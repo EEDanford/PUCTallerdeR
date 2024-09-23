@@ -424,22 +424,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>Best Normalizing transformation with 342 Observations
  Estimated Normality Statistics (Pearson P / df, lower =&gt; more normal):
- - arcsinh(x): 1.3814
- - Box-Cox: 1.3264
- - Center+scale: 1.6986
- - Double Reversed Log_b(x+a): 3.1215
- - Log_b(x+a): 1.3814
- - orderNorm (ORQ): 1.525
- - sqrt(x + a): 1.4729
- - Yeo-Johnson: 1.3264
+ - arcsinh(x): 1.1915
+ - Box-Cox: 1.1438
+ - Center+scale: 1.5791
+ - Double Reversed Log_b(x+a): 3.026
+ - Log_b(x+a): 1.1915
+ - orderNorm (ORQ): 1.0781
+ - sqrt(x + a): 1.382
+ - Yeo-Johnson: 1.1438
 Estimation method: Out-of-sample via CV with 10 folds and 5 repeats
  
 Based off these, bestNormalize chose:
-Standardized Box Cox Transformation with 342 nonmissing obs.:
- Estimated statistics:
- - lambda = -0.465651 
- - mean (before standardization) = 2.10287 
- - sd (before standardization) = 0.003880517 </code></pre>
+orderNorm Transformation with 342 nonmissing obs and ties
+ - 95 unique values 
+ - Original quantiles:
+  0%  25%  50%  75% 100% 
+2700 3550 4050 4750 6300 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ON.MasaCorpg <span class="ot">&lt;-</span> <span class="fu">orderNorm</span>(pinguinos<span class="sc">$</span>masa_corporal_g) <span class="co">#orderNorming y guardar como factor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -470,22 +470,48 @@ W = 0.99931, p-value = 1</code></pre>
 <h3 class="anchored" data-anchor-id="log-transformar">log (transformar)</h3>
 <p>A veces puede usar un log() para transformar sus datos. Solo cambiar sus números con el log de los números. Puede hacerse y guardar como nuevo colúmno o en parte de un modelo.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pinguinos<span class="sc">$</span>log_masacorpg <span class="ot">&lt;-</span> <span class="fu">log</span>(pinguinos<span class="sc">$</span>masa_corporal_g)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(pinguinos<span class="sc">$</span>largo_aleta_mm <span class="sc">~</span> <span class="fu">log</span>(pinguinos<span class="sc">$</span>masa_corporal_g))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = pinguinos$largo_aleta_mm ~ log(pinguinos$masa_corporal_g))
-
-Coefficients:
-                   (Intercept)  log(pinguinos$masa_corporal_g)  
-                       -335.88                           64.48  </code></pre>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pinguinos<span class="sc">$</span>masa_corporal_g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C6-normalizacion_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pinguinos<span class="sc">$</span>log_masacorpg <span class="ot">&lt;-</span> <span class="fu">log</span>(pinguinos<span class="sc">$</span>masa_corporal_g)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pinguinos<span class="sc">$</span>log_masacorpg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C6-normalizacion_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
 <section id="z-score" class="level3">
 <h3 class="anchored" data-anchor-id="z-score">z-score</h3>
+<p>La función ‘scale()’ es parte del R y se usa para ‘z-scores’.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pinguinos<span class="sc">$</span>largo_aleta_mm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C6-normalizacion_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pinguinos<span class="sc">$</span>largo_aleta_mm_z <span class="ot">&lt;-</span> <span class="fu">scale</span>(pinguinos<span class="sc">$</span>largo_aleta_mm)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pinguinos<span class="sc">$</span>largo_aleta_mm_z)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C6-normalizacion_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 </section>
 </section>
