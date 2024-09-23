@@ -17,7 +17,7 @@ Debe tener caución con sus datos, porque si haya un colúmno de números, pero 
 Había muchas típos, pero lo más comunes son:
 
 | Típo             | Descripción                                                                                                                                                                     |
-|-------------|-----------------------------------------------------------|
+|----------------|--------------------------------------------------------|
 | Factor           | Puede ser número, entero o texto, pero la idea es que no representa su valor exacto, sino que niveles o distinciones entre sitios. ej: sus sitios, tiempo de observación, etc.. |
 | Número (numeric) | Un número (no entero) que quiere usar como número ej: porcentaje de floración, concentración de carbon, etc..                                                                   |
 | Entero (integer) | Un número entero que quiere usar como número ej: abundancia de abejas, riqueza de especies                                                                                      |
@@ -101,10 +101,11 @@ A veces todos los metodos en bestNormalize son superparecidos; por ser caso, pue
 A veces puede usar un log() para transformar sus datos. Solo cambiar sus números con el log de los números. Puede hacerse y guardar como nuevo colúmno o en parte de un modelo.
 
 ```{r}
-
+hist(pinguinos$masa_corporal_g)
 pinguinos$log_masacorpg <- log(pinguinos$masa_corporal_g)
 
-lm(pinguinos$largo_aleta_mm ~ log(pinguinos$masa_corporal_g))
+hist(pinguinos$log_masacorpg)
+
 ```
 
 ### z-score
@@ -112,8 +113,9 @@ lm(pinguinos$largo_aleta_mm ~ log(pinguinos$masa_corporal_g))
 La función 'scale()' es parte del R y se usa para 'z-scores'.
 
 ```{r}
-
+hist(pinguinos$largo_aleta_mm)
 pinguinos$largo_aleta_mm_z <- scale(pinguinos$largo_aleta_mm)
+hist(pinguinos$largo_aleta_mm_z)
 ```
 
 # ejercicios
