@@ -1,0 +1,74 @@
+---
+title: "C1-Intro"
+---
+
+# R y R Studio
+
+R es uno de los opciones para analizar y analizar datos. Para usarla facilmente, puede usar R Studio. Se pone más facíl su uso de R.
+
+-   [Descargar R](https://cran.r-project.org/bin/windows/base/)
+
+-   [Descargar R Studio](https://posit.co/downloads/)
+
+## Ciencias de datos
+
+El proceso general de hacer ciencias de datos empece explorando sus datos (importar y ordenar), despúes analizar (transformar, visualizar, y modelar), y comunicar.
+
+![Wickham & Grolemund, 2023](images/Flowchart.png){fig-alt="Un gráfico con el orden de programar: importar, ordenar, y transformar, visualizar y modelar en un círculo, y en fin comunicar"}
+
+# Organización de datos en excel
+
+Cada fila debe ser un observación o un especie (una replica)
+
+Por ejemplo:
+
+Cada fila aca es un observación de una especie.
+
+![](images/Orgexcel.png)
+
+Cada fila es una fecha en que ha observado/colectado los datos. Los columnos son abundancia de individuous por familias/especies.
+
+![](images/orgexcel2.png){fig-align="center"}
+
+Abajo no, porque:
+
+-   hay 6 tablas en una hoja (debería ser solo uno)
+
+-   Hay colors non-necesarios
+
+-   Puede ser mal interpretado
+
+![](images/badorg.png){fig-align="center"}
+
+| No....                                  | Sí                                                  |
+|-----------------------------------------|-----------------------------------------------------|
+| usa acentos/tildes en nombres           | Guardar sola una tabla por cada hoja de excel       |
+| usa símbolos (#%\^&\$\*) en sus nombres | Llamar sus columnas con algo corto pero descriptivo |
+| Pon espacios en los nombres de csv      |                                                     |
+| Empieza nombres con números             |                                                     |
+
+## Guardar un excel como csv
+
+Solo puede guardar una hoja de excel en un csv. Si este listo para guardar, elije la hoja deseada y selecciona 'guardar como' y examinar su carpeta.
+
+![Elije 'csv (delimitado por comma) (\*csv)](images/csv.png){fig-align="center"}
+
+# Empezando R Studio
+
+Su pantalla en R Studio aparece así antes de hacer un R Markdown. Hay tres aspetos: console (o consolo), environment y files.
+
+![](images/Consolelabelled.png){fig-align="center"}
+
+En R, es importante hacer proyectos para tener todo en orden. Cuando hace un proyecto, guardalo con un nombre distinto. Crea un proyecto para cada proyecto distinto. Su proyecto se convierte en una carpeta donde debería guardar su csv.
+
+![](images/NewProject.png){fig-align="center"}
+
+Elije 'new project' y llamarla con algo descriptiva por su proyecto.
+
+![](images/namenewproject.png){fig-align="center"}
+
+Su proyecto está salvado en una carpeta del mismo nombre en su computadora: guardar sus csv allá.
+
+![](images/guardar%20en%20su%20carpeta%20con%20csv.png){fig-align="center"}
+
+Y eso es todo de la lección 1!

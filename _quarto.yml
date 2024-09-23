@@ -1,0 +1,45 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  page-navigation: true
+  title: "PUCTallerdeR"
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - href: index.qmd
+        text: "Bienvenidos"
+      - Horario.qmd
+      - section: "Clases"
+        href: clases.qmd
+        contents: 
+          - C1-Intro.qmd
+          - C2-RMarkdown.qmd
+          - C3-Tidyverse.qmd
+          - C4-GGplot1.qmd
+          - C5-GGplot2.qmd
+          - C6-normalizacion.qmd
+          - C7-correlacion.qmd
+          - C8-modelosnormales1.qmd
+          - C9-modelosnormales2.qmd
+          - C10-modelosnonparametricos.qmd
+          - C11-Fuerzademodelos.qmd
+          - C12-graficos.qmd
+      - section: "Proyectos"
+        href: proyectos.qmd
+        contents:
+          - Proyecto1.qmd
+          - Proyecto2.qmd
+          - Proyecto3.qmd
+
+
+format:
+  html:
+    theme: minty
+    css: styles.css
+    toc: true
+
+editor: visual
+

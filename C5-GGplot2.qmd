@@ -1,0 +1,85 @@
+---
+title: "C5-GGplot2"
+---
+
+# Opciones avanzados con GGPlot
+
+## Facet
+
+El función 'facet_wrap' y 'facet_grid', mover los datos para que muestran más.
+
+```{r, warning=FALSE}
+library(tidyverse)
+library(datos)
+
+pinguinos %>%  # nombre de sus datos/dataframe y el pipe %>% o |>
+  ggplot(aes(x=largo_pico_mm, color=especie))+ # empece un gráfico con 'ggplot' y aesteticas (aes())
+  geom_boxplot() # boxplot
+
+```
+
+Imagine que tenemos este gráfico con tres boxplots, seperado por especie del pinguino. Pero queremos tambien ver la distinción entre islas.
+
+```{r, warning=FALSE}
+pinguinos %>%  # nombre de sus datos/dataframe y el pipe %>% o |>
+  ggplot(aes(x=largo_pico_mm, color=especie))+ # empece un gráfico con 'ggplot' y aesteticas (aes())
+  geom_boxplot()+ # boxplot
+  facet_wrap(~isla)
+```
+
+El facet revela que en la isla Torgerson solo tiene el especie 'Adelia', y las otras dos tienen distintos especies de pinguinos. Tenemos ahora tres gráficos separados por isla.
+
+Podemos también usar más que dos variables con 'facet_grid'.
+
+```{r}
+pinguinos %>%  # nombre de sus datos/dataframe y el pipe %>% o |>
+  ggplot(aes(x=largo_pico_mm, color=especie))+ # empece un gráfico con 'ggplot' y aesteticas (aes())
+  geom_boxplot()+ # boxplot
+  facet_grid(rows=vars(isla), cols=vars(especie))
+```
+
+Es más fácil ver ahora los especies y en cual isla estan.
+
+## pivot
+
+Por ser caso queremos hacer un gráfico con todos los características del pinguinos (alto pico, largo pico, largo aleta y masa corporal) no podemos porque solo podemos elegir un 'y' en las aesteticas. Pero, hay un función para cambiar el formato de sus datos, se llama 'pivot'. Había pivot_longer y pivot_wider.
+
+### pivot_longer
+
+Funciona así:
+
+-   Elegir los colúmnos con variables que quiere poner juntos en una gráfica. Ahora es largo pico y alto pico del pinguinos, entonces los pone en cols=.
+
+-   Después, elegimos un nombre para un colúmno para poner las nombres de los colúmnos (acá caracteristica) y una para un colúmno nuevo para los valores (acá Medidasmm)
+
+-   El nuevo dataframe: 'pinguinos_longer' tiene dos nuevos colúmnos 'caracteristica' y 'medidasmm'
+
+```{r}
+pinguinos_longer <- pivot_longer(data=pinguinos, cols=largo_pico_mm:alto_pico_mm, names_to="Caracteristica", values_to="Medidasmm")
+pinguinos_longer
+```
+
+Ahora podemos hacerse en ggplot.
+
+```{r, warning=FALSE}
+pinguinos_longer %>%
+  ggplot(aes(x=Medidasmm, color=Caracteristica))+
+  geom_boxplot()
+
+```
+
+Y puede hacer un facet con lo mismo.
+
+```{r, warning=FALSE}
+pinguinos_longer %>%
+  ggplot(aes(x=Medidasmm, color=Caracteristica))+
+  geom_boxplot()+
+  facet_wrap(~Caracteristica)
+```
+
+Estos dos tecnicas son más dificíl pero imensamente útil.
+
+# A practicar (juntos)
+
+1.  Con los datos de 'flores' hacer un pivot_longer
+2.  hacer un gráfico con un facet con los datos 'longer' de flores

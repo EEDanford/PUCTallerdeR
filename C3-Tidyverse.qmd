@@ -1,0 +1,214 @@
+---
+title: "C3-Tidyverse"
+---
+
+# Data Wrangling
+
+Usualmente, nuestros datos son desorganizados o díficil a usar en R, especialmente a respeto a los visualizaciónes. Y, a veces es útil filtrarla, cambiar nombres, quitar filas, y más.
+
+### paquetes
+
+Hoy usamos dos paquetes, 'tidyverse' y 'dplyr'. (Recuerda installarlas con 'install.packages()' en el consolo (abajo))
+
+```{r}
+library(tidyverse) # organización (pipe, gráficos)
+library(dplyr) # cambiar datos (rename, filter, mutate)
+```
+
+
+### Gramática de la programación
+
+| Típo                          | sintaxis            |
+|-------------------------------|---------------------|
+| Lista                         | c(x, y, z)          |
+| Texto                         | "texto" o 'texto'   |
+| Dataframe (datos) y colúmno   | dataframe\$colúmno  |
+| Guardar/llamar datos/colúmnos | nuevo \<- operación |
+| 'Pipe' (en tidyverse)         | %\>% o \|\>         |
+
+```{r, lista}
+# lista guardado como nuevo lista (importante, solo es una lista ahora, no un dataframe)
+
+lista <- c(1, 2, 3, 4, 5)
+head(lista) # ver los 6 primeros líneas
+```
+
+Ahora, 'lista' solo contiene un colúmno con 5 números, o sea, es una lista. Para añadir más información, puede hacer lo mismo, pero crear también con un nombre, pero si use '\$' quede como una lista.
+
+```{r, columno}
+# usar el $ para identificar el nombre del objeto (dataframe o lista) y llamar el nuevo colúmno
+lista$nuevocolumno <- c("uno", "dos", "tres", "cuatro", "cinco")
+```
+
+### Hacer colúmnos con nueva información (datos\$nuevocolumno \<- datos\$columno)
+
+Puede añadir colúmnos con información nuevo o sin información.
+
+Por ejemplo:
+
+```{r, datos}
+# guardando sus datos con un nombre
+data("iris")
+head(iris)
+
+```
+
+Puede ver que los colúmnos son llamados en inglés. Si queremos en español, podemos añadir un colúmno llamado en español.
+
+```{r, anadir columno}
+# puede usar '$' o sea, datos$colúmno deseado
+# recurede que '<-' sirve para llamar o guardar algo
+iris$LargoSepalo <- iris$Sepal.Length
+
+head(iris)
+# puede ver que tenemos el nuevo
+```
+
+También es posible hacer matemáticas con los colúmnos y guardarlos en un nuevo colúmno.
+
+| Operaciónes matemáticas | Función |
+|-------------------------|---------|
+| Multiplicación          | \*      |
+| Suma                    | \+      |
+| Resta                   | \-      |
+| División                | /       |
+| Raíz cuadrada           | sqrt()  |
+| Promedio                | mean()  |
+| Mínimo                  | min()   |
+| Máximo                  | max()   |
+
+```{r, matematicas}
+# acá multiplica el largo sepalo y ancho sepalo y guardar en nuevo colúmno llamado 'volumen' en su marco de datos 'iris'
+iris$volumen <- (iris$Sepal.Length * iris$Sepal.Width)
+head(iris) # ver los primeros seis filas del iris para asegurar que 'volumen' ya estaba añadido
+
+# acá toma el raíz cuadrada del largo sepalo, pero no lo guarda
+sqrt(iris$LargoSepalo)
+
+# acá toma el raíz cuadrada otra vez pero guardanlos
+iris$sqrtls <- sqrt(iris$LargoSepalo)
+head(iris)
+```
+
+Además puede añadir datos manualmente.
+
+```{r, anadir datos manualmente}
+iris$numerosrandom <- c()
+```
+
+Vamos a hacerlo juntos!
+
+### elegir colúmnos o filas \[\]
+
+Puede elegir colúmnos o filas para solo usar colúmnos especificos queridos.
+
+El sintaxis es dataframe\[número de filas, número de colúmnos\]
+
+Por ejemplo:
+
+```{r, elegir columnos}
+# acá solo ha elegido los colúmnos 2 y 3 (: significa 2 hasta 3)
+head(iris[,2:3])
+
+```
+
+```{r, elegir filas}
+# acá ha elegido las filas 2 hasta 9 
+iris[2:9,]
+```
+
+```{r, elegir columnos y filas}
+# acá ha elegido los colúmnos 1 hasta 3 y las filas 1 hasta 6
+iris[1:6,1:3]
+```
+
+Puede guardar con '<-' siquieres usarla despues
+
+Por ejemplo:
+
+```{r, guardar columnos y filas elegidas}
+irispoco <- iris[1:6, 2:8]
+
+```
+
+### cambiar nombres "[rename()]"
+
+Si tenga un nombre de un colúmno y quiere cambiarlo, puedes usar el función 'rename()'
+
+El sintaxis es rename(dataframe, nuevonombre = nombreoriginal)
+
+```{r, rename}
+head(rename(iris, AnchoSepalo=Sepal.Width))
+```
+
+### filtrar "[filter()]"
+
+En sus datos, hay colúmnos y filas. Puede filtrar por valores en sus colúmnos. Por ejemplo, con los datos de iris, podemos filtrar por sepalos con un largo más de 5mm o podemos filtrar por solo el espeice 'setosa'.
+
+```{r, filter caracter}
+# filtrar por solo la epecie "setosa" Si filtre por texto, debería usar '==' por números '=', ">","<", ">=", etc.
+irissetosa <- filter(iris, Species == 'setosa')
+head(irissetosa)
+
+```
+
+```{r, filter opuesto}
+# filtrar por los especies que no son setosa
+irisnonsetosa <- filter(iris, Species != 'setosa')
+head(irisnonsetosa)
+
+```
+
+```{r, filtrar numeros}
+# filtrar por los especies que no son setosa
+irisSepG5 <- filter(iris, Sepal.Length > 5)
+head(irisSepG5)
+dim(irisSepG5)
+
+```
+
+| Operador                                    | Símbolo                     |
+|-------------------------------------------|----------------------------|
+| Filtrar texto por algo especifico           | == "texto"                  |
+| Filtrar por número exacto                   | = número                    |
+| Filtrar por número más o menos del asignado | \< o \> ('\>=' o '\<=')     |
+| Filtrar por el opuesto                      | != (números) !== (caracter) |
+| buscar por 'na' sin datos                   | is.na()                     |
+
+Vamos a probar juntos!
+
+### cambiar datos \[mutate()\]
+
+Con 'mutate' puede cambiar datos en una manera distinta.
+
+Puede hacer varios cambios con 'mutate' desde crear nuevos colúmnos/variables hasta cambiar/sacar los que ya existen.
+
+```{r, pipe}
+# ejemplo, usando el 'pipe' para pasar datos (en vez de llamarla) y mutate para añadir variable con matemáticas
+
+head(iris |>
+  mutate(Vol = Sepal.Length*Sepal.Width))
+```
+
+Podemos sacar variables también.
+
+```{r, pipe 2}
+# para sacar un variable, usar el pipe con iris y llamar el colúmno para sacar igual 'NULL'
+head(iris |>
+  mutate(Vol= NULL))
+```
+
+# Ejercicios
+
+1.  Con los datos 'iris' cambiar todos los nombres de colúmnos a español (length = largo, width = ancho)
+2.  añadir un colúmno hecho del algún combinación del largo y ancho de sepalo o pétalo
+3.  Filtrar los especies para solo ver 'setosa'
+4.  Practicar con el 'pipe'
+
+## recursos
+
+[Filtrar, elegir, cambiar nombre, etc.. inglés](https://dplyr.tidyverse.org/reference/select.html)
+
+[Filtrar (español)](https://rpubs.com/hllinas/R_Filtrar_DataFrames)
+
+[más de filtrar (español)](https://rsanchezs.gitbooks.io/rprogramming/content/chapter9/filter.html)

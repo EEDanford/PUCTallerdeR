@@ -1,0 +1,7 @@
+---
+title: "PUCTallerdeR"
+---
+
+Bienvenidos estudiantes al taller de R 2024. Reunimos cada Martes a las 17:30 desde 18:40.
+
+Correo: danford.34\@buckeyemail.osu.edu

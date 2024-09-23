@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>PUCTallerdeR - C3-Tidyverse</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./C4-GGplot1.html" rel="next">
+<link href="./C2-RMarkdown.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./clases.html">Clases</a></li><li class="breadcrumb-item"><a href="./C3-Tidyverse.html">C3-Tidyverse</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">PUCTallerdeR</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bienvenidos</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Horario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Horario</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./clases.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Clases</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C1-Intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">C1-Intro</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C2-RMarkdown.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">C2-RMarkdown</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C3-Tidyverse.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">C3-Tidyverse</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C4-GGplot1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">C4-GGPlot1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C5-GGplot2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">C5-GGplot2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C6-normalizacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">C6-normalizacion</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C7-correlacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">C7-correlacion</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C8-modelosnormales1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">C8-modelosnormales1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C9-modelosnormales2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">C9-modelosnormales2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C10-modelosnonparametricos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">C10-modelosnonparametricos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C11-Fuerzademodelos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">C11-Fuerzademodelos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C12-graficos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">C12-graficos</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./proyectos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Proyectos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Proyecto1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Proyecto1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Proyecto2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Proyecto2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Proyecto3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Proyecto3</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link active" data-scroll-target="#data-wrangling">Data Wrangling</a>
+  <ul class="collapse">
+  <li><a href="#paquetes" id="toc-paquetes" class="nav-link" data-scroll-target="#paquetes">paquetes</a></li>
+  <li><a href="#gramática-de-la-programación" id="toc-gramática-de-la-programación" class="nav-link" data-scroll-target="#gramática-de-la-programación">Gramática de la programación</a></li>
+  <li><a href="#hacer-colúmnos-con-nueva-información-datosnuevocolumno---datoscolumno" id="toc-hacer-colúmnos-con-nueva-información-datosnuevocolumno---datoscolumno" class="nav-link" data-scroll-target="#hacer-colúmnos-con-nueva-información-datosnuevocolumno---datoscolumno">Hacer colúmnos con nueva información (datos$nuevocolumno &lt;- datos$columno)</a></li>
+  <li><a href="#elegir-colúmnos-o-filas" id="toc-elegir-colúmnos-o-filas" class="nav-link" data-scroll-target="#elegir-colúmnos-o-filas">elegir colúmnos o filas []</a></li>
+  <li><a href="#cambiar-nombres-rename" id="toc-cambiar-nombres-rename" class="nav-link" data-scroll-target="#cambiar-nombres-rename">cambiar nombres “[rename()]”</a></li>
+  <li><a href="#filtrar-filter" id="toc-filtrar-filter" class="nav-link" data-scroll-target="#filtrar-filter">filtrar “[filter()]”</a></li>
+  <li><a href="#cambiar-datos-mutate" id="toc-cambiar-datos-mutate" class="nav-link" data-scroll-target="#cambiar-datos-mutate">cambiar datos [mutate()]</a></li>
+  </ul></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a>
+  <ul class="collapse">
+  <li><a href="#recursos" id="toc-recursos" class="nav-link" data-scroll-target="#recursos">recursos</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./clases.html">Clases</a></li><li class="breadcrumb-item"><a href="./C3-Tidyverse.html">C3-Tidyverse</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">C3-Tidyverse</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="data-wrangling" class="level1">
+<h1>Data Wrangling</h1>
+<p>Usualmente, nuestros datos son desorganizados o díficil a usar en R, especialmente a respeto a los visualizaciónes. Y, a veces es útil filtrarla, cambiar nombres, quitar filas, y más.</p>
+<section id="paquetes" class="level3">
+<h3 class="anchored" data-anchor-id="paquetes">paquetes</h3>
+<p>Hoy usamos dos paquetes, ‘tidyverse’ y ‘dplyr’. (Recuerda installarlas con ‘install.packages()’ en el consolo (abajo))</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># organización (pipe, gráficos)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># cambiar datos (rename, filter, mutate)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="gramática-de-la-programación" class="level3">
+<h3 class="anchored" data-anchor-id="gramática-de-la-programación">Gramática de la programación</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Típo</th>
+<th>sintaxis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Lista</td>
+<td>c(x, y, z)</td>
+</tr>
+<tr class="even">
+<td>Texto</td>
+<td>“texto” o ‘texto’</td>
+</tr>
+<tr class="odd">
+<td>Dataframe (datos) y colúmno</td>
+<td>dataframe$colúmno</td>
+</tr>
+<tr class="even">
+<td>Guardar/llamar datos/colúmnos</td>
+<td>nuevo &lt;- operación</td>
+</tr>
+<tr class="odd">
+<td>‘Pipe’ (en tidyverse)</td>
+<td>%&gt;% o |&gt;</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lista guardado como nuevo lista (importante, solo es una lista ahora, no un dataframe)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>lista <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lista) <span class="co"># ver los 6 primeros líneas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3 4 5</code></pre>
+</div>
+</div>
+<p>Ahora, ‘lista’ solo contiene un colúmno con 5 números, o sea, es una lista. Para añadir más información, puede hacer lo mismo, pero crear también con un nombre, pero si use ‘$’ quede como una lista.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># usar el $ para identificar el nombre del objeto (dataframe o lista) y llamar el nuevo colúmno</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>lista<span class="sc">$</span>nuevocolumno <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"uno"</span>, <span class="st">"dos"</span>, <span class="st">"tres"</span>, <span class="st">"cuatro"</span>, <span class="st">"cinco"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in lista$nuevocolumno &lt;- c("uno", "dos", "tres", "cuatro", "cinco"):
+Coercing LHS to a list</code></pre>
+</div>
+</div>
+</section>
+<section id="hacer-colúmnos-con-nueva-información-datosnuevocolumno---datoscolumno" class="level3">
+<h3 class="anchored" data-anchor-id="hacer-colúmnos-con-nueva-información-datosnuevocolumno---datoscolumno">Hacer colúmnos con nueva información (datos$nuevocolumno &lt;- datos$columno)</h3>
+<p>Puede añadir colúmnos con información nuevo o sin información.</p>
+<p>Por ejemplo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># guardando sus datos con un nombre</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"iris"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa
+4          4.6         3.1          1.5         0.2  setosa
+5          5.0         3.6          1.4         0.2  setosa
+6          5.4         3.9          1.7         0.4  setosa</code></pre>
+</div>
+</div>
+<p>Puede ver que los colúmnos son llamados en inglés. Si queremos en español, podemos añadir un colúmno llamado en español.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># puede usar '$' o sea, datos$colúmno deseado</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># recurede que '&lt;-' sirve para llamar o guardar algo</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>LargoSepalo <span class="ot">&lt;-</span> iris<span class="sc">$</span>Sepal.Length</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species LargoSepalo
+1          5.1         3.5          1.4         0.2  setosa         5.1
+2          4.9         3.0          1.4         0.2  setosa         4.9
+3          4.7         3.2          1.3         0.2  setosa         4.7
+4          4.6         3.1          1.5         0.2  setosa         4.6
+5          5.0         3.6          1.4         0.2  setosa         5.0
+6          5.4         3.9          1.7         0.4  setosa         5.4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># puede ver que tenemos el nuevo</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>También es posible hacer matemáticas con los colúmnos y guardarlos en un nuevo colúmno.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Operaciónes matemáticas</th>
+<th>Función</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Multiplicación</td>
+<td>*</td>
+</tr>
+<tr class="even">
+<td>Suma</td>
+<td>+</td>
+</tr>
+<tr class="odd">
+<td>Resta</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>División</td>
+<td>/</td>
+</tr>
+<tr class="odd">
+<td>Raíz cuadrada</td>
+<td>sqrt()</td>
+</tr>
+<tr class="even">
+<td>Promedio</td>
+<td>mean()</td>
+</tr>
+<tr class="odd">
+<td>Mínimo</td>
+<td>min()</td>
+</tr>
+<tr class="even">
+<td>Máximo</td>
+<td>max()</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># acá multiplica el largo sepalo y ancho sepalo y guardar en nuevo colúmno llamado 'volumen' en su marco de datos 'iris'</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>volumen <span class="ot">&lt;-</span> (iris<span class="sc">$</span>Sepal.Length <span class="sc">*</span> iris<span class="sc">$</span>Sepal.Width)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris) <span class="co"># ver los primeros seis filas del iris para asegurar que 'volumen' ya estaba añadido</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species LargoSepalo volumen
+1          5.1         3.5          1.4         0.2  setosa         5.1   17.85
+2          4.9         3.0          1.4         0.2  setosa         4.9   14.70
+3          4.7         3.2          1.3         0.2  setosa         4.7   15.04
+4          4.6         3.1          1.5         0.2  setosa         4.6   14.26
+5          5.0         3.6          1.4         0.2  setosa         5.0   18.00
+6          5.4         3.9          1.7         0.4  setosa         5.4   21.06</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># acá toma el raíz cuadrada del largo sepalo, pero no lo guarda</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(iris<span class="sc">$</span>LargoSepalo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] 2.258318 2.213594 2.167948 2.144761 2.236068 2.323790 2.144761 2.236068
+  [9] 2.097618 2.213594 2.323790 2.190890 2.190890 2.073644 2.408319 2.387467
+ [17] 2.323790 2.258318 2.387467 2.258318 2.323790 2.258318 2.144761 2.258318
+ [25] 2.190890 2.236068 2.236068 2.280351 2.280351 2.167948 2.190890 2.323790
+ [33] 2.280351 2.345208 2.213594 2.236068 2.345208 2.213594 2.097618 2.258318
+ [41] 2.236068 2.121320 2.097618 2.236068 2.258318 2.190890 2.258318 2.144761
+ [49] 2.302173 2.236068 2.645751 2.529822 2.626785 2.345208 2.549510 2.387467
+ [57] 2.509980 2.213594 2.569047 2.280351 2.236068 2.428992 2.449490 2.469818
+ [65] 2.366432 2.588436 2.366432 2.408319 2.489980 2.366432 2.428992 2.469818
+ [73] 2.509980 2.469818 2.529822 2.569047 2.607681 2.588436 2.449490 2.387467
+ [81] 2.345208 2.345208 2.408319 2.449490 2.323790 2.449490 2.588436 2.509980
+ [89] 2.366432 2.345208 2.345208 2.469818 2.408319 2.236068 2.366432 2.387467
+ [97] 2.387467 2.489980 2.258318 2.387467 2.509980 2.408319 2.664583 2.509980
+[105] 2.549510 2.756810 2.213594 2.701851 2.588436 2.683282 2.549510 2.529822
+[113] 2.607681 2.387467 2.408319 2.529822 2.549510 2.774887 2.774887 2.449490
+[121] 2.626785 2.366432 2.774887 2.509980 2.588436 2.683282 2.489980 2.469818
+[129] 2.529822 2.683282 2.720294 2.810694 2.529822 2.509980 2.469818 2.774887
+[137] 2.509980 2.529822 2.449490 2.626785 2.588436 2.626785 2.408319 2.607681
+[145] 2.588436 2.588436 2.509980 2.549510 2.489980 2.428992</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># acá toma el raíz cuadrada otra vez pero guardanlos</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>sqrtls <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(iris<span class="sc">$</span>LargoSepalo)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species LargoSepalo volumen
+1          5.1         3.5          1.4         0.2  setosa         5.1   17.85
+2          4.9         3.0          1.4         0.2  setosa         4.9   14.70
+3          4.7         3.2          1.3         0.2  setosa         4.7   15.04
+4          4.6         3.1          1.5         0.2  setosa         4.6   14.26
+5          5.0         3.6          1.4         0.2  setosa         5.0   18.00
+6          5.4         3.9          1.7         0.4  setosa         5.4   21.06
+    sqrtls
+1 2.258318
+2 2.213594
+3 2.167948
+4 2.144761
+5 2.236068
+6 2.323790</code></pre>
+</div>
+</div>
+<p>Además puede añadir datos manualmente.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>numerosrandom <span class="ot">&lt;-</span> <span class="fu">c</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Vamos a hacerlo juntos!</p>
+</section>
+<section id="elegir-colúmnos-o-filas" class="level3">
+<h3 class="anchored" data-anchor-id="elegir-colúmnos-o-filas">elegir colúmnos o filas []</h3>
+<p>Puede elegir colúmnos o filas para solo usar colúmnos especificos queridos.</p>
+<p>El sintaxis es dataframe[número de filas, número de colúmnos]</p>
+<p>Por ejemplo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># acá solo ha elegido los colúmnos 2 y 3 (: significa 2 hasta 3)</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris[,<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Width Petal.Length
+1         3.5          1.4
+2         3.0          1.4
+3         3.2          1.3
+4         3.1          1.5
+5         3.6          1.4
+6         3.9          1.7</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># acá ha elegido las filas 2 hasta 9 </span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>iris[<span class="dv">2</span><span class="sc">:</span><span class="dv">9</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species LargoSepalo volumen
+2          4.9         3.0          1.4         0.2  setosa         4.9   14.70
+3          4.7         3.2          1.3         0.2  setosa         4.7   15.04
+4          4.6         3.1          1.5         0.2  setosa         4.6   14.26
+5          5.0         3.6          1.4         0.2  setosa         5.0   18.00
+6          5.4         3.9          1.7         0.4  setosa         5.4   21.06
+7          4.6         3.4          1.4         0.3  setosa         4.6   15.64
+8          5.0         3.4          1.5         0.2  setosa         5.0   17.00
+9          4.4         2.9          1.4         0.2  setosa         4.4   12.76
+    sqrtls
+2 2.213594
+3 2.167948
+4 2.144761
+5 2.236068
+6 2.323790
+7 2.144761
+8 2.236068
+9 2.097618</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># acá ha elegido los colúmnos 1 hasta 3 y las filas 1 hasta 6</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>iris[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length
+1          5.1         3.5          1.4
+2          4.9         3.0          1.4
+3          4.7         3.2          1.3
+4          4.6         3.1          1.5
+5          5.0         3.6          1.4
+6          5.4         3.9          1.7</code></pre>
+</div>
+</div>
+<p>Puede guardar con ‘&lt;-’ siquieres usarla despues</p>
+<p>Por ejemplo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>irispoco <span class="ot">&lt;-</span> iris[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="cambiar-nombres-rename" class="level3">
+<h3 class="anchored" data-anchor-id="cambiar-nombres-rename">cambiar nombres “[rename()]”</h3>
+<p>Si tenga un nombre de un colúmno y quiere cambiarlo, puedes usar el función ‘rename()’</p>
+<p>El sintaxis es rename(dataframe, nuevonombre = nombreoriginal)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">rename</span>(iris, <span class="at">AnchoSepalo=</span>Sepal.Width))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length AnchoSepalo Petal.Length Petal.Width Species LargoSepalo volumen
+1          5.1         3.5          1.4         0.2  setosa         5.1   17.85
+2          4.9         3.0          1.4         0.2  setosa         4.9   14.70
+3          4.7         3.2          1.3         0.2  setosa         4.7   15.04
+4          4.6         3.1          1.5         0.2  setosa         4.6   14.26
+5          5.0         3.6          1.4         0.2  setosa         5.0   18.00
+6          5.4         3.9          1.7         0.4  setosa         5.4   21.06
+    sqrtls
+1 2.258318
+2 2.213594
+3 2.167948
+4 2.144761
+5 2.236068
+6 2.323790</code></pre>
+</div>
+</div>
+</section>
+<section id="filtrar-filter" class="level3">
+<h3 class="anchored" data-anchor-id="filtrar-filter">filtrar “[filter()]”</h3>
+<p>En sus datos, hay colúmnos y filas. Puede filtrar por valores en sus colúmnos. Por ejemplo, con los datos de iris, podemos filtrar por sepalos con un largo más de 5mm o podemos filtrar por solo el espeice ‘setosa’.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filtrar por solo la epecie "setosa" Si filtre por texto, debería usar '==' por números '=', "&gt;","&lt;", "&gt;=", etc.</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>irissetosa <span class="ot">&lt;-</span> <span class="fu">filter</span>(iris, Species <span class="sc">==</span> <span class="st">'setosa'</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(irissetosa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species LargoSepalo volumen
+1          5.1         3.5          1.4         0.2  setosa         5.1   17.85
+2          4.9         3.0          1.4         0.2  setosa         4.9   14.70
+3          4.7         3.2          1.3         0.2  setosa         4.7   15.04
+4          4.6         3.1          1.5         0.2  setosa         4.6   14.26
+5          5.0         3.6          1.4         0.2  setosa         5.0   18.00
+6          5.4         3.9          1.7         0.4  setosa         5.4   21.06
+    sqrtls
+1 2.258318
+2 2.213594
+3 2.167948
+4 2.144761
+5 2.236068
+6 2.323790</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filtrar por los especies que no son setosa</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>irisnonsetosa <span class="ot">&lt;-</span> <span class="fu">filter</span>(iris, Species <span class="sc">!=</span> <span class="st">'setosa'</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(irisnonsetosa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width    Species LargoSepalo
+1          7.0         3.2          4.7         1.4 versicolor         7.0
+2          6.4         3.2          4.5         1.5 versicolor         6.4
+3          6.9         3.1          4.9         1.5 versicolor         6.9
+4          5.5         2.3          4.0         1.3 versicolor         5.5
+5          6.5         2.8          4.6         1.5 versicolor         6.5
+6          5.7         2.8          4.5         1.3 versicolor         5.7
+  volumen   sqrtls
+1   22.40 2.645751
+2   20.48 2.529822
+3   21.39 2.626785
+4   12.65 2.345208
+5   18.20 2.549510
+6   15.96 2.387467</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filtrar por los especies que no son setosa</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>irisSepG5 <span class="ot">&lt;-</span> <span class="fu">filter</span>(iris, Sepal.Length <span class="sc">&gt;</span> <span class="dv">5</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(irisSepG5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species LargoSepalo volumen
+1          5.1         3.5          1.4         0.2  setosa         5.1   17.85
+2          5.4         3.9          1.7         0.4  setosa         5.4   21.06
+3          5.4         3.7          1.5         0.2  setosa         5.4   19.98
+4          5.8         4.0          1.2         0.2  setosa         5.8   23.20
+5          5.7         4.4          1.5         0.4  setosa         5.7   25.08
+6          5.4         3.9          1.3         0.4  setosa         5.4   21.06
+    sqrtls
+1 2.258318
+2 2.323790
+3 2.323790
+4 2.408319
+5 2.387467
+6 2.323790</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(irisSepG5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 118   8</code></pre>
+</div>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 60%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Operador</th>
+<th>Símbolo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Filtrar texto por algo especifico</td>
+<td>== “texto”</td>
+</tr>
+<tr class="even">
+<td>Filtrar por número exacto</td>
+<td>= número</td>
+</tr>
+<tr class="odd">
+<td>Filtrar por número más o menos del asignado</td>
+<td>&lt; o &gt; (‘&gt;=’ o ‘&lt;=’)</td>
+</tr>
+<tr class="even">
+<td>Filtrar por el opuesto</td>
+<td>!= (números) !== (caracter)</td>
+</tr>
+<tr class="odd">
+<td>buscar por ‘na’ sin datos</td>
+<td>is.na()</td>
+</tr>
+</tbody>
+</table>
+<p>Vamos a probar juntos!</p>
+</section>
+<section id="cambiar-datos-mutate" class="level3">
+<h3 class="anchored" data-anchor-id="cambiar-datos-mutate">cambiar datos [mutate()]</h3>
+<p>Con ‘mutate’ puede cambiar datos en una manera distinta.</p>
+<p>Puede hacer varios cambios con ‘mutate’ desde crear nuevos colúmnos/variables hasta cambiar/sacar los que ya existen.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ejemplo, usando el 'pipe' para pasar datos (en vez de llamarla) y mutate para añadir variable con matemáticas</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris <span class="sc">|&gt;</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Vol =</span> Sepal.Length<span class="sc">*</span>Sepal.Width))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species LargoSepalo volumen
+1          5.1         3.5          1.4         0.2  setosa         5.1   17.85
+2          4.9         3.0          1.4         0.2  setosa         4.9   14.70
+3          4.7         3.2          1.3         0.2  setosa         4.7   15.04
+4          4.6         3.1          1.5         0.2  setosa         4.6   14.26
+5          5.0         3.6          1.4         0.2  setosa         5.0   18.00
+6          5.4         3.9          1.7         0.4  setosa         5.4   21.06
+    sqrtls   Vol
+1 2.258318 17.85
+2 2.213594 14.70
+3 2.167948 15.04
+4 2.144761 14.26
+5 2.236068 18.00
+6 2.323790 21.06</code></pre>
+</div>
+</div>
+<p>Podemos sacar variables también.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># para sacar un variable, usar el pipe con iris y llamar el colúmno para sacar igual 'NULL'</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris <span class="sc">|&gt;</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Vol=</span> <span class="cn">NULL</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species LargoSepalo volumen
+1          5.1         3.5          1.4         0.2  setosa         5.1   17.85
+2          4.9         3.0          1.4         0.2  setosa         4.9   14.70
+3          4.7         3.2          1.3         0.2  setosa         4.7   15.04
+4          4.6         3.1          1.5         0.2  setosa         4.6   14.26
+5          5.0         3.6          1.4         0.2  setosa         5.0   18.00
+6          5.4         3.9          1.7         0.4  setosa         5.4   21.06
+    sqrtls
+1 2.258318
+2 2.213594
+3 2.167948
+4 2.144761
+5 2.236068
+6 2.323790</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="ejercicios" class="level1">
+<h1>Ejercicios</h1>
+<ol type="1">
+<li>Con los datos ‘iris’ cambiar todos los nombres de colúmnos a español (length = largo, width = ancho)</li>
+<li>añadir un colúmno hecho del algún combinación del largo y ancho de sepalo o pétalo</li>
+<li>Filtrar los especies para solo ver ‘setosa’</li>
+<li>Practicar con el ‘pipe’</li>
+</ol>
+<section id="recursos" class="level2">
+<h2 class="anchored" data-anchor-id="recursos">recursos</h2>
+<p><a href="https://dplyr.tidyverse.org/reference/select.html">Filtrar, elegir, cambiar nombre, etc.. inglés</a></p>
+<p><a href="https://rpubs.com/hllinas/R_Filtrar_DataFrames">Filtrar (español)</a></p>
+<p><a href="https://rsanchezs.gitbooks.io/rprogramming/content/chapter9/filter.html">más de filtrar (español)</a></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./C2-RMarkdown.html" class="pagination-link" aria-label="C2-RMarkdown">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">C2-RMarkdown</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./C4-GGplot1.html" class="pagination-link" aria-label="C4-GGPlot1">
+        <span class="nav-page-text">C4-GGPlot1</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

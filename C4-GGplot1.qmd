@@ -1,0 +1,212 @@
+---
+title: "C4-GGPlot1"
+---
+
+# Visualizaciónes
+
+Para explorar y comunicar sus datos, necesita visualizaciónes adecuadas. Hay ambos tipos de gráficos, y desafortunadamente, muchas que no se enseña mucho.
+
+![](images/spaghetti.webp){fig-alt="Imagen con más de diez líneas coloridas del falta de trabajos desde el segunda guerra mundial hasta 2007." fig-align="center"}
+
+![](images/agencia_mi_voz_2020_estudio_credito_covid_01_a-01.png){fig-alt="Dos gráficos: un gráfico de colúmnos y un círculo. Es díficil decir que estan enseñando." fig-align="center" width="900"}
+
+![](images/whatevenisthis-01.png){fig-alt="Líneas sin sentido en varías colores." fig-align="center" width="900"}
+
+![](images/IrisBAD.png){fig-alt="Gráfico de colúmnos con 3 categoriás (setosa, versicolor y virginica), sin título" fig-align="center" width="900"} \# Partes de un gráfico
+
+Un gráfico debería tener un título descriptivo, títulos cortos para los ejes y ejes con numeración adecuado. Si ocupa colores para demonstar grupos o asociaciones, ten cuidado. Colores como rojo y verde pueden significar para e ir, o mal y bueno. Azul puede ser agua, el mar, el cielo. Verde, la tierra, el bosque, etc.. Ten cuidado con sus colores elegidos.
+
+# tipos de gráficos comúnes
+
+## Gráfico de colúmnos (bar graph)
+
+Lo más básico es un gráfico de colúmnos. Usualmente no es adecuada porque solo se enseña una cosita. No dice nada del gama de sus datos, ni tampoco un estatistica especifica.
+
+```{r, echo=FALSE}
+library(tidyverse)
+library(datos)
+
+iris %>%
+  group_by(Species) %>%
+  summarize(prom_seplar = mean(Sepal.Length)) %>%
+  ggplot(aes(x=Species, y=prom_seplar, fill=Species))+
+  geom_col()+
+  labs(x= "Especie", y="Promedio de largo sepalo")+
+  ggtitle("Promedio de Largo Sepalo por Especie de Iris")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+Acá hay un gráfico de colúmnos con las tres especies. Puede ver que las especies tienen promedios de largo sepalo distintos, pero no más. No hay información del promedio, ni distribución normal, tampoco el promedio/desviación estander.
+
+## dotplot
+
+Un dotplot contiene 2 variables: el variable respuesta en el axis x y explicativa en el axis y. Un dotplot tiene más información de los gráficos de colúmnos.
+
+```{r, warning=FALSE, echo=FALSE}
+pinguinos %>%
+  ggplot(aes(x=masa_corporal_g, y= largo_pico_mm, color=especie))+
+  geom_point()+
+  labs(x="Masa corporal (g)", y="Largo Pico (mm)")+
+  ggtitle("Influencia de masa corporal en largo pico de pinguinos")+
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+Acá hay más información y pueden ver distinciones entre las tres especies. Las tres colores (de las especies) estan más o menos seperadas y indicando que es probable que hay diferencias distintas entre largo pico y masa corporal de las tres especies. Tambien, aparece que hay una relación entre masa corporal alta y largo pico alto.
+
+## dotplot con línea
+
+```{r, warning=FALSE, echo=FALSE}
+pinguinos %>%
+  ggplot(aes(x=masa_corporal_g, y= largo_pico_mm, color=especie))+
+  geom_point()+
+  labs(x="Masa corporal (g)", y="Largo Pico (mm)")+
+  ggtitle("Influencia de masa corporal en largo pico de pinguinos")+
+  theme(plot.title = element_text(hjust = 0.5))+
+  geom_smooth()
+```
+
+Hay dos opciones por una línea, acá tenemos una línea de regressión por cada especie.
+
+```{r, warning=FALSE, echo=FALSE}
+pinguinos %>%
+  ggplot(aes(x=masa_corporal_g, y= largo_pico_mm))+
+  geom_point()+
+  labs(x="Masa corporal (g)", y="Largo Pico (mm)")+
+  ggtitle("Influencia de masa corporal en largo pico de pinguinos")+
+  theme(plot.title = element_text(hjust = 0.5))+
+  geom_smooth()
+```
+
+Acá tenemos solo una línea que sugiere que hay una relación entre masa corporal y largo pico.
+
+## Histogram
+
+El histogram es quizas lo más útil para probar la normalidad de sus datos. Aparece como un gráfico de colúmnos, pero no lo es. Cada número observado en el x-axis (o sea 0=0 abejas colectados, 2=2 abejas colectados) y el y axis es el número de tiempos que cada número observado.
+
+```{r, echo=FALSE}
+pinguinos <- datos::pinguinos
+
+hist(pinguinos$largo_pico_mm)
+
+```
+
+## Boxplot
+
+Un boxplot es uno de los gráficos más descriptivos de todos. Los boxplots se muestra todo de su curvo normal, la caja esta todo entre 1 deviación estander, la línea oscura es el promedio de sus datos. Las líneas afeura de la caja son 2-3 deviación estander. Puntos usualmente son outliers.
+
+```{r, echo=FALSE}
+library(tidyverse)
+data(iris)
+
+iris |> 
+  ggplot(aes(x=Sepal.Length, color=Species))+
+  geom_boxplot()+
+  ggtitle("Largo sepalo de tres especies de iris")+
+  labs(x="Largo Sepalo")+
+  theme(axis.text.y=element_blank(), axis.ticks.y=element_blank(), plot.title = element_text(hjust = 0.5)) 
+```
+
+## Boxplot con dotplot
+
+Para mostrar más información, puede añadir los puntos exactos de sus datos.
+
+```{r, echo=FALSE}
+iris |> 
+  ggplot(aes(x=Sepal.Length, y= Species, color=Species))+
+  geom_boxplot()+
+  ggtitle("Largo sepalo de tres especies de iris")+
+  labs(x="Largo Sepalo")+
+  theme(axis.text.y=element_blank(), axis.ticks.y=element_blank(), plot.title = element_text(hjust = 0.5)) +
+  geom_jitter()
+```
+
+# ggplot2
+
+'Ggplot2' está incluído con el paquete 'tidyverse'. Tiene su propia gramática, pero es parecida a lo de R.
+
+```{r, warning=FALSE}
+data(iris) # cargando datos de iris
+library(tidyverse)
+
+
+pinguinos %>%  # nombre de sus datos/dataframe y el pipe %>% o |>
+  ggplot(aes(x=largo_pico_mm, y= alto_pico_mm))+ # empece un gráfico con 'ggplot' y aesteticas (aes())
+  geom_point() # geom_*forma de gráfico* decía a ggplot que quiere
+  
+
+```
+
+Eso es la forma más básico del ggplot! Pero falta títulos descriptivos todavía.
+
+```{r, warning=FALSE}
+pinguinos %>%  # nombre de sus datos/dataframe y el pipe %>% o |>
+  ggplot(aes(x=largo_pico_mm, y= alto_pico_mm))+ # empece un gráfico con 'ggplot' y aesteticas (aes())
+  geom_point()+ # geom_*forma de gráfico* decía a ggplot que quiere
+  labs(x="Largo pico (mm)", y="Alto pico (mm)")+ # titulos de los ejes
+  ggtitle("Distribución del tamaño de pico (mm) de pinguinos") # titulos
+```
+
+Podemos añadir colores también, para distinguir grupos (especies acá) o para aesteticas.
+
+```{r, warning=FALSE}
+pinguinos %>%  # nombre de sus datos/dataframe y el pipe %>% o |>
+  ggplot(aes(x=largo_pico_mm, y= alto_pico_mm, color=especie))+ # gráficos pueden ser color o fill
+  geom_point()+ # geom_*forma de gráfico* decía a ggplot que quiere
+  labs(x="Largo pico (mm)", y="Alto pico (mm)")+ # titulos de los ejes
+  ggtitle("Distribución del tamaño de pico (mm) de pinguinos") # titulos
+
+```
+
+Puede filtrar datos para un gráfico también.
+
+```{r}
+pinguinos |>  # nombre de sus datos/dataframe y el pipe %>% o |>
+  filter(especie=="Adelia") |>
+  ggplot(aes(x=largo_pico_mm, y= alto_pico_mm, color=especie))+ # empece un gráfico con 'ggplot' y aesteticas (aes())
+  geom_point()+ # geom_*forma de gráfico* decía a ggplot que quiere
+  labs(x="Largo pico (mm)", y="Alto pico (mm)")+ # titulos de los ejes
+  ggtitle("Distribución del tamaño de pico (mm) de pinguinos") # titulos
+```
+
++---------------------+--------------------------+
+| Tipo de gráfico     | Códigos                  |
++=====================+==========================+
+| Gráfico de colúmnos | ggplot(aes(x=, y=)+      |
+|                     |                          |
+|                     | geom_col, geom_bar       |
++---------------------+--------------------------+
+| Dotplot             | ggplot(aes(x=, y=)+      |
+|                     |                          |
+|                     | geom_dotplot, geom_point |
++---------------------+--------------------------+
+| Histogram           | hist()                   |
++---------------------+--------------------------+
+| Boxplot             | ggplot(aes(x=, y=)+      |
+|                     |                          |
+|                     | geom_boxplot()           |
++---------------------+--------------------------+
+| Puntas exactas      | ggplot(aes(x=, y=)+      |
+|                     |                          |
+|                     | geom\_ +                 |
+|                     |                          |
+|                     | geom_jitter()            |
++---------------------+--------------------------+
+
+# A practicar
+
+1.  Cargar los datos de 'pinguinos' del paquete datos
+2.  Cargar tidyverse
+3.  Hacer algunos gráficos de varios tipos
+4.  Intentar a cambiar los colores
+5.  Filtrar algo por un gráfico
+
+# Recursos
+
+[GGPlot Introdución](https://www.icesi.edu.co/editorial/empezando-visualizar-web/evol.html#gr%C3%A1fico-de-l%C3%ADneas)
+
+[Ejemplos de GGPlot funciones](https://rpubs.com/daniballari/ggplot)
+
+[Corto utilización del ggplot/R](http://www.castrolab.org/teaching/data_analysis/visualizacion-de-datos-usando-ggplot2.html)
+
+[Buena explicación de GGPlot](https://rpubs.com/paraneda/ggplot)

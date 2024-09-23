@@ -1,0 +1,22 @@
+---
+title: "Horario"
+---
+
+| Fecha    | Tema                            | Tareas sugeridas                                               | Entregar            |
+|----------|---------------------------------|----------------------------------------------------------------|---------------------|
+| 13/8/24  | Introducción a ciencia de datos | Organizar y guardar sus datos como csv, crear su proyecto en R |                     |
+| 20/8/24  | Introducción a R/R Studio       | Crear su R Markdown y cargar datos/paquetes                    |                     |
+| 27/8/24  | Introducción a tidyverse        | Practicar ‘pivot’ con sus datos                                |                     |
+| 3/9/24   | GGplot pt 1                     | Hacer gráficos como queráis                                    |                     |
+| 10/9/24  | GGplot pt 2                     | Finalizar su proyecto                                          |                     |
+| 17/9/24  | No hay clase                    |                                                                | Entregar proyecto 1 |
+| 24/9/24  | Normalización                   | Normalizar sus datos                                           |                     |
+| 1/10/24  | correlación                     | Analizar correlación con gráficos y números                    |                     |
+| 8/10/24  | Introducción a modelos normales | Prueba los asumpciones de un modelo normal, elegir familia     |                     |
+| 15/10/24 | Modelos normales p2             | Hacer y elegir un modelo bueno                                 |                     |
+| 22/10/24 | Modelos non-paramétricos        | Finalizar su proyecto                                          |                     |
+| 29/10/24 | No hay clase                    |                                                                | Entregar proyecto 2 |
+| 5/11/24  | Fuerza/análisis del modelo      | Elegir y hacer un análisis de fuerza y ajuste del modelo       |                     |
+| 12/11/24 | Gráficos para comunicar         | Elegir y diseñar gráficos comunicativos                        |                     |
+| 19/11/24 | Tiempo para trabajar en clase   | Finalizar proyecto                                             |                     |
+| 26/11/24 | Entregar proyecto final         |                                                                | Entregar proyecto 3 |

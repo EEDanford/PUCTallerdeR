@@ -1,0 +1,31 @@
+---
+title: "Proyecto1"
+---
+
+Usando sus propios datos (si no tenga, avísame), hacer un R Markdown con una exploración completa de sus datos según lo que hemos hecho en clase.
+
+Debería entregar un R Markdown en formato PDF
+
+Incluye:
+
+-   Cargar y llamar sus datos (del csv o paquete data/datos)
+
+-   Incluir encabezados descriptivos (bien organizadas) y texto normal (puede presentar su proyecto, sus datos o su mismo)
+
+-   Datos en forma ‘tidy’, mínimo un pivot
+
+-   Un gráfico de ggplot (elegir lo mejor forma y defender con una oración)
+
+    -   Los gráficos deben tener títulos de los dos axis, y un título descriptivo
+
+    -   debe tener colores únicos para distinguir grupos en sus gráficos
+
+    -   mínimo un facet
+
+-   Sumir todo con un párrafo (puede ser corto) que explica los resultados de su exploración
+
+|                | 20%                                         | 40%                                   | 60%                                                                      | 80%                               | 100%                                                                   |
+|----------------|---------------------------------------------|---------------------------------------|--------------------------------------------------------------------------|-----------------------------------|------------------------------------------------------------------------|
+| Markdown       | Sin organización, sin texto normal, sin pdf | Mal exportado, sin parrafos o títulos | Minimo de esfuerzo, sin un parrafo, foto, o título                       | Bien hecho, pero sin un elemento  | Con parrafos, fotos, títulos, exportada como pdf                       |
+| Pivot          | Sin pivot                                   |                                       | Pivot exitoso, pero mal organizado (nombres mal, o con NA)               |                                   | Pivot llamado bien, y usado por su ggplot                              |
+| gráfico ggplot | Sin gráfico                                 | Un gráfico inadecuado por los datos   | Un gráfico adecuado sin dos elementos (sin títulos, colores, facet, etc) | Un gráfico sin un elemento o otro | Un gráfico bien elegido, con títulos descriptivas, un facet, y colores |
