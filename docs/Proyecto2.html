@@ -237,7 +237,14 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#hacer-modelos-con-sus-datos" id="toc-hacer-modelos-con-sus-datos" class="nav-link active" data-scroll-target="#hacer-modelos-con-sus-datos">Hacer modelos con sus datos</a></li>
+  <li><a href="#rúbrica" id="toc-rúbrica" class="nav-link" data-scroll-target="#rúbrica">Rúbrica</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -261,8 +268,92 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="hacer-modelos-con-sus-datos" class="level1">
+<h1>Hacer modelos con sus datos</h1>
+<p>La idea de proyecto 2 es hacer un modelo adecuado con sus datos. Es integral tener datos en las formas correctas (integral, número, factor, etc..). Además, debería probar los suposiciónes del típo de modelo elegido (si elegas un típo non-paramétrico, debería probar por normalidad y covarianza todavía).</p>
+<p>Debería entregar un pdf de R Markdown (con cajas de códigos incluídos) con:</p>
+<ul>
+<li><p>Un corrgram o PCA con las variables explicativas y una oración explicando lo que significa el corrgram/PCA</p></li>
+<li><p>Un anova o kruskal-wallis (paramétrico o non-paramétrico) con prueba de normalidad y una oración explicando sus resultados</p></li>
+<li><p>Un par de modelos (paramétrico o non-paramétrico) con pruebas de los suposiciónes (explica los resultados de estas pruebas)</p></li>
+<li><p>Un modelo final elegido de los opciones con un metodo adecuado y un párrafo explicando como lo elegiste lo mejor y interpretando los resultados</p></li>
+</ul>
+</section>
+<section id="rúbrica" class="level1">
+<h1>Rúbrica</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>100 puntos total</th>
+<th>0-20%</th>
+<th>20-40%</th>
+<th>40-60%</th>
+<th>60-80%</th>
+<th>80-100%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Corrgram o PCA (10 pts)</td>
+<td>Falta corrgram/pca</td>
+<td>Falta interpretación</td>
+<td>Sin todo los variables de interes (por el modelo)</td>
+<td>Con todo los variables pero mal interpretado</td>
+<td>Incluye todo los variables de interes, con interpretación adecuado, bien organizado</td>
+</tr>
+<tr class="even">
+<td>Anova o kruskal-wallis (20 pts)</td>
+<td>Falta anova/kruskal wallis</td>
+<td>No prueba los suposiciónes</td>
+<td>Elección del prueba incorrecto desde sus pruebas</td>
+<td>Los suposiciónes y prueba correcto pero mal interpretado</td>
+<td>Todo corecto, o con errores chicos</td>
+</tr>
+<tr class="odd">
+<td>Pruebas de los suposiciónes (20 pts)</td>
+<td>Falta pruebcas de los suposiciónes</td>
+<td>Solo hay prueba de un suposición</td>
+<td>Hay la mayoría de los suposiciónes con errores en interpretación</td>
+<td>Todos los suposiciónes incluídos y explicados con pocas errores</td>
+<td>Buen interpretación de los suposiciónes</td>
+</tr>
+<tr class="even">
+<td>Grupos de modelos (20 pts)</td>
+<td>Falta un par de modelos (o sea solo hay uno)</td>
+<td>Con modelos, pero sin interpretación o con mala familia o solo un modelo (en vez de un grupo)</td>
+<td>Modelos con familia mal elegido o típo incorrecto</td>
+<td>Modelos buen diseñados, con buena familia, pero mal interpretado</td>
+<td>Todo corecto, o con errores chicos</td>
+</tr>
+<tr class="odd">
+<td>Elección del modelo final (20 pts)</td>
+<td>Sin modelo final</td>
+<td>Modelo final elegido pero no interpretado o mal elegido</td>
+<td>Modelo final elegido bien, pero sin interpretacióm</td>
+<td>Modelo final bien elegido, y con pocas errores en interpretación</td>
+<td>Modelo bien diseñado, elegido y interpretado: es claro como elegiste su modelo</td>
+</tr>
+<tr class="even">
+<td>Organización del R Markdown (10 pts)</td>
+<td>Sin organización, sin texto normal, sin pdf</td>
+<td>Mal exportado, sin parrafos o títulos</td>
+<td>Minimo de esfuerzo, sin un parrafo, foto, o título</td>
+<td>Bien hecho, pero sin un elemento</td>
+<td>Con parrafos, fotos, títulos, exportada como pdf</td>
+</tr>
+</tbody>
+</table>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
