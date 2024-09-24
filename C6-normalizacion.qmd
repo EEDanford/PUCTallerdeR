@@ -6,7 +6,7 @@ title: "C6-normalizacion"
 
 Había varías cosas, depende en sus datos, que puede o, a veces debe, hacer antes de modelar sus datos. Incluyen: asegurar los típos de datos en R, normalizar, y tomar un idea del limites y formas de sus datos.
 
-Porque? Para asegurar que cumplen con los assumpciones de sus modelos y que cuando hacen modelos que ellos son lo más correcto posible.
+Porque? Para asegurar que cumplen con los suposiciónes de sus modelos y que cuando hacen modelos que ellos son lo más correcto posible.
 
 ## Típos de datos (data types)
 
@@ -17,7 +17,7 @@ Debe tener caución con sus datos, porque si haya un colúmno de números, pero 
 Había muchas típos, pero lo más comunes son:
 
 | Típo             | Descripción                                                                                                                                                                     |
-|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|-------------|-----------------------------------------------------------|
 | Factor           | Puede ser número, entero o texto, pero la idea es que no representa su valor exacto, sino que niveles o distinciones entre sitios. ej: sus sitios, tiempo de observación, etc.. |
 | Número (numeric) | Un número (no entero) que quiere usar como número ej: porcentaje de floración, concentración de carbon, etc..                                                                   |
 | Entero (integer) | Un número entero que quiere usar como número ej: abundancia de abejas, riqueza de especies                                                                                      |

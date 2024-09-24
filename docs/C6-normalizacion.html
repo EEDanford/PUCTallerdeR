@@ -314,7 +314,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="manejando-datos-para-modelar" class="level1">
 <h1>Manejando datos para modelar</h1>
 <p>Había varías cosas, depende en sus datos, que puede o, a veces debe, hacer antes de modelar sus datos. Incluyen: asegurar los típos de datos en R, normalizar, y tomar un idea del limites y formas de sus datos.</p>
-<p>Porque? Para asegurar que cumplen con los assumpciones de sus modelos y que cuando hacen modelos que ellos son lo más correcto posible.</p>
+<p>Porque? Para asegurar que cumplen con los suposiciónes de sus modelos y que cuando hacen modelos que ellos son lo más correcto posible.</p>
 <section id="típos-de-datos-data-types" class="level2">
 <h2 class="anchored" data-anchor-id="típos-de-datos-data-types">Típos de datos (data types)</h2>
 <p>Data types o típos de datos, son la categoría asignada a sus datos. Puede determinarla en excel, pero igual es posible en R.</p>
@@ -322,8 +322,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Había muchas típos, pero lo más comunes son:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 9%">
-<col style="width: 90%">
+<col style="width: 18%">
+<col style="width: 81%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -424,14 +424,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>Best Normalizing transformation with 342 Observations
  Estimated Normality Statistics (Pearson P / df, lower =&gt; more normal):
- - arcsinh(x): 1.4366
- - Box-Cox: 1.4269
- - Center+scale: 1.7786
- - Double Reversed Log_b(x+a): 3.2138
- - Log_b(x+a): 1.4366
- - orderNorm (ORQ): 1.2722
- - sqrt(x + a): 1.5499
- - Yeo-Johnson: 1.4269
+ - arcsinh(x): 1.257
+ - Box-Cox: 1.2148
+ - Center+scale: 1.6587
+ - Double Reversed Log_b(x+a): 2.9848
+ - Log_b(x+a): 1.257
+ - orderNorm (ORQ): 1.1948
+ - sqrt(x + a): 1.3907
+ - Yeo-Johnson: 1.2148
 Estimation method: Out-of-sample via CV with 10 folds and 5 repeats
  
 Based off these, bestNormalize chose:
