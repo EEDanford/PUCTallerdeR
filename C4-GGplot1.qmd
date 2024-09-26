@@ -18,9 +18,9 @@ Un gráfico debería tener un título descriptivo, títulos cortos para los ejes
 
 # tipos de gráficos comúnes
 
-## Gráfico de colúmnos (bar graph)
+## Gráfico de columnas (bar graph)
 
-Lo más básico es un gráfico de colúmnos. Usualmente no es adecuada porque solo se enseña una cosita. No dice nada del gama de sus datos, ni tampoco un estatistica especifica.
+Lo mas básico es un gráfico de columnas. Usualmente no es adecuada porque solo se enseña una cosita. No dice nada del gama de sus datos, ni tampoco un estatistica especifica.
 
 ```{r, echo=FALSE}
 library(tidyverse)
@@ -37,11 +37,11 @@ iris %>%
 
 ```
 
-Acá hay un gráfico de colúmnos con las tres especies. Puede ver que las especies tienen promedios de largo sepalo distintos, pero no más. No hay información del promedio, ni distribución normal, tampoco el promedio/desviación estander.
+Acá hay un gráfico de columnas con las tres especies. Puede ver que las especies tienen promedios de largo sepalo distintos, pero no mas. No hay información del promedio, ni distribución normal, tampoco el promedio/desviación estander.
 
 ## dotplot
 
-Un dotplot contiene 2 variables: el variable respuesta en el axis x y explicativa en el axis y. Un dotplot tiene más información de los gráficos de colúmnos.
+Un dotplot contiene 2 variables: el variable respuesta en el axis x y explicativa en el axis y. Un dotplot tiene mas información de los gráficos de columnas.
 
 ```{r, warning=FALSE, echo=FALSE}
 pinguinos %>%
@@ -52,7 +52,7 @@ pinguinos %>%
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
-Acá hay más información y pueden ver distinciones entre las tres especies. Las tres colores (de las especies) estan más o menos seperadas y indicando que es probable que hay diferencias distintas entre largo pico y masa corporal de las tres especies. Tambien, aparece que hay una relación entre masa corporal alta y largo pico alto.
+Acá hay mas información y pueden ver distinciones entre las tres especies. Las tres colores (de las especies) estan mas o menos seperadas y indicando que es probable que hay diferencias distintas entre largo pico y masa corporal de las tres especies. Tambien, aparece que hay una relación entre masa corporal alta y largo pico alto.
 
 ## dotplot con línea
 
@@ -82,7 +82,7 @@ Acá tenemos solo una línea que sugiere que hay una relación entre masa corpor
 
 ## Histogram
 
-El histogram es quizas lo más útil para probar la normalidad de sus datos. Aparece como un gráfico de colúmnos, pero no lo es. Cada número observado en el x-axis (o sea 0=0 abejas colectados, 2=2 abejas colectados) y el y axis es el número de tiempos que cada número observado.
+El histogram es quizas lo mas útil para probar la normalidad de sus datos. Aparece como un gráfico de columnas, pero no lo es. Cada número observado en el x-axis (o sea 0=0 abejas colectados, 2=2 abejas colectados) y el y axis es el número de tiempos que cada número observado.
 
 ```{r, echo=FALSE}
 pinguinos <- datos::pinguinos
@@ -93,7 +93,7 @@ hist(pinguinos$largo_pico_mm)
 
 ## Boxplot
 
-Un boxplot es uno de los gráficos más descriptivos de todos. Los boxplots se muestra todo de su curvo normal, la caja esta todo entre 1 deviación estander, la línea oscura es el promedio de sus datos. Las líneas afeura de la caja son 2-3 deviación estander. Puntos usualmente son outliers.
+Un boxplot es uno de los gráficos mas descriptivos de todos. Los boxplots se muestra todo de su curvo normal, la caja esta todo entre 1 deviación estander, la línea oscura es el promedio de sus datos. Las líneas afeura de la caja son 2-3 deviación estander. Puntos usualmente son outliers.
 
 ```{r, echo=FALSE}
 library(tidyverse)
@@ -109,7 +109,7 @@ iris |>
 
 ## Boxplot con dotplot
 
-Para mostrar más información, puede añadir los puntos exactos de sus datos.
+Para mostrar mas información, puede añadir los puntos exactos de sus datos.
 
 ```{r, echo=FALSE}
 iris |> 
@@ -137,7 +137,7 @@ pinguinos %>%  # nombre de sus datos/dataframe y el pipe %>% o |>
 
 ```
 
-Eso es la forma más básico del ggplot! Pero falta títulos descriptivos todavía.
+Eso es la forma mas básico del ggplot! Pero falta títulos descriptivos todavía.
 
 ```{r, warning=FALSE}
 pinguinos %>%  # nombre de sus datos/dataframe y el pipe %>% o |>
@@ -172,7 +172,7 @@ pinguinos |>  # nombre de sus datos/dataframe y el pipe %>% o |>
 +---------------------+--------------------------+
 | Tipo de gráfico     | Códigos                  |
 +=====================+==========================+
-| Gráfico de colúmnos | ggplot(aes(x=, y=)+      |
+| Gráfico de columnas | ggplot(aes(x=, y=)+      |
 |                     |                          |
 |                     | geom_col, geom_bar       |
 +---------------------+--------------------------+

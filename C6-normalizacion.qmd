@@ -6,25 +6,25 @@ title: "C6-normalizacion"
 
 Había varías cosas, depende en sus datos, que puede o, a veces debe, hacer antes de modelar sus datos. Incluyen: asegurar los típos de datos en R, normalizar, y tomar un idea del limites y formas de sus datos.
 
-Porque? Para asegurar que cumplen con los suposiciónes de sus modelos y que cuando hacen modelos que ellos son lo más correcto posible.
+Porque? Para asegurar que cumplen con los suposiciónes de sus modelos y que cuando hacen modelos que ellos son lo mas correcto posible.
 
 ## Típos de datos (data types)
 
 Data types o típos de datos, son la categoría asignada a sus datos. Puede determinarla en excel, pero igual es posible en R.
 
-Debe tener caución con sus datos, porque si haya un colúmno de números, pero es asignado como texto, no puede hacer procesos o funciones matemáticas con ellos. O sea, que sus scripts pueden fallar por causa de típos incorrectos de datos.
+Debe tener caución con sus datos, porque si haya una columna de números, pero es asignado como texto, no puede hacer procesos o funciones matemáticas con ellos. O sea, que sus scripts pueden fallar por causa de típos incorrectos de datos.
 
-Había muchas típos, pero lo más comunes son:
+Había muchas típos, pero lo mas comunes son:
 
 | Típo             | Descripción                                                                                                                                                                     |
-|-------------|-----------------------------------------------------------|
+|----------------|--------------------------------------------------------|
 | Factor           | Puede ser número, entero o texto, pero la idea es que no representa su valor exacto, sino que niveles o distinciones entre sitios. ej: sus sitios, tiempo de observación, etc.. |
 | Número (numeric) | Un número (no entero) que quiere usar como número ej: porcentaje de floración, concentración de carbon, etc..                                                                   |
 | Entero (integer) | Un número entero que quiere usar como número ej: abundancia de abejas, riqueza de especies                                                                                      |
-| Caracter (texto) | Pura texto, apto para apuntes o colúmnos que no va a usar en sus modelos.                                                                                                       |
+| Caracter (texto) | Pura texto, apto para apuntes o columnas que no va a usar en sus modelos.                                                                                                       |
 | Fecha (date)     | Una fecha (formato especial, pero igual puede usar como factor)                                                                                                                 |
 
-Despúes de identificar sus típos de datos deseados, puede cambiarlos en R y guardar en lo mismo dataframe (en lo mismo colúmno porque se cambia solo el típo de dato y ningún otro información.
+Despúes de identificar sus típos de datos deseados, puede cambiarlos en R y guardar en lo mismo dataframe (en la misma columna porque se cambia solo el típo de dato y ningún otro información.
 
 ```{r}
 library(datos)
@@ -32,7 +32,7 @@ clima <-datos::clima
 
 # factor
 clima$origen <- as.factor(clima$origen) 
-clima$anio <- as.factor (clima$anio) # año/mes/día/hora son factores porque números más grandes no realmente son más
+clima$anio <- as.factor (clima$anio) # año/mes/día/hora son factores porque números mas grandes no realmente son mas
 clima$mes <- as.factor(clima$mes) # ej: enero (1) no es menos de diciembre (12), y como número aparece así
 clima$dia <- as.factor(clima$dia) # entonces usamos como factor
 clima$hora <- as.factor(clima$hora)
@@ -86,7 +86,7 @@ El paquete 'bestNormalize' fue diseñado a elegir un transformación beneficial 
 library(bestNormalize)
 
 hist(pinguinos$masa_corporal_g) # aparece normal? si o no?
-bestNormalize(pinguinos$masa_corporal_g) # elegir el metodo con el numero más bajo (aca ordernorm)
+bestNormalize(pinguinos$masa_corporal_g) # elegir el metodo con el numero mas bajo (aca ordernorm)
 ON.MasaCorpg <- orderNorm(pinguinos$masa_corporal_g) #orderNorming y guardar como factor
 pinguinos$MasaCorpg_t <- ON.MasaCorpg$x.t # guardar todo con '_t', o sea, fue transformado
 
@@ -94,11 +94,11 @@ hist(pinguinos$MasaCorpg_t) # histogram para ver normalidad de variable
 shapiro.test(pinguinos$MasaCorpg_t) # Prueba de normalidad
 ```
 
-A veces todos los metodos en bestNormalize son superparecidos; por ser caso, puede elegir lo más bajo o lo mismo para todo sus variables. Es recomendable usar lo mismo metodo para todos tus variables.
+A veces todos los metodos en bestNormalize son superparecidos; por ser caso, puede elegir lo mas bajo o lo mismo para todo sus variables. Es recomendable usar lo mismo metodo para todos tus variables.
 
 ### log (transformar)
 
-A veces puede usar un log() para transformar sus datos. Solo cambiar sus números con el log de los números. Puede hacerse y guardar como nuevo colúmno o en parte de un modelo.
+A veces puede usar un log() para transformar sus datos. Solo cambiar sus números con el log de los números. Puede hacerse y guardar como nueva columna o en parte de un modelo.
 
 ```{r}
 hist(pinguinos$masa_corporal_g)

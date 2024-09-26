@@ -207,19 +207,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./C8-modelosnormales1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">C8-modelosnormales1</span></a>
+ <span class="menu-text">Anova &amp; Kruskal-Wallis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./C9-modelosnormales2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">C9-modelosnormales2</span></a>
+ <span class="menu-text">C9-modelosnormales2.html</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./C10-modelosnonparametricos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">C10-modelosnonparametricos</span></a>
+ <span class="menu-text">C10-modelosnonparametricos.html</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -278,7 +278,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#visualizaciónes" id="toc-visualizaciónes" class="nav-link active" data-scroll-target="#visualizaciónes">Visualizaciónes</a></li>
   <li><a href="#tipos-de-gráficos-comúnes" id="toc-tipos-de-gráficos-comúnes" class="nav-link" data-scroll-target="#tipos-de-gráficos-comúnes">tipos de gráficos comúnes</a>
   <ul class="collapse">
-  <li><a href="#gráfico-de-colúmnos-bar-graph" id="toc-gráfico-de-colúmnos-bar-graph" class="nav-link" data-scroll-target="#gráfico-de-colúmnos-bar-graph">Gráfico de colúmnos (bar graph)</a></li>
+  <li><a href="#gráfico-de-columnas-bar-graph" id="toc-gráfico-de-columnas-bar-graph" class="nav-link" data-scroll-target="#gráfico-de-columnas-bar-graph">Gráfico de columnas (bar graph)</a></li>
   <li><a href="#dotplot" id="toc-dotplot" class="nav-link" data-scroll-target="#dotplot">dotplot</a></li>
   <li><a href="#dotplot-con-línea" id="toc-dotplot-con-línea" class="nav-link" data-scroll-target="#dotplot-con-línea">dotplot con línea</a></li>
   <li><a href="#histogram" id="toc-histogram" class="nav-link" data-scroll-target="#histogram">Histogram</a></li>
@@ -336,9 +336,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="tipos-de-gráficos-comúnes" class="level1">
 <h1>tipos de gráficos comúnes</h1>
-<section id="gráfico-de-colúmnos-bar-graph" class="level2">
-<h2 class="anchored" data-anchor-id="gráfico-de-colúmnos-bar-graph">Gráfico de colúmnos (bar graph)</h2>
-<p>Lo más básico es un gráfico de colúmnos. Usualmente no es adecuada porque solo se enseña una cosita. No dice nada del gama de sus datos, ni tampoco un estatistica especifica.</p>
+<section id="gráfico-de-columnas-bar-graph" class="level2">
+<h2 class="anchored" data-anchor-id="gráfico-de-columnas-bar-graph">Gráfico de columnas (bar graph)</h2>
+<p>Lo mas básico es un gráfico de columnas. Usualmente no es adecuada porque solo se enseña una cosita. No dice nada del gama de sus datos, ni tampoco un estatistica especifica.</p>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
@@ -360,11 +360,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Acá hay un gráfico de colúmnos con las tres especies. Puede ver que las especies tienen promedios de largo sepalo distintos, pero no más. No hay información del promedio, ni distribución normal, tampoco el promedio/desviación estander.</p>
+<p>Acá hay un gráfico de columnas con las tres especies. Puede ver que las especies tienen promedios de largo sepalo distintos, pero no mas. No hay información del promedio, ni distribución normal, tampoco el promedio/desviación estander.</p>
 </section>
 <section id="dotplot" class="level2">
 <h2 class="anchored" data-anchor-id="dotplot">dotplot</h2>
-<p>Un dotplot contiene 2 variables: el variable respuesta en el axis x y explicativa en el axis y. Un dotplot tiene más información de los gráficos de colúmnos.</p>
+<p>Un dotplot contiene 2 variables: el variable respuesta en el axis x y explicativa en el axis y. Un dotplot tiene mas información de los gráficos de columnas.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -374,7 +374,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Acá hay más información y pueden ver distinciones entre las tres especies. Las tres colores (de las especies) estan más o menos seperadas y indicando que es probable que hay diferencias distintas entre largo pico y masa corporal de las tres especies. Tambien, aparece que hay una relación entre masa corporal alta y largo pico alto.</p>
+<p>Acá hay mas información y pueden ver distinciones entre las tres especies. Las tres colores (de las especies) estan mas o menos seperadas y indicando que es probable que hay diferencias distintas entre largo pico y masa corporal de las tres especies. Tambien, aparece que hay una relación entre masa corporal alta y largo pico alto.</p>
 </section>
 <section id="dotplot-con-línea" class="level2">
 <h2 class="anchored" data-anchor-id="dotplot-con-línea">dotplot con línea</h2>
@@ -407,7 +407,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="histogram" class="level2">
 <h2 class="anchored" data-anchor-id="histogram">Histogram</h2>
-<p>El histogram es quizas lo más útil para probar la normalidad de sus datos. Aparece como un gráfico de colúmnos, pero no lo es. Cada número observado en el x-axis (o sea 0=0 abejas colectados, 2=2 abejas colectados) y el y axis es el número de tiempos que cada número observado.</p>
+<p>El histogram es quizas lo mas útil para probar la normalidad de sus datos. Aparece como un gráfico de columnas, pero no lo es. Cada número observado en el x-axis (o sea 0=0 abejas colectados, 2=2 abejas colectados) y el y axis es el número de tiempos que cada número observado.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -420,7 +420,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="boxplot" class="level2">
 <h2 class="anchored" data-anchor-id="boxplot">Boxplot</h2>
-<p>Un boxplot es uno de los gráficos más descriptivos de todos. Los boxplots se muestra todo de su curvo normal, la caja esta todo entre 1 deviación estander, la línea oscura es el promedio de sus datos. Las líneas afeura de la caja son 2-3 deviación estander. Puntos usualmente son outliers.</p>
+<p>Un boxplot es uno de los gráficos mas descriptivos de todos. Los boxplots se muestra todo de su curvo normal, la caja esta todo entre 1 deviación estander, la línea oscura es el promedio de sus datos. Las líneas afeura de la caja son 2-3 deviación estander. Puntos usualmente son outliers.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -433,7 +433,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="boxplot-con-dotplot" class="level2">
 <h2 class="anchored" data-anchor-id="boxplot-con-dotplot">Boxplot con dotplot</h2>
-<p>Para mostrar más información, puede añadir los puntos exactos de sus datos.</p>
+<p>Para mostrar mas información, puede añadir los puntos exactos de sus datos.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -464,7 +464,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Eso es la forma más básico del ggplot! Pero falta títulos descriptivos todavía.</p>
+<p>Eso es la forma mas básico del ggplot! Pero falta títulos descriptivos todavía.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pinguinos <span class="sc">%&gt;%</span>  <span class="co"># nombre de sus datos/dataframe y el pipe %&gt;% o |&gt;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>largo_pico_mm, <span class="at">y=</span> alto_pico_mm))<span class="sc">+</span> <span class="co"># empece un gráfico con 'ggplot' y aesteticas (aes())</span></span>
@@ -527,7 +527,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td>Gráfico de colúmnos</td>
+<td>Gráfico de columnas</td>
 <td><p>ggplot(aes(x=, y=)+</p>
 <p>geom_col, geom_bar</p></td>
 </tr>

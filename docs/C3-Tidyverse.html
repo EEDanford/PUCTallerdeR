@@ -207,19 +207,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./C8-modelosnormales1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">C8-modelosnormales1</span></a>
+ <span class="menu-text">Anova &amp; Kruskal-Wallis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./C9-modelosnormales2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">C9-modelosnormales2</span></a>
+ <span class="menu-text">C9-modelosnormales2.html</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./C10-modelosnonparametricos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">C10-modelosnonparametricos</span></a>
+ <span class="menu-text">C10-modelosnonparametricos.html</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -279,8 +279,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#paquetes" id="toc-paquetes" class="nav-link" data-scroll-target="#paquetes">paquetes</a></li>
   <li><a href="#gramática-de-la-programación" id="toc-gramática-de-la-programación" class="nav-link" data-scroll-target="#gramática-de-la-programación">Gramática de la programación</a></li>
-  <li><a href="#hacer-colúmnos-con-nueva-información-datosnuevocolumno---datoscolumno" id="toc-hacer-colúmnos-con-nueva-información-datosnuevocolumno---datoscolumno" class="nav-link" data-scroll-target="#hacer-colúmnos-con-nueva-información-datosnuevocolumno---datoscolumno">Hacer colúmnos con nueva información (datos$nuevocolumno &lt;- datos$columno)</a></li>
-  <li><a href="#elegir-colúmnos-o-filas" id="toc-elegir-colúmnos-o-filas" class="nav-link" data-scroll-target="#elegir-colúmnos-o-filas">elegir colúmnos o filas []</a></li>
+  <li><a href="#hacer-columnas-con-nueva-información-datosnuevocolumna---datoscolumna" id="toc-hacer-columnas-con-nueva-información-datosnuevocolumna---datoscolumna" class="nav-link" data-scroll-target="#hacer-columnas-con-nueva-información-datosnuevocolumna---datoscolumna">Hacer columnas con nueva información (datos$nuevocolumna &lt;- datos$columna)</a></li>
+  <li><a href="#elegir-columnas-o-filas" id="toc-elegir-columnas-o-filas" class="nav-link" data-scroll-target="#elegir-columnas-o-filas">elegir columnas o filas []</a></li>
   <li><a href="#cambiar-nombres-rename" id="toc-cambiar-nombres-rename" class="nav-link" data-scroll-target="#cambiar-nombres-rename">cambiar nombres “[rename()]”</a></li>
   <li><a href="#filtrar-filter" id="toc-filtrar-filter" class="nav-link" data-scroll-target="#filtrar-filter">filtrar “[filter()]”</a></li>
   <li><a href="#cambiar-datos-mutate" id="toc-cambiar-datos-mutate" class="nav-link" data-scroll-target="#cambiar-datos-mutate">cambiar datos [mutate()]</a></li>
@@ -316,7 +316,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="data-wrangling" class="level1">
 <h1>Data Wrangling</h1>
-<p>Usualmente, nuestros datos son desorganizados o díficil a usar en R, especialmente a respeto a los visualizaciónes. Y, a veces es útil filtrarla, cambiar nombres, quitar filas, y más.</p>
+<p>Usualmente, nuestros datos son desorganizados o díficil a usar en R, especialmente a respeto a los visualizaciónes. Y, a veces es útil filtrarla, cambiar nombres, quitar filas, y mas.</p>
 <section id="paquetes" class="level3">
 <h3 class="anchored" data-anchor-id="paquetes">paquetes</h3>
 <p>Hoy usamos dos paquetes, ‘tidyverse’ y ‘dplyr’. (Recuerda installarlas con ‘install.packages()’ en el consolo (abajo))</p>
@@ -356,11 +356,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>“texto” o ‘texto’</td>
 </tr>
 <tr class="odd">
-<td>Dataframe (datos) y colúmno</td>
-<td>dataframe$colúmno</td>
+<td>Dataframe (datos) y columna</td>
+<td>dataframe$columna</td>
 </tr>
 <tr class="even">
-<td>Guardar/llamar datos/colúmnos</td>
+<td>Guardar/llamar datos/columnas</td>
 <td>nuevo &lt;- operación</td>
 </tr>
 <tr class="odd">
@@ -378,9 +378,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>[1] 1 2 3 4 5</code></pre>
 </div>
 </div>
-<p>Ahora, ‘lista’ solo contiene un colúmno con 5 números, o sea, es una lista. Para añadir más información, puede hacer lo mismo, pero crear también con un nombre, pero si use ‘$’ quede como una lista.</p>
+<p>Ahora, ‘lista’ solo contiene una columna con 5 números, o sea, es una lista. Para añadir mas información, puede hacer lo mismo, pero crear también con un nombre, pero si use ‘$’ quede como una lista.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># usar el $ para identificar el nombre del objeto (dataframe o lista) y llamar el nuevo colúmno</span></span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># usar el $ para identificar el nombre del objeto (dataframe o lista) y llamar la nueva columna</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>lista<span class="sc">$</span>nuevocolumno <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"uno"</span>, <span class="st">"dos"</span>, <span class="st">"tres"</span>, <span class="st">"cuatro"</span>, <span class="st">"cinco"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in lista$nuevocolumno &lt;- c("uno", "dos", "tres", "cuatro", "cinco"):
@@ -388,9 +388,9 @@ Coercing LHS to a list</code></pre>
 </div>
 </div>
 </section>
-<section id="hacer-colúmnos-con-nueva-información-datosnuevocolumno---datoscolumno" class="level3">
-<h3 class="anchored" data-anchor-id="hacer-colúmnos-con-nueva-información-datosnuevocolumno---datoscolumno">Hacer colúmnos con nueva información (datos$nuevocolumno &lt;- datos$columno)</h3>
-<p>Puede añadir colúmnos con información nuevo o sin información.</p>
+<section id="hacer-columnas-con-nueva-información-datosnuevocolumna---datoscolumna" class="level3">
+<h3 class="anchored" data-anchor-id="hacer-columnas-con-nueva-información-datosnuevocolumna---datoscolumna">Hacer columnas con nueva información (datos$nuevocolumna &lt;- datos$columna)</h3>
+<p>Puede añadir columnas con información nuevo o sin información.</p>
 <p>Por ejemplo:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># guardando sus datos con un nombre</span></span>
@@ -406,9 +406,9 @@ Coercing LHS to a list</code></pre>
 6          5.4         3.9          1.7         0.4  setosa</code></pre>
 </div>
 </div>
-<p>Puede ver que los colúmnos son llamados en inglés. Si queremos en español, podemos añadir un colúmno llamado en español.</p>
+<p>Puede ver que las columnas son llamados en inglés. Si queremos en español, podemos añadir una columna llamado en español.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># puede usar '$' o sea, datos$colúmno deseado</span></span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># puede usar '$' o sea, datos$columna deseado</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># recurede que '&lt;-' sirve para llamar o guardar algo</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>LargoSepalo <span class="ot">&lt;-</span> iris<span class="sc">$</span>Sepal.Length</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -424,7 +424,7 @@ Coercing LHS to a list</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># puede ver que tenemos el nuevo</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>También es posible hacer matemáticas con los colúmnos y guardarlos en un nuevo colúmno.</p>
+<p>También es posible hacer matemáticas con las columnas y guardarlos en una nueva columna.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -468,7 +468,7 @@ Coercing LHS to a list</code></pre>
 </tbody>
 </table>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># acá multiplica el largo sepalo y ancho sepalo y guardar en nuevo colúmno llamado 'volumen' en su marco de datos 'iris'</span></span>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># acá multiplica el largo sepalo y ancho sepalo y guardar en nueva columna llamado 'volumen' en su marco de datos 'iris'</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>volumen <span class="ot">&lt;-</span> (iris<span class="sc">$</span>Sepal.Length <span class="sc">*</span> iris<span class="sc">$</span>Sepal.Width)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris) <span class="co"># ver los primeros seis filas del iris para asegurar que 'volumen' ya estaba añadido</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -523,19 +523,19 @@ Coercing LHS to a list</code></pre>
 6 2.323790</code></pre>
 </div>
 </div>
-<p>Además puede añadir datos manualmente.</p>
+<p>Ademas puede añadir datos manualmente.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>numerosrandom <span class="ot">&lt;-</span> <span class="fu">c</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Vamos a hacerlo juntos!</p>
 </section>
-<section id="elegir-colúmnos-o-filas" class="level3">
-<h3 class="anchored" data-anchor-id="elegir-colúmnos-o-filas">elegir colúmnos o filas []</h3>
-<p>Puede elegir colúmnos o filas para solo usar colúmnos especificos queridos.</p>
-<p>El sintaxis es dataframe[número de filas, número de colúmnos]</p>
+<section id="elegir-columnas-o-filas" class="level3">
+<h3 class="anchored" data-anchor-id="elegir-columnas-o-filas">elegir columnas o filas []</h3>
+<p>Puede elegir columnas o filas para solo usar columnas especificos queridos.</p>
+<p>El sintaxis es dataframe[número de filas, número de columnas]</p>
 <p>Por ejemplo:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># acá solo ha elegido los colúmnos 2 y 3 (: significa 2 hasta 3)</span></span>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># acá solo ha elegido las columnas 2 y 3 (: significa 2 hasta 3)</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris[,<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Sepal.Width Petal.Length
@@ -572,7 +572,7 @@ Coercing LHS to a list</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># acá ha elegido los colúmnos 1 hasta 3 y las filas 1 hasta 6</span></span>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># acá ha elegido las columnas 1 hasta 3 y las filas 1 hasta 6</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>iris[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Sepal.Length Sepal.Width Petal.Length
@@ -592,7 +592,7 @@ Coercing LHS to a list</code></pre>
 </section>
 <section id="cambiar-nombres-rename" class="level3">
 <h3 class="anchored" data-anchor-id="cambiar-nombres-rename">cambiar nombres “[rename()]”</h3>
-<p>Si tenga un nombre de un colúmno y quiere cambiarlo, puedes usar el función ‘rename()’</p>
+<p>Si tenga un nombre de una columna y quiere cambiarlo, puedes usar el función ‘rename()’</p>
 <p>El sintaxis es rename(dataframe, nuevonombre = nombreoriginal)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">rename</span>(iris, <span class="at">AnchoSepalo=</span>Sepal.Width))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -616,7 +616,7 @@ Coercing LHS to a list</code></pre>
 </section>
 <section id="filtrar-filter" class="level3">
 <h3 class="anchored" data-anchor-id="filtrar-filter">filtrar “[filter()]”</h3>
-<p>En sus datos, hay colúmnos y filas. Puede filtrar por valores en sus colúmnos. Por ejemplo, con los datos de iris, podemos filtrar por sepalos con un largo más de 5mm o podemos filtrar por solo el espeice ‘setosa’.</p>
+<p>En sus datos, hay columnas y filas. Puede filtrar por valores en sus columnas. Por ejemplo, con los datos de iris, podemos filtrar por sepalos con un largo mas de 5mm o podemos filtrar por solo el espeice ‘setosa’.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filtrar por solo la epecie "setosa" Si filtre por texto, debería usar '==' por números '=', "&gt;","&lt;", "&gt;=", etc.</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>irissetosa <span class="ot">&lt;-</span> <span class="fu">filter</span>(iris, Species <span class="sc">==</span> <span class="st">'setosa'</span>)</span>
@@ -705,7 +705,7 @@ Coercing LHS to a list</code></pre>
 <td>= número</td>
 </tr>
 <tr class="odd">
-<td>Filtrar por número más o menos del asignado</td>
+<td>Filtrar por número mas o menos del asignado</td>
 <td>&lt; o &gt; (‘&gt;=’ o ‘&lt;=’)</td>
 </tr>
 <tr class="even">
@@ -723,7 +723,7 @@ Coercing LHS to a list</code></pre>
 <section id="cambiar-datos-mutate" class="level3">
 <h3 class="anchored" data-anchor-id="cambiar-datos-mutate">cambiar datos [mutate()]</h3>
 <p>Con ‘mutate’ puede cambiar datos en una manera distinta.</p>
-<p>Puede hacer varios cambios con ‘mutate’ desde crear nuevos colúmnos/variables hasta cambiar/sacar los que ya existen.</p>
+<p>Puede hacer varios cambios con ‘mutate’ desde crear nuevas columnas/variables hasta cambiar/sacar los que ya existen.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ejemplo, usando el 'pipe' para pasar datos (en vez de llamarla) y mutate para añadir variable con matemáticas</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -748,7 +748,7 @@ Coercing LHS to a list</code></pre>
 </div>
 <p>Podemos sacar variables también.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># para sacar un variable, usar el pipe con iris y llamar el colúmno para sacar igual 'NULL'</span></span>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># para sacar un variable, usar el pipe con iris y llamar la columna para sacar igual 'NULL'</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris <span class="sc">|&gt;</span></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Vol=</span> <span class="cn">NULL</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -773,8 +773,8 @@ Coercing LHS to a list</code></pre>
 <section id="ejercicios" class="level1">
 <h1>Ejercicios</h1>
 <ol type="1">
-<li>Con los datos ‘iris’ cambiar todos los nombres de colúmnos a español (length = largo, width = ancho)</li>
-<li>añadir un colúmno hecho del algún combinación del largo y ancho de sepalo o pétalo</li>
+<li>Con los datos ‘iris’ cambiar todos los nombres de columnas a español (length = largo, width = ancho)</li>
+<li>añadir una columna hecho del algún combinación del largo y ancho de sepalo o pétalo</li>
 <li>Filtrar los especies para solo ver ‘setosa’</li>
 <li>Practicar con el ‘pipe’</li>
 </ol>
@@ -782,7 +782,7 @@ Coercing LHS to a list</code></pre>
 <h2 class="anchored" data-anchor-id="recursos">recursos</h2>
 <p><a href="https://dplyr.tidyverse.org/reference/select.html">Filtrar, elegir, cambiar nombre, etc.. inglés</a></p>
 <p><a href="https://rpubs.com/hllinas/R_Filtrar_DataFrames">Filtrar (español)</a></p>
-<p><a href="https://rsanchezs.gitbooks.io/rprogramming/content/chapter9/filter.html">más de filtrar (español)</a></p>
+<p><a href="https://rsanchezs.gitbooks.io/rprogramming/content/chapter9/filter.html">mas de filtrar (español)</a></p>
 
 
 </section>

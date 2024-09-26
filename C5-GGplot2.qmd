@@ -6,7 +6,7 @@ title: "C5-GGplot2"
 
 ## Facet
 
-El función 'facet_wrap' y 'facet_grid', mover los datos para que muestran más.
+El función 'facet_wrap' y 'facet_grid', mover los datos para que muestran mas.
 
 ```{r, warning=FALSE}
 library(tidyverse)
@@ -29,7 +29,7 @@ pinguinos %>%  # nombre de sus datos/dataframe y el pipe %>% o |>
 
 El facet revela que en la isla Torgerson solo tiene el especie 'Adelia', y las otras dos tienen distintos especies de pinguinos. Tenemos ahora tres gráficos separados por isla.
 
-Podemos también usar más que dos variables con 'facet_grid'.
+Podemos también usar mas que dos variables con 'facet_grid'.
 
 ```{r}
 pinguinos %>%  # nombre de sus datos/dataframe y el pipe %>% o |>
@@ -38,7 +38,7 @@ pinguinos %>%  # nombre de sus datos/dataframe y el pipe %>% o |>
   facet_grid(rows=vars(isla), cols=vars(especie))
 ```
 
-Es más fácil ver ahora los especies y en cual isla estan.
+Es mas fácil ver ahora los especies y en cual isla estan.
 
 ## pivot
 
@@ -48,11 +48,11 @@ Por ser caso queremos hacer un gráfico con todos los características del pingu
 
 Funciona así:
 
--   Elegir los colúmnos con variables que quiere poner juntos en una gráfica. Ahora es largo pico y alto pico del pinguinos, entonces los pone en cols=.
+-   Elegir las columnas con variables que quiere poner juntos en una gráfica. Ahora es largo pico y alto pico del pinguinos, entonces los pone en cols=.
 
--   Después, elegimos un nombre para un colúmno para poner las nombres de los colúmnos (acá caracteristica) y una para un colúmno nuevo para los valores (acá Medidasmm)
+-   Después, elegimos un nombre para una columna para poner las nombres de las columnas (acá caracteristica) y una para una columna nuevo para los valores (acá Medidasmm)
 
--   El nuevo dataframe: 'pinguinos_longer' tiene dos nuevos colúmnos 'caracteristica' y 'medidasmm'
+-   El nuevo dataframe: 'pinguinos_longer' tiene dos nuevas columnas 'caracteristica' y 'medidasmm'
 
 ```{r}
 pinguinos_longer <- pivot_longer(data=pinguinos, cols=largo_pico_mm:alto_pico_mm, names_to="Caracteristica", values_to="Medidasmm")
@@ -77,7 +77,7 @@ pinguinos_longer %>%
   facet_wrap(~Caracteristica)
 ```
 
-Estos dos tecnicas son más dificíl pero imensamente útil.
+Estos dos tecnicas son mas dificíl pero imensamente útil.
 
 # A practicar (juntos)
 

@@ -4,7 +4,7 @@ title: "C1-Intro"
 
 # R y R Studio
 
-R es uno de los opciones para analizar y analizar datos. Para usarla facilmente, puede usar R Studio. Se pone más facíl su uso de R.
+R es uno de los opciones para analizar y analizar datos. Para usarla facilmente, puede usar R Studio. Se pone mas facíl su uso de R.
 
 -   [Descargar R](https://cran.r-project.org/bin/windows/base/)
 
@@ -26,7 +26,7 @@ Cada fila aca es un observación de una especie.
 
 ![](images/Orgexcel.png)
 
-Cada fila es una fecha en que ha observado/colectado los datos. Los columnos son abundancia de individuous por familias/especies.
+Cada fila es una fecha en que ha observado/colectado los datos. Las columnas son abundancia de individuous por familias/especies.
 
 ![](images/orgexcel2.png){fig-align="center"}
 
@@ -41,7 +41,7 @@ Abajo no, porque:
 ![](images/badorg.png){fig-align="center"}
 
 | No....                                  | Sí                                                  |
-|-----------------------------------------|-----------------------------------------------------|
+|--------------------------------|----------------------------------------|
 | usa acentos/tildes en nombres           | Guardar sola una tabla por cada hoja de excel       |
 | usa símbolos (#%\^&\$\*) en sus nombres | Llamar sus columnas con algo corto pero descriptivo |
 | Pon espacios en los nombres de csv      |                                                     |

@@ -34,7 +34,7 @@ Aún puede trabajar con el consolo, y hay cositas que solo puede hacer en el con
 
 En el consolo no es posible guardar su trabajo, si cierre R, lo pierde. Pero con un script puede guardar su trabajo, y puede trabajar sin hacerlo. En el consolo, todo debería ser correcto o no funcionará, pero con un script, puede hacer solo algunas líneas y trabajar en otras hasta todo esta perfecto.
 
-Además, si guardaría su script en el mismo carpeta con su proyecto y csv, tiene acceso a los dos.
+Ademas, si guardaría su script en el mismo carpeta con su proyecto y csv, tiene acceso a los dos.
 
 #### Apuntes en un script
 
@@ -49,12 +49,12 @@ Además, si guardaría su script en el mismo carpeta con su proyecto y csv, tien
 ### R Script y R Markdown
 
 | R Script                                    | R Markdown                                              |
-|---------------------------------------------|---------------------------------------------------------|
+|--------------------------------|----------------------------------------|
 | Cada palabra esta considerada código        | Hay cajas para seperar códigos y texto                  |
 | Gráficos se exporta en su ventana de 'plot' | Incluír gráficos, sitios de web, y fotos en sus códigos |
 | Sus mensajes y errores está en 'consolo'    | sus mensajes y errores está en el markdown              |
 | Solo exportar como script                   | Puede exportar como pdf, html o documento de word       |
-| Lo más básico, pero fácil                   | Más complicado, pero mejor                              |
+| Lo mas básico, pero fácil                   | mas complicado, pero mejor                              |
 
 Vamos a usar R Markdown en este clase porque si sus códigos no se funciona, tampoco se exporta su R Markdown. Entonces, si exporte su Markdown como PDF, significa que sus códigos funciona.
 
@@ -62,7 +62,7 @@ Vamos a usar R Markdown en este clase porque si sus códigos no se funciona, tam
 
 Primero, instalar el paquete en el consolo: install.packages("rmarkdown")
 
-Distinto a los otros paquetes, solo necesita instalar y no debería hacer nada más despúes.
+Distinto a los otros paquetes, solo necesita instalar y no debería hacer nada mas despúes.
 
 Para empezar un 'R Markdown' tocar el cruz verde, llamar la en manera descriptiva en su carpeta de proyecto.
 
@@ -74,7 +74,7 @@ Existe cuatro componentes de un R Markdown allá: el 'yaml', cajas de códigos, 
 
 #### YAML
 
-El YAML (abajo), es el parte más específico del R Markdown. Este parte se manda el título, estilo y formato del R Markdown. Había varías cosas que puede cambiar acá, pero por ahora, está bien quedarse como se genera automáticamente.
+El YAML (abajo), es el parte mas específico del R Markdown. Este parte se manda el título, estilo y formato del R Markdown. Había varías cosas que puede cambiar acá, pero por ahora, está bien quedarse como se genera automáticamente.
 
 ![El YAML](images/YAML.png){fig-alt="R Markdown abierto con YAML abierto." fig-align="center"}
 
@@ -142,7 +142,7 @@ library(tidyverse)
 library(MASS)
 ```
 
-Es necesario recargar los paquetes cada vez que reempezar con un script. Además, es necesario incluir library() con los paquetes deseados en cada script nuevo.
+Es necesario recargar los paquetes cada vez que reempezar con un script. Ademas, es necesario incluir library() con los paquetes deseados en cada script nuevo.
 
 ## Exportación de su R Markdown
 

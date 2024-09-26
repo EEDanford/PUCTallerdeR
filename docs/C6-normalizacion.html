@@ -207,19 +207,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./C8-modelosnormales1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">C8-modelosnormales1</span></a>
+ <span class="menu-text">Anova &amp; Kruskal-Wallis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./C9-modelosnormales2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">C9-modelosnormales2</span></a>
+ <span class="menu-text">C9-modelosnormales2.html</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./C10-modelosnonparametricos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">C10-modelosnonparametricos</span></a>
+ <span class="menu-text">C10-modelosnonparametricos.html</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -314,16 +314,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="manejando-datos-para-modelar" class="level1">
 <h1>Manejando datos para modelar</h1>
 <p>Había varías cosas, depende en sus datos, que puede o, a veces debe, hacer antes de modelar sus datos. Incluyen: asegurar los típos de datos en R, normalizar, y tomar un idea del limites y formas de sus datos.</p>
-<p>Porque? Para asegurar que cumplen con los suposiciónes de sus modelos y que cuando hacen modelos que ellos son lo más correcto posible.</p>
+<p>Porque? Para asegurar que cumplen con los suposiciónes de sus modelos y que cuando hacen modelos que ellos son lo mas correcto posible.</p>
 <section id="típos-de-datos-data-types" class="level2">
 <h2 class="anchored" data-anchor-id="típos-de-datos-data-types">Típos de datos (data types)</h2>
 <p>Data types o típos de datos, son la categoría asignada a sus datos. Puede determinarla en excel, pero igual es posible en R.</p>
-<p>Debe tener caución con sus datos, porque si haya un colúmno de números, pero es asignado como texto, no puede hacer procesos o funciones matemáticas con ellos. O sea, que sus scripts pueden fallar por causa de típos incorrectos de datos.</p>
-<p>Había muchas típos, pero lo más comunes son:</p>
+<p>Debe tener caución con sus datos, porque si haya una columna de números, pero es asignado como texto, no puede hacer procesos o funciones matemáticas con ellos. O sea, que sus scripts pueden fallar por causa de típos incorrectos de datos.</p>
+<p>Había muchas típos, pero lo mas comunes son:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 18%">
-<col style="width: 81%">
+<col style="width: 22%">
+<col style="width: 77%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -346,7 +346,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td>Caracter (texto)</td>
-<td>Pura texto, apto para apuntes o colúmnos que no va a usar en sus modelos.</td>
+<td>Pura texto, apto para apuntes o columnas que no va a usar en sus modelos.</td>
 </tr>
 <tr class="odd">
 <td>Fecha (date)</td>
@@ -354,14 +354,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<p>Despúes de identificar sus típos de datos deseados, puede cambiarlos en R y guardar en lo mismo dataframe (en lo mismo colúmno porque se cambia solo el típo de dato y ningún otro información.</p>
+<p>Despúes de identificar sus típos de datos deseados, puede cambiarlos en R y guardar en lo mismo dataframe (en la misma columna porque se cambia solo el típo de dato y ningún otro información.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datos)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>clima <span class="ot">&lt;-</span>datos<span class="sc">::</span>clima</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># factor</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>clima<span class="sc">$</span>origen <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(clima<span class="sc">$</span>origen) </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>clima<span class="sc">$</span>anio <span class="ot">&lt;-</span> <span class="fu">as.factor</span> (clima<span class="sc">$</span>anio) <span class="co"># año/mes/día/hora son factores porque números más grandes no realmente son más</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>clima<span class="sc">$</span>anio <span class="ot">&lt;-</span> <span class="fu">as.factor</span> (clima<span class="sc">$</span>anio) <span class="co"># año/mes/día/hora son factores porque números mas grandes no realmente son mas</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>clima<span class="sc">$</span>mes <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(clima<span class="sc">$</span>mes) <span class="co"># ej: enero (1) no es menos de diciembre (12), y como número aparece así</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>clima<span class="sc">$</span>dia <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(clima<span class="sc">$</span>dia) <span class="co"># entonces usamos como factor</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>clima<span class="sc">$</span>hora <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(clima<span class="sc">$</span>hora)</span>
@@ -420,18 +420,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bestNormalize</span>(pinguinos<span class="sc">$</span>masa_corporal_g) <span class="co"># elegir el metodo con el numero más bajo (aca ordernorm)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bestNormalize</span>(pinguinos<span class="sc">$</span>masa_corporal_g) <span class="co"># elegir el metodo con el numero mas bajo (aca ordernorm)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Best Normalizing transformation with 342 Observations
  Estimated Normality Statistics (Pearson P / df, lower =&gt; more normal):
- - arcsinh(x): 1.257
- - Box-Cox: 1.2148
- - Center+scale: 1.6587
- - Double Reversed Log_b(x+a): 2.9848
- - Log_b(x+a): 1.257
- - orderNorm (ORQ): 1.1948
- - sqrt(x + a): 1.3907
- - Yeo-Johnson: 1.2148
+ - arcsinh(x): 1.4178
+ - Box-Cox: 1.3417
+ - Center+scale: 1.6687
+ - Double Reversed Log_b(x+a): 3.1405
+ - Log_b(x+a): 1.4178
+ - orderNorm (ORQ): 1.3132
+ - sqrt(x + a): 1.5339
+ - Yeo-Johnson: 1.3417
 Estimation method: Out-of-sample via CV with 10 folds and 5 repeats
  
 Based off these, bestNormalize chose:
@@ -464,11 +464,11 @@ data:  pinguinos$MasaCorpg_t
 W = 0.99931, p-value = 1</code></pre>
 </div>
 </div>
-<p>A veces todos los metodos en bestNormalize son superparecidos; por ser caso, puede elegir lo más bajo o lo mismo para todo sus variables. Es recomendable usar lo mismo metodo para todos tus variables.</p>
+<p>A veces todos los metodos en bestNormalize son superparecidos; por ser caso, puede elegir lo mas bajo o lo mismo para todo sus variables. Es recomendable usar lo mismo metodo para todos tus variables.</p>
 </section>
 <section id="log-transformar" class="level3">
 <h3 class="anchored" data-anchor-id="log-transformar">log (transformar)</h3>
-<p>A veces puede usar un log() para transformar sus datos. Solo cambiar sus números con el log de los números. Puede hacerse y guardar como nuevo colúmno o en parte de un modelo.</p>
+<p>A veces puede usar un log() para transformar sus datos. Solo cambiar sus números con el log de los números. Puede hacerse y guardar como nueva columna o en parte de un modelo.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pinguinos<span class="sc">$</span>masa_corporal_g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">

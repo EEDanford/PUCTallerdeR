@@ -2,26 +2,21 @@
 title: "C7-correlacion"
 ---
 
-# Asunciones de modelos normales
+# Correlación
 
 La forma más común de modelos y funciones viene con asunciones. Incluye: normalidad, homogeneidad de varianza, y independencia (sin intercorrelaciónes). Estos modelos se llama modelos normales. La última semana hablabamos del funciones para hacer normal los variables, pero no se cumplen está requisito.
 
-## correlación
+## Corrgram
 
 Hay varias maneras de probar correlación entre sus variables. Usualmente se pasa cuando tienes medidas de caracteristicas que quizas crecen juntos. Por ejemplo, si quieres usar largo de cuerpo y largo de sepalo de una planta, es posible que son correlados porque el largo de sepalo debe crecer con el largo de cuerpo de la planta. En este situación, puede probar y determinar si haya uno mejor que otro para usar. Puede hacerse eso antes con gráficos y después con el *variance inflation factor*.
-
-```{r}
-
-
-```
 
 ```{r}
 library(corrgram)
 
 pinguinos <- datos::pinguinos
-pinguinos$abundancia <- sample(1:100, replace=T, nrow(pinguinos)) # hice un colúmno con valores de abundancia (falsos)
+pinguinos$abundancia <- sample(1:100, replace=T, nrow(pinguinos)) # hice una columna con valores de abundancia (falsos)
 
-pinguinoscorr <- pinguinos[c(3:6)] # (elegimos solo los colúmnos númericos)
+pinguinoscorr <- pinguinos[c(3:6)] # (elegimos solo las columnas númericos)
 
 corrgram(pinguinoscorr) # hacer el corrgram
 
@@ -50,4 +45,7 @@ vif(lmpincorr2) # * variance inflation factor *
 
 Ahora todo está bien, y podemos seguir con las otras pruebas!
 
-## plot()
+## 
+
+```{}
+```

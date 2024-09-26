@@ -1,3 +1,51 @@
----
-title: "C8-modelosnormales1"
----
+# Anova & Kruskal-Wallis
+
+Ocupa las pruebas Anova/Kruskal-Wallis para analizar si existe diferencias significativas entre un grupo y otro. O sea, debería ser una prueba entre niveles o grupos específicos. No deba usar una Anova para analizar un variable numérico.
+
+¿Por qué? Porque el proceso de hacer una anova (análisis de varianza) es tomar los promedios de su variable de interés por cada grupo y compararlas para decidir si hay una diferencia que es mas que lo que se pasa naturalmente o por casualidad.
+
+Por ejemplo: Con los datos de pingüinos, supone que quiere probar si una especie u otra tiene una masa corporal más grande que cualquiera otra especie. Acá una anova se sirve con masa corporal con su variable de respuesta y especie con su variable explicativa. Porque especie es un grupo, o sea, que todos los pingüinos son de una de las tres especies, podemos usar un anova.
+
+Pero, si quiere analizar si el largo pico cambia por la masa corporal, no puede usar un anova porque la masa corporal no tiene niveles, cada masa es distinto. Su variable explicativa debe ser categórica.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(datos)
+library(tidyverse)
+library(vegan)
+library(rstatix)
+
+pinguinos <- datos::pinguinos
+
+pinguinos %>%
+  ggplot(aes(x=especie, y=masa_corporal_g, color=especie))+
+  geom_boxplot()+
+  labs(x="especie", y="masa corporal (g)")+
+  theme(legend.position = "none")+
+  ggtitle("Masa Corporal por Especie de Pingüino")
+```
+
+## Sacar outliers
+
+```{r}
+library(rstatix)
+
+pinguinos %>%
+  group_by(especie) %>%
+  identify_outliers(masa_corporal_g)
+
+
+datos_visitors_observations_sin_outliers <- datos_visitors_observations[,1:19]
+dim(datos_visitors_observations)
+
+quartiles <- quantile(datos_visitors_observations$Ab, probs=c(.25, .75), na.rm = FALSE)
+IQR <- IQR(datos_visitors_observations$Ab)
+
+Lower <- quartiles[1] - 1.5*IQR
+Upper <- quartiles[2] + 1.5*IQR 
+
+datos_visitors_observations_sin_outliers <- subset(datos_visitors_observations, datos_visitors_observations$Ab > Lower & datos_visitors_observations$Ab < Upper)
+
+dim(datos_visitors_observations_sin_outliers)
+
+
+```

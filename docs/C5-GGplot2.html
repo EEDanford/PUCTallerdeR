@@ -207,19 +207,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./C8-modelosnormales1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">C8-modelosnormales1</span></a>
+ <span class="menu-text">Anova &amp; Kruskal-Wallis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./C9-modelosnormales2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">C9-modelosnormales2</span></a>
+ <span class="menu-text">C9-modelosnormales2.html</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./C10-modelosnonparametricos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">C10-modelosnonparametricos</span></a>
+ <span class="menu-text">C10-modelosnonparametricos.html</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -313,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Opciones avanzados con GGPlot</h1>
 <section id="facet" class="level2">
 <h2 class="anchored" data-anchor-id="facet">Facet</h2>
-<p>El función ‘facet_wrap’ y ‘facet_grid’, mover los datos para que muestran más.</p>
+<p>El función ‘facet_wrap’ y ‘facet_grid’, mover los datos para que muestran mas.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -356,7 +356,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>El facet revela que en la isla Torgerson solo tiene el especie ‘Adelia’, y las otras dos tienen distintos especies de pinguinos. Tenemos ahora tres gráficos separados por isla.</p>
-<p>Podemos también usar más que dos variables con ‘facet_grid’.</p>
+<p>Podemos también usar mas que dos variables con ‘facet_grid’.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pinguinos <span class="sc">%&gt;%</span>  <span class="co"># nombre de sus datos/dataframe y el pipe %&gt;% o |&gt;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>largo_pico_mm, <span class="at">color=</span>especie))<span class="sc">+</span> <span class="co"># empece un gráfico con 'ggplot' y aesteticas (aes())</span></span>
@@ -374,7 +374,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Es más fácil ver ahora los especies y en cual isla estan.</p>
+<p>Es mas fácil ver ahora los especies y en cual isla estan.</p>
 </section>
 <section id="pivot" class="level2">
 <h2 class="anchored" data-anchor-id="pivot">pivot</h2>
@@ -383,9 +383,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="pivot_longer">pivot_longer</h3>
 <p>Funciona así:</p>
 <ul>
-<li><p>Elegir los colúmnos con variables que quiere poner juntos en una gráfica. Ahora es largo pico y alto pico del pinguinos, entonces los pone en cols=.</p></li>
-<li><p>Después, elegimos un nombre para un colúmno para poner las nombres de los colúmnos (acá caracteristica) y una para un colúmno nuevo para los valores (acá Medidasmm)</p></li>
-<li><p>El nuevo dataframe: ‘pinguinos_longer’ tiene dos nuevos colúmnos ‘caracteristica’ y ‘medidasmm’</p></li>
+<li><p>Elegir las columnas con variables que quiere poner juntos en una gráfica. Ahora es largo pico y alto pico del pinguinos, entonces los pone en cols=.</p></li>
+<li><p>Después, elegimos un nombre para una columna para poner las nombres de las columnas (acá caracteristica) y una para una columna nuevo para los valores (acá Medidasmm)</p></li>
+<li><p>El nuevo dataframe: ‘pinguinos_longer’ tiene dos nuevas columnas ‘caracteristica’ y ‘medidasmm’</p></li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pinguinos_longer <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(<span class="at">data=</span>pinguinos, <span class="at">cols=</span>largo_pico_mm<span class="sc">:</span>alto_pico_mm, <span class="at">names_to=</span><span class="st">"Caracteristica"</span>, <span class="at">values_to=</span><span class="st">"Medidasmm"</span>)</span>
@@ -435,7 +435,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Estos dos tecnicas son más dificíl pero imensamente útil.</p>
+<p>Estos dos tecnicas son mas dificíl pero imensamente útil.</p>
 </section>
 </section>
 </section>
