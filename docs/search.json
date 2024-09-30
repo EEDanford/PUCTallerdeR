@@ -1,0 +1,78 @@
+[
+  {
+    "objectID": "C7-correlacion.html",
+    "href": "C7-correlacion.html",
+    "title": "C7-correlacion",
+    "section": "",
+    "text": "Antes de que pueda hacer un modelo, debería tener en cuenta que sus datos pueden tener valores extremos, o sea, outliers.\nPrimero, hacer un boxplot de su variable de respuesta para ver si hay outliers (o sea, puntos).\n\n\n\n\n\n\n\n\n\nTenemos ambas ‘outliers’ acá. El método general aceptado es usar la distribución normal y eliminar todo que esta mas de 3 deviaciones estándar desde el promedio (arriba y abajo).\nA hacerse, identificar los valores atípicos y después eliminarlos y guardar en un dataframe nuevo.\n\nlibrary(rstatix)\n\n\nAttaching package: 'rstatix'\n\n\nThe following object is masked from 'package:stats':\n\n    filter\n\nlibrary(outForest)\n\npinguinos &lt;- datos::pinguinos\n\npinguinos$ab &lt;- sample(100, size = nrow(pinguinos), replace = TRUE)\n\npinguinos$abo &lt;- generateOutliers(pinguinos$ab, p = 0.05, sd_factor = 5, seed = NULL)\n\nquartiles &lt;- quantile(pinguinos$abo, probs=c(.25, .75), na.rm = FALSE)\nIQR &lt;- IQR(pinguinos$abo)\n\n# -3 deviaciónes estander \nLower &lt;- quartiles[1] - 1.5*IQR\n\n# +3 deviaciónes estander\nUpper &lt;- quartiles[2] + 1.5*IQR \n\npinguinos_sin_outliers &lt;- subset(pinguinos, pinguinos$abo &gt; Lower & pinguinos$abo &lt; Upper)\n\n\npinguinos_sin_outliers %&gt;%\n  ggplot(aes(x=abo))+\n  geom_boxplot()\n\n\n\n\n\n\n\n\nLa forma más común de modelos y funciones viene con suposiciones. Incluye: normalidad, homogeneidad de varianza, e independencia. Estos modelos se llama modelos normales. La última semana hablábamos de las funciones para hacer normal los variables, pero no se cumplen está requisito.\n\n\n\nHay varias maneras de probar correlación entre sus variables. Usualmente se pasa cuando tienes medidas de características que quizás crecen juntos. Por ejemplo, si quieres usar largo de cuerpo y largo de sépalo de una planta, es posible que son correlacionados porque el largo de sépalo debe crecer con el largo de cuerpo de la planta. En esta situación, puede probar y determinar si haya uno mejor que otro para usar. Puede hacerse eso antes con gráficos y después con elfactor de inflación de varianza.\n\nlibrary(corrgram)\n\npinguinos &lt;- datos::pinguinos\npinguinos$abundancia &lt;- sample(1:100, replace=T, nrow(pinguinos)) # hice una columna con valores de abundancia (falsos)\n\npinguinoscorr &lt;- pinguinos[c(3:6)] # (elegimos solo las columnas númericos)\n\ncorrgram(pinguinoscorr) # hacer el corrgram\n\n\n\n\n\n\n\n\nAcá podemos adivinar que largo aleta y masa corporal son correlacionados fuertemente positivamente (porque son azul oscuro). Además, aparece que quizás son correlacionados el alto pico y el largo aleta negativamente (porque son rojo oscuro).\nSi intentemos un modelo con estas variables:\n\nlmpincorr &lt;- lm(data=pinguinos, abundancia ~  largo_pico_mm + alto_pico_mm + largo_aleta_mm + masa_corporal_g)\n\nlibrary(car) \n\nLoading required package: carData\n\n\n\nAttaching package: 'car'\n\n\nThe following object is masked from 'package:dplyr':\n\n    recode\n\n\nThe following object is masked from 'package:purrr':\n\n    some\n\nvif(lmpincorr) # * variance inflation factor *\n\n  largo_pico_mm    alto_pico_mm  largo_aleta_mm masa_corporal_g \n       1.868456        1.621511        5.930499        4.192353 \n\n\nNúmeros más que 2-3 son problemáticas. Acá, como pensamos en el corrgram, el masa corporal y largo aleta son correlacionados (más que 3). Entonces, sacamos el largo aleta (lo más grande) e intentamos otra vez.\n\nlmpincorr2 &lt;- lm(data=pinguinos, abundancia ~  largo_pico_mm + alto_pico_mm + masa_corporal_g)\n\nvif(lmpincorr2) # * variance inflation factor *\n\n  largo_pico_mm    alto_pico_mm masa_corporal_g \n       1.554855        1.291907        1.889820 \n\n\n¡Ahora todo está bien, y podemos seguir con las otras pruebas!",
+    "crumbs": [
+      "Clases",
+      "C7-correlacion"
+    ]
+  },
+  {
+    "objectID": "C7-correlacion.html#eliminar-outliers",
+    "href": "C7-correlacion.html#eliminar-outliers",
+    "title": "C7-correlacion",
+    "section": "",
+    "text": "Antes de que pueda hacer un modelo, debería tener en cuenta que sus datos pueden tener valores extremos, o sea, outliers.\nPrimero, hacer un boxplot de su variable de respuesta para ver si hay outliers (o sea, puntos).\n\n\n\n\n\n\n\n\n\nTenemos ambas ‘outliers’ acá. El método general aceptado es usar la distribución normal y eliminar todo que esta mas de 3 deviaciones estándar desde el promedio (arriba y abajo).\nA hacerse, identificar los valores atípicos y después eliminarlos y guardar en un dataframe nuevo.\n\nlibrary(rstatix)\n\n\nAttaching package: 'rstatix'\n\n\nThe following object is masked from 'package:stats':\n\n    filter\n\nlibrary(outForest)\n\npinguinos &lt;- datos::pinguinos\n\npinguinos$ab &lt;- sample(100, size = nrow(pinguinos), replace = TRUE)\n\npinguinos$abo &lt;- generateOutliers(pinguinos$ab, p = 0.05, sd_factor = 5, seed = NULL)\n\nquartiles &lt;- quantile(pinguinos$abo, probs=c(.25, .75), na.rm = FALSE)\nIQR &lt;- IQR(pinguinos$abo)\n\n# -3 deviaciónes estander \nLower &lt;- quartiles[1] - 1.5*IQR\n\n# +3 deviaciónes estander\nUpper &lt;- quartiles[2] + 1.5*IQR \n\npinguinos_sin_outliers &lt;- subset(pinguinos, pinguinos$abo &gt; Lower & pinguinos$abo &lt; Upper)\n\n\npinguinos_sin_outliers %&gt;%\n  ggplot(aes(x=abo))+\n  geom_boxplot()\n\n\n\n\n\n\n\n\nLa forma más común de modelos y funciones viene con suposiciones. Incluye: normalidad, homogeneidad de varianza, e independencia. Estos modelos se llama modelos normales. La última semana hablábamos de las funciones para hacer normal los variables, pero no se cumplen está requisito.",
+    "crumbs": [
+      "Clases",
+      "C7-correlacion"
+    ]
+  },
+  {
+    "objectID": "C7-correlacion.html#corrgram",
+    "href": "C7-correlacion.html#corrgram",
+    "title": "C7-correlacion",
+    "section": "",
+    "text": "Hay varias maneras de probar correlación entre sus variables. Usualmente se pasa cuando tienes medidas de características que quizás crecen juntos. Por ejemplo, si quieres usar largo de cuerpo y largo de sépalo de una planta, es posible que son correlacionados porque el largo de sépalo debe crecer con el largo de cuerpo de la planta. En esta situación, puede probar y determinar si haya uno mejor que otro para usar. Puede hacerse eso antes con gráficos y después con elfactor de inflación de varianza.\n\nlibrary(corrgram)\n\npinguinos &lt;- datos::pinguinos\npinguinos$abundancia &lt;- sample(1:100, replace=T, nrow(pinguinos)) # hice una columna con valores de abundancia (falsos)\n\npinguinoscorr &lt;- pinguinos[c(3:6)] # (elegimos solo las columnas númericos)\n\ncorrgram(pinguinoscorr) # hacer el corrgram\n\n\n\n\n\n\n\n\nAcá podemos adivinar que largo aleta y masa corporal son correlacionados fuertemente positivamente (porque son azul oscuro). Además, aparece que quizás son correlacionados el alto pico y el largo aleta negativamente (porque son rojo oscuro).\nSi intentemos un modelo con estas variables:\n\nlmpincorr &lt;- lm(data=pinguinos, abundancia ~  largo_pico_mm + alto_pico_mm + largo_aleta_mm + masa_corporal_g)\n\nlibrary(car) \n\nLoading required package: carData\n\n\n\nAttaching package: 'car'\n\n\nThe following object is masked from 'package:dplyr':\n\n    recode\n\n\nThe following object is masked from 'package:purrr':\n\n    some\n\nvif(lmpincorr) # * variance inflation factor *\n\n  largo_pico_mm    alto_pico_mm  largo_aleta_mm masa_corporal_g \n       1.868456        1.621511        5.930499        4.192353 \n\n\nNúmeros más que 2-3 son problemáticas. Acá, como pensamos en el corrgram, el masa corporal y largo aleta son correlacionados (más que 3). Entonces, sacamos el largo aleta (lo más grande) e intentamos otra vez.\n\nlmpincorr2 &lt;- lm(data=pinguinos, abundancia ~  largo_pico_mm + alto_pico_mm + masa_corporal_g)\n\nvif(lmpincorr2) # * variance inflation factor *\n\n  largo_pico_mm    alto_pico_mm masa_corporal_g \n       1.554855        1.291907        1.889820 \n\n\n¡Ahora todo está bien, y podemos seguir con las otras pruebas!",
+    "crumbs": [
+      "Clases",
+      "C7-correlacion"
+    ]
+  },
+  {
+    "objectID": "Proyecto2.html",
+    "href": "Proyecto2.html",
+    "title": "Proyecto2",
+    "section": "",
+    "text": "Hacer modelos con sus datos\nLa idea de proyecto 2 es hacer un modelo adecuado con sus datos. Es integral tener datos en las formas correctas (integral, número, factor, etc..). Además, debería probar los suposiciónes del típo de modelo elegido (si elegas un típo non-paramétrico, debería probar por normalidad y covarianza todavía).\nDebería entregar un pdf de R Markdown (con cajas de códigos incluídos) con:\n\nUn corrgram o PCA con las variables explicativas y una oración explicando lo que significa el corrgram/PCA\nUn anova o kruskal-wallis (paramétrico o non-paramétrico) con prueba de normalidad y una oración explicando sus resultados\nUn par de modelos (paramétrico o non-paramétrico) con pruebas de los suposiciónes (explica los resultados de estas pruebas)\nUn modelo final elegido de los opciones con un metodo adecuado y un párrafo explicando como lo elegiste lo mejor y interpretando los resultados\n\n\n\nRúbrica\n\n\n\n\n\n\n\n\n\n\n\n1\n3\n5\n7\n\n\n\n\nCorrgram o PCA\nFalta corrgram/pca\nSin todo los variables de interes (por el modelo) o sin interpretación\nCon todo los variables pero mal interpretado\nIncluye todo los variables de interes, con interpretación adecuado, bien organizado\n\n\nAnova o kruskal-wallis\nFalta anova/kruskal wallis\nElección del prueba incorrecto desde sus pruebas\nLos suposiciónes y prueba correcto pero mal interpretado\nTodo corecto, o con errores chicos\n\n\nPruebas de los suposiciónes\nFalta pruebcas de los suposiciónes\nHay la mayoría de los suposiciónes con errores en interpretación\nTodos los suposiciónes incluídos y explicados con pocas errores\nBuen interpretación de los suposiciónes\n\n\nGrupos de modelos\nFalta un par de modelos (o sea solo hay uno)\nModelos con familia mal elegido o típo incorrecto, y/o sin interpretación\nModelos buen diseñados, con buena familia, pero mal interpretado\nTodo corecto,\n\n\nElección del modelo final\nSin modelo final\nModelo final elegido pero no interpretado o mal elegido\nModelo final bien elegido, y con pocas errores en interpretación\nModelo bien diseñado, elegido y interpretado: es claro como elegiste su modelo\n\n\nOrganización del R Markdown\nSin organización, sin texto normal, sin pdf\nMal exportado, sin parrafos o títulos\nBien hecho, pero sin un elemento\nCon parrafos, fotos, títulos, exportada como pdf",
+    "crumbs": [
+      "Proyectos",
+      "Proyecto2"
+    ]
+  },
+  {
+    "objectID": "Horario.html",
+    "href": "Horario.html",
+    "title": "Horario",
+    "section": "",
+    "text": "Fecha\nTema\nTareas sugeridas\nEntregar\n\n\n\n\n13/8/24\nIntroducción a ciencia de datos\nOrganizar y guardar sus datos como csv, crear su proyecto en R\n\n\n\n20/8/24\nIntroducción a R/R Studio\nCrear su R Markdown y cargar datos/paquetes\n\n\n\n27/8/24\nIntroducción a tidyverse\nPracticar ‘pivot’ con sus datos\n\n\n\n3/9/24\nGGplot pt 1\nHacer gráficos como queráis\n\n\n\n10/9/24\nGGplot pt 2\nFinalizar su proyecto\n\n\n\n17/9/24\nNo hay clase\n\nEntregar proyecto 1\n\n\n24/9/24\nNormalización\nNormalizar sus datos\n\n\n\n1/10/24\ncorrelación\nAnalizar correlación con gráficos y números\n\n\n\n8/10/24\nIntroducción a modelos normales\nPrueba los asumpciones de un modelo normal, elegir familia\n\n\n\n15/10/24\nModelos normales p2\nHacer y elegir un modelo bueno\n\n\n\n22/10/24\nModelos non-paramétricos\nFinalizar su proyecto\n\n\n\n29/10/24\nNo hay clase\n\nEntregar proyecto 2\n\n\n5/11/24\nFuerza/análisis del modelo\nElegir y hacer un análisis de fuerza y ajuste del modelo\n\n\n\n12/11/24\nGráficos para comunicar\nElegir y diseñar gráficos comunicativos\n\n\n\n19/11/24\nTiempo para trabajar en clase\nFinalizar proyecto\n\n\n\n26/11/24\nEntregar proyecto final\n\nEntregar proyecto 3",
+    "crumbs": [
+      "Horario"
+    ]
+  },
+  {
+    "objectID": "C8-modelosnormales1.html",
+    "href": "C8-modelosnormales1.html",
+    "title": "Anova & Kruskal-Wallis",
+    "section": "",
+    "text": "Anova & Kruskal-Wallis\nOcupa las pruebas Anova/Kruskal-Wallis para analizar si existe diferencias significativas entre un grupo y otro. O sea, debería ser una prueba entre niveles o grupos específicos. No deba usar una Anova para analizar un variable numérico.\n¿Por qué? Porque el proceso de hacer una anova (análisis de varianza) es tomar los promedios de su variable de interés por cada grupo y compararlas para decidir si hay una diferencia que es mas que lo que se pasa naturalmente o por casualidad.\nPor ejemplo: Con los datos de pingüinos, supone que quiere probar si una especie u otra tiene una masa corporal más grande que cualquiera otra especie. Acá una anova se sirve con masa corporal con su variable de respuesta y especie con su variable explicativa. Porque especie es un grupo, o sea, que todos los pingüinos son de una de las tres especies, podemos usar un anova.\nPero, si quiere analizar si el largo pico cambia por la masa corporal, no puede usar un anova porque la masa corporal no tiene niveles, cada masa es distinto. Su variable explicativa debe ser categórica.",
+    "crumbs": [
+      "Clases",
+      "Anova & Kruskal-Wallis"
+    ]
+  },
+  {
+    "objectID": "Proyecto1.html",
+    "href": "Proyecto1.html",
+    "title": "Proyecto1",
+    "section": "",
+    "text": "Usando sus propios datos (si no tenga, avísame), hacer un R Markdown con una exploración completa de sus datos según lo que hemos hecho en clase.\nDebería entregar un R Markdown en formato PDF\nIncluye:\n\nCargar y llamar sus datos (del csv o paquete data/datos)\nIncluir encabezados descriptivos (bien organizadas) y texto normal (puede presentar su proyecto, sus datos o su mismo)\nDatos en forma ‘tidy’, mínimo un pivot\nUn gráfico de ggplot (elegir lo mejor forma y defender con una oración)\n\nLos gráficos deben tener títulos de los dos axis, y un título descriptivo\ndebe tener colores únicos para distinguir grupos en sus gráficos\nmínimo un facet\n\nSumir todo con un párrafo (puede ser corto) que explica los resultados de su exploración\n\n\n\n\n\n\n\n\n\n\n\n\n\n20%\n40%\n60%\n80%\n100%\n\n\n\n\nMarkdown\nSin organización, sin texto normal, sin pdf\nMal exportado, sin parrafos o títulos\nMinimo de esfuerzo, sin un parrafo, foto, o título\nBien hecho, pero sin un elemento\nCon parrafos, fotos, títulos, exportada como pdf\n\n\nPivot\nSin pivot\n\nPivot exitoso, pero mal organizado (nombres mal, o con NA)\n\nPivot llamado bien, y usado por su ggplot\n\n\ngráfico ggplot\nSin gráfico\nUn gráfico inadecuado por los datos\nUn gráfico adecuado sin dos elementos (sin títulos, colores, facet, etc)\nUn gráfico sin un elemento o otro\nUn gráfico bien elegido, con títulos descriptivas, un facet, y colores",
+    "crumbs": [
+      "Proyectos",
+      "Proyecto1"
+    ]
+  }
+]

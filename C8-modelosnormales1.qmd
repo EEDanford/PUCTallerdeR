@@ -24,28 +24,4 @@ pinguinos %>%
   ggtitle("Masa Corporal por Especie de Pingüino")
 ```
 
-## Sacar outliers
 
-```{r}
-library(rstatix)
-
-pinguinos %>%
-  group_by(especie) %>%
-  identify_outliers(masa_corporal_g)
-
-
-datos_visitors_observations_sin_outliers <- datos_visitors_observations[,1:19]
-dim(datos_visitors_observations)
-
-quartiles <- quantile(datos_visitors_observations$Ab, probs=c(.25, .75), na.rm = FALSE)
-IQR <- IQR(datos_visitors_observations$Ab)
-
-Lower <- quartiles[1] - 1.5*IQR
-Upper <- quartiles[2] + 1.5*IQR 
-
-datos_visitors_observations_sin_outliers <- subset(datos_visitors_observations, datos_visitors_observations$Ab > Lower & datos_visitors_observations$Ab < Upper)
-
-dim(datos_visitors_observations_sin_outliers)
-
-
-```

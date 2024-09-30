@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>PUCTallerdeR - C7-correlacion</title>
+<title>PUCTallerdeR</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -64,8 +30,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./C8-modelosnormales1.html" rel="next">
-<link href="./C6-normalizacion.html" rel="prev">
+<link href="./C9-modelosnormales2.html" rel="next">
+<link href="./C7-correlacion.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -116,7 +82,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./clases.html">Clases</a></li><li class="breadcrumb-item"><a href="./C7-correlacion.html">C7-correlacion</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./clases.html">Clases</a></li><li class="breadcrumb-item"><a href="./C8-modelosnormales1.html">Anova &amp; Kruskal-Wallis</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -200,13 +166,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./C7-correlacion.html" class="sidebar-item-text sidebar-link active">
+  <a href="./C7-correlacion.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">C7-correlacion</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./C8-modelosnormales1.html" class="sidebar-item-text sidebar-link">
+  <a href="./C8-modelosnormales1.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Anova &amp; Kruskal-Wallis</span></a>
   </div>
 </li>
@@ -275,160 +241,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#cambios-antes-de-modelar" id="toc-cambios-antes-de-modelar" class="nav-link active" data-scroll-target="#cambios-antes-de-modelar">Cambios antes de modelar</a>
-  <ul class="collapse">
-  <li><a href="#eliminar-outliers" id="toc-eliminar-outliers" class="nav-link" data-scroll-target="#eliminar-outliers">Eliminar outliers</a></li>
-  <li><a href="#corrgram" id="toc-corrgram" class="nav-link" data-scroll-target="#corrgram">Corrgram</a></li>
-  </ul></li>
+  <li><a href="#anova-kruskal-wallis" id="toc-anova-kruskal-wallis" class="nav-link active" data-scroll-target="#anova-kruskal-wallis">Anova &amp; Kruskal-Wallis</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./clases.html">Clases</a></li><li class="breadcrumb-item"><a href="./C7-correlacion.html">C7-correlacion</a></li></ol></nav>
-<div class="quarto-title">
-<h1 class="title">C7-correlacion</h1>
-</div>
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<section id="cambios-antes-de-modelar" class="level1">
-<h1>Cambios antes de modelar</h1>
-<section id="eliminar-outliers" class="level2">
-<h2 class="anchored" data-anchor-id="eliminar-outliers">Eliminar outliers</h2>
-<p>Antes de que pueda hacer un modelo, debería tener en cuenta que sus datos pueden tener valores extremos, o sea, outliers.</p>
-<p>Primero, hacer un boxplot de su variable de respuesta para ver si hay outliers (o sea, puntos).</p>
+<section id="anova-kruskal-wallis" class="level1">
+<h1>Anova &amp; Kruskal-Wallis</h1>
+<p>Ocupa las pruebas Anova/Kruskal-Wallis para analizar si existe diferencias significativas entre un grupo y otro. O sea, debería ser una prueba entre niveles o grupos específicos. No deba usar una Anova para analizar un variable numérico.</p>
+<p>¿Por qué? Porque el proceso de hacer una anova (análisis de varianza) es tomar los promedios de su variable de interés por cada grupo y compararlas para decidir si hay una diferencia que es mas que lo que se pasa naturalmente o por casualidad.</p>
+<p>Por ejemplo: Con los datos de pingüinos, supone que quiere probar si una especie u otra tiene una masa corporal más grande que cualquiera otra especie. Acá una anova se sirve con masa corporal con su variable de respuesta y especie con su variable explicativa. Porque especie es un grupo, o sea, que todos los pingüinos son de una de las tres especies, podemos usar un anova.</p>
+<p>Pero, si quiere analizar si el largo pico cambia por la masa corporal, no puede usar un anova porque la masa corporal no tiene niveles, cada masa es distinto. Su variable explicativa debe ser categórica.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="C7-correlacion_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="C8-modelosnormales1_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Tenemos ambas ‘outliers’ acá. El método general aceptado es usar la distribución normal y eliminar todo que esta mas de 3 deviaciones estándar desde el promedio (arriba y abajo).</p>
-<p>A hacerse, identificar los valores atípicos y después eliminarlos y guardar en un dataframe nuevo.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstatix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'rstatix'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:stats':
-
-    filter</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(outForest)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>pinguinos <span class="ot">&lt;-</span> datos<span class="sc">::</span>pinguinos</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>pinguinos<span class="sc">$</span>ab <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">100</span>, <span class="at">size =</span> <span class="fu">nrow</span>(pinguinos), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>pinguinos<span class="sc">$</span>abo <span class="ot">&lt;-</span> <span class="fu">generateOutliers</span>(pinguinos<span class="sc">$</span>ab, <span class="at">p =</span> <span class="fl">0.05</span>, <span class="at">sd_factor =</span> <span class="dv">5</span>, <span class="at">seed =</span> <span class="cn">NULL</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>quartiles <span class="ot">&lt;-</span> <span class="fu">quantile</span>(pinguinos<span class="sc">$</span>abo, <span class="at">probs=</span><span class="fu">c</span>(.<span class="dv">25</span>, .<span class="dv">75</span>), <span class="at">na.rm =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>IQR <span class="ot">&lt;-</span> <span class="fu">IQR</span>(pinguinos<span class="sc">$</span>abo)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># -3 deviaciónes estander </span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>Lower <span class="ot">&lt;-</span> quartiles[<span class="dv">1</span>] <span class="sc">-</span> <span class="fl">1.5</span><span class="sc">*</span>IQR</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># +3 deviaciónes estander</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>Upper <span class="ot">&lt;-</span> quartiles[<span class="dv">2</span>] <span class="sc">+</span> <span class="fl">1.5</span><span class="sc">*</span>IQR </span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>pinguinos_sin_outliers <span class="ot">&lt;-</span> <span class="fu">subset</span>(pinguinos, pinguinos<span class="sc">$</span>abo <span class="sc">&gt;</span> Lower <span class="sc">&amp;</span> pinguinos<span class="sc">$</span>abo <span class="sc">&lt;</span> Upper)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pinguinos_sin_outliers <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>abo))<span class="sc">+</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="C7-correlacion_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>La forma más común de modelos y funciones viene con suposiciones. Incluye: normalidad, homogeneidad de varianza, e independencia. Estos modelos se llama modelos normales. La última semana hablábamos de las funciones para hacer normal los variables, pero no se cumplen está requisito.</p>
-</section>
-<section id="corrgram" class="level2">
-<h2 class="anchored" data-anchor-id="corrgram">Corrgram</h2>
-<p>Hay varias maneras de probar correlación entre sus variables. Usualmente se pasa cuando tienes medidas de características que quizás crecen juntos. Por ejemplo, si quieres usar largo de cuerpo y largo de sépalo de una planta, es posible que son correlacionados porque el largo de sépalo debe crecer con el largo de cuerpo de la planta. En esta situación, puede probar y determinar si haya uno mejor que otro para usar. Puede hacerse eso antes con gráficos y después con elfactor de inflación de varianza.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrgram)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>pinguinos <span class="ot">&lt;-</span> datos<span class="sc">::</span>pinguinos</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>pinguinos<span class="sc">$</span>abundancia <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">replace=</span>T, <span class="fu">nrow</span>(pinguinos)) <span class="co"># hice una columna con valores de abundancia (falsos)</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>pinguinoscorr <span class="ot">&lt;-</span> pinguinos[<span class="fu">c</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>)] <span class="co"># (elegimos solo las columnas númericos)</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">corrgram</span>(pinguinoscorr) <span class="co"># hacer el corrgram</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="C7-correlacion_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Acá podemos adivinar que largo aleta y masa corporal son correlacionados fuertemente positivamente (porque son azul oscuro). Además, aparece que quizás son correlacionados el alto pico y el largo aleta negativamente (porque son rojo oscuro).</p>
-<p>Si intentemos un modelo con estas variables:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lmpincorr <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data=</span>pinguinos, abundancia <span class="sc">~</span>  largo_pico_mm <span class="sc">+</span> alto_pico_mm <span class="sc">+</span> largo_aleta_mm <span class="sc">+</span> masa_corporal_g)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: carData</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'car'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:dplyr':
-
-    recode</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:purrr':
-
-    some</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(lmpincorr) <span class="co"># * variance inflation factor *</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  largo_pico_mm    alto_pico_mm  largo_aleta_mm masa_corporal_g 
-       1.868456        1.621511        5.930499        4.192353 </code></pre>
-</div>
-</div>
-<p>Números más que 2-3 son problemáticas. Acá, como pensamos en el corrgram, el masa corporal y largo aleta son correlacionados (más que 3). Entonces, sacamos el largo aleta (lo más grande) e intentamos otra vez.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>lmpincorr2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data=</span>pinguinos, abundancia <span class="sc">~</span>  largo_pico_mm <span class="sc">+</span> alto_pico_mm <span class="sc">+</span> masa_corporal_g)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(lmpincorr2) <span class="co"># * variance inflation factor *</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  largo_pico_mm    alto_pico_mm masa_corporal_g 
-       1.554855        1.291907        1.889820 </code></pre>
-</div>
-</div>
-<p>¡Ahora todo está bien, y podemos seguir con las otras pruebas!</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -843,13 +682,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./C6-normalizacion.html" class="pagination-link" aria-label="C6-normalizacion">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">C6-normalizacion</span>
+      <a href="./C7-correlacion.html" class="pagination-link" aria-label="C7-correlacion">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">C7-correlacion</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./C8-modelosnormales1.html" class="pagination-link" aria-label="Anova &amp; Kruskal-Wallis">
-        <span class="nav-page-text">Anova &amp; Kruskal-Wallis</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./C9-modelosnormales2.html" class="pagination-link" aria-label="C9-modelosnormales2.html">
+        <span class="nav-page-text">C9-modelosnormales2.html</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

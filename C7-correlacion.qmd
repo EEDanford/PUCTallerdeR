@@ -29,13 +29,17 @@ pinguinos %>%
 
 Tenemos ambas ‘outliers’ acá. El método general aceptado es usar la distribución normal y eliminar todo que esta mas de 3 deviaciones estándar desde el promedio (arriba y abajo).
 
-![](images/outliers_2.png)
-
 A hacerse, identificar los valores atípicos y después eliminarlos y guardar en un dataframe nuevo.
 
 ```{r}
 library(rstatix)
+library(outForest)
 
+pinguinos <- datos::pinguinos
+
+pinguinos$ab <- sample(100, size = nrow(pinguinos), replace = TRUE)
+
+pinguinos$abo <- generateOutliers(pinguinos$ab, p = 0.05, sd_factor = 5, seed = NULL)
 
 quartiles <- quantile(pinguinos$abo, probs=c(.25, .75), na.rm = FALSE)
 IQR <- IQR(pinguinos$abo)
