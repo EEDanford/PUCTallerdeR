@@ -17,7 +17,7 @@ Debe tener caución con sus datos, porque si haya una columna de números, pero 
 Había muchas típos, pero lo mas comunes son:
 
 | Típo             | Descripción                                                                                                                                                                     |
-|----------------|--------------------------------------------------------|
+|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Factor           | Puede ser número, entero o texto, pero la idea es que no representa su valor exacto, sino que niveles o distinciones entre sitios. ej: sus sitios, tiempo de observación, etc.. |
 | Número (numeric) | Un número (no entero) que quiere usar como número ej: porcentaje de floración, concentración de carbon, etc..                                                                   |
 | Entero (integer) | Un número entero que quiere usar como número ej: abundancia de abejas, riqueza de especies                                                                                      |

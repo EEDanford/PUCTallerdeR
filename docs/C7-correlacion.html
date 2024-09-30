@@ -275,10 +275,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#correlación" id="toc-correlación" class="nav-link active" data-scroll-target="#correlación">Correlación</a>
+  <li><a href="#cambios-antes-de-modelar" id="toc-cambios-antes-de-modelar" class="nav-link active" data-scroll-target="#cambios-antes-de-modelar">Cambios antes de modelar</a>
   <ul class="collapse">
+  <li><a href="#eliminar-outliers" id="toc-eliminar-outliers" class="nav-link" data-scroll-target="#eliminar-outliers">Eliminar outliers</a></li>
   <li><a href="#corrgram" id="toc-corrgram" class="nav-link" data-scroll-target="#corrgram">Corrgram</a></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
   </ul></li>
   </ul>
 </nav>
@@ -305,21 +305,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="correlación" class="level1">
-<h1>Correlación</h1>
-<p>La forma más común de modelos y funciones viene con asunciones. Incluye: normalidad, homogeneidad de varianza, y independencia (sin intercorrelaciónes). Estos modelos se llama modelos normales. La última semana hablabamos del funciones para hacer normal los variables, pero no se cumplen está requisito.</p>
-<section id="corrgram" class="level2">
-<h2 class="anchored" data-anchor-id="corrgram">Corrgram</h2>
-<p>Hay varias maneras de probar correlación entre sus variables. Usualmente se pasa cuando tienes medidas de caracteristicas que quizas crecen juntos. Por ejemplo, si quieres usar largo de cuerpo y largo de sepalo de una planta, es posible que son correlados porque el largo de sepalo debe crecer con el largo de cuerpo de la planta. En este situación, puede probar y determinar si haya uno mejor que otro para usar. Puede hacerse eso antes con gráficos y después con el <em>variance inflation factor</em>.</p>
+<section id="cambios-antes-de-modelar" class="level1">
+<h1>Cambios antes de modelar</h1>
+<section id="eliminar-outliers" class="level2">
+<h2 class="anchored" data-anchor-id="eliminar-outliers">Eliminar outliers</h2>
+<p>Antes de que pueda hacer un modelo, debería tener en cuenta que sus datos pueden tener valores extremos, o sea, outliers.</p>
+<p>Primero, hacer un boxplot de su variable de respuesta para ver si hay outliers (o sea, puntos).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrgram)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pinguinos <span class="ot">&lt;-</span> datos<span class="sc">::</span>pinguinos</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>pinguinos<span class="sc">$</span>abundancia <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">replace=</span>T, <span class="fu">nrow</span>(pinguinos)) <span class="co"># hice una columna con valores de abundancia (falsos)</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>pinguinoscorr <span class="ot">&lt;-</span> pinguinos[<span class="fu">c</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>)] <span class="co"># (elegimos solo las columnas númericos)</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">corrgram</span>(pinguinoscorr) <span class="co"># hacer el corrgram</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -328,36 +320,105 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Acá podemos adivinar que largo aleta y masa corporal son correlados fuertemente positivamente (porque son azul oscuro). Además aparece que quizas son correlados el alto pico y el largo aleta negativamente (porque son rojo oscuro).</p>
+<p>Tenemos ambas ‘outliers’ acá. El método general aceptado es usar la distribución normal y eliminar todo que esta mas de 3 deviaciones estándar desde el promedio (arriba y abajo).</p>
+<p><img src="images/outliers_2.png" class="img-fluid"></p>
+<p>A hacerse, identificar los valores atípicos y después eliminarlos y guardar en un dataframe nuevo.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstatix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'rstatix'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:stats':
+
+    filter</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>quartiles <span class="ot">&lt;-</span> <span class="fu">quantile</span>(pinguinos<span class="sc">$</span>abo, <span class="at">probs=</span><span class="fu">c</span>(.<span class="dv">25</span>, .<span class="dv">75</span>), <span class="at">na.rm =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>IQR <span class="ot">&lt;-</span> <span class="fu">IQR</span>(pinguinos<span class="sc">$</span>abo)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># -3 deviaciónes estander </span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>Lower <span class="ot">&lt;-</span> quartiles[<span class="dv">1</span>] <span class="sc">-</span> <span class="fl">1.5</span><span class="sc">*</span>IQR</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># +3 deviaciónes estander</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>Upper <span class="ot">&lt;-</span> quartiles[<span class="dv">2</span>] <span class="sc">+</span> <span class="fl">1.5</span><span class="sc">*</span>IQR </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>pinguinos_sin_outliers <span class="ot">&lt;-</span> <span class="fu">subset</span>(pinguinos, pinguinos<span class="sc">$</span>abo <span class="sc">&gt;</span> Lower <span class="sc">&amp;</span> pinguinos<span class="sc">$</span>abo <span class="sc">&lt;</span> Upper)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pinguinos_sin_outliers <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>abo))<span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C7-correlacion_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>La forma más común de modelos y funciones viene con suposiciones. Incluye: normalidad, homogeneidad de varianza, e independencia. Estos modelos se llama modelos normales. La última semana hablábamos de las funciones para hacer normal los variables, pero no se cumplen está requisito.</p>
+</section>
+<section id="corrgram" class="level2">
+<h2 class="anchored" data-anchor-id="corrgram">Corrgram</h2>
+<p>Hay varias maneras de probar correlación entre sus variables. Usualmente se pasa cuando tienes medidas de características que quizás crecen juntos. Por ejemplo, si quieres usar largo de cuerpo y largo de sépalo de una planta, es posible que son correlacionados porque el largo de sépalo debe crecer con el largo de cuerpo de la planta. En esta situación, puede probar y determinar si haya uno mejor que otro para usar. Puede hacerse eso antes con gráficos y después con elfactor de inflación de varianza.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrgram)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>pinguinos <span class="ot">&lt;-</span> datos<span class="sc">::</span>pinguinos</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>pinguinos<span class="sc">$</span>abundancia <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">replace=</span>T, <span class="fu">nrow</span>(pinguinos)) <span class="co"># hice una columna con valores de abundancia (falsos)</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>pinguinoscorr <span class="ot">&lt;-</span> pinguinos[<span class="fu">c</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>)] <span class="co"># (elegimos solo las columnas númericos)</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">corrgram</span>(pinguinoscorr) <span class="co"># hacer el corrgram</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C7-correlacion_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Acá podemos adivinar que largo aleta y masa corporal son correlacionados fuertemente positivamente (porque son azul oscuro). Además, aparece que quizás son correlacionados el alto pico y el largo aleta negativamente (porque son rojo oscuro).</p>
 <p>Si intentemos un modelo con estas variables:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lmpincorr <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data=</span>pinguinos, abundancia <span class="sc">~</span>  largo_pico_mm <span class="sc">+</span> alto_pico_mm <span class="sc">+</span> largo_aleta_mm <span class="sc">+</span> masa_corporal_g)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lmpincorr <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data=</span>pinguinos, abundancia <span class="sc">~</span>  largo_pico_mm <span class="sc">+</span> alto_pico_mm <span class="sc">+</span> largo_aleta_mm <span class="sc">+</span> masa_corporal_g)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: carData</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(lmpincorr) <span class="co"># * variance inflation factor *</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'car'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    recode</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:purrr':
+
+    some</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(lmpincorr) <span class="co"># * variance inflation factor *</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  largo_pico_mm    alto_pico_mm  largo_aleta_mm masa_corporal_g 
        1.868456        1.621511        5.930499        4.192353 </code></pre>
 </div>
 </div>
-<p>Números más que 2-3 son problemáticas. Acá, como pensamos en el corrgram, el masa corporal y largo aleta son correlados (más que 3). Entonces, sacamos el largo aleta (lo más grande) y intentamos otra vez.</p>
+<p>Números más que 2-3 son problemáticas. Acá, como pensamos en el corrgram, el masa corporal y largo aleta son correlacionados (más que 3). Entonces, sacamos el largo aleta (lo más grande) e intentamos otra vez.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>lmpincorr2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data=</span>pinguinos, abundancia <span class="sc">~</span>  largo_pico_mm <span class="sc">+</span> alto_pico_mm <span class="sc">+</span> masa_corporal_g)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(lmpincorr2) <span class="co"># * variance inflation factor *</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>lmpincorr2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data=</span>pinguinos, abundancia <span class="sc">~</span>  largo_pico_mm <span class="sc">+</span> alto_pico_mm <span class="sc">+</span> masa_corporal_g)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(lmpincorr2) <span class="co"># * variance inflation factor *</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  largo_pico_mm    alto_pico_mm masa_corporal_g 
        1.554855        1.291907        1.889820 </code></pre>
 </div>
 </div>
-<p>Ahora todo está bien, y podemos seguir con las otras pruebas!</p>
-</section>
-<section id="section" class="level2">
-<h2 class="anchored" data-anchor-id="section"></h2>
-<pre><code></code></pre>
+<p>¡Ahora todo está bien, y podemos seguir con las otras pruebas!</p>
 
 
 </section>

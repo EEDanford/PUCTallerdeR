@@ -2,13 +2,66 @@
 title: "C7-correlacion"
 ---
 
-# Correlación
+# Cambios antes de modelar
 
-La forma más común de modelos y funciones viene con asunciones. Incluye: normalidad, homogeneidad de varianza, y independencia (sin intercorrelaciónes). Estos modelos se llama modelos normales. La última semana hablabamos del funciones para hacer normal los variables, pero no se cumplen está requisito.
+## Eliminar outliers
+
+Antes de que pueda hacer un modelo, debería tener en cuenta que sus datos pueden tener valores extremos, o sea, outliers.
+
+Primero, hacer un boxplot de su variable de respuesta para ver si hay outliers (o sea, puntos).
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(datos)
+library(tidyverse)
+library(outForest)
+
+pinguinos <- datos::pinguinos
+
+pinguinos$ab <- sample(100, size = nrow(pinguinos), replace = TRUE)
+
+pinguinos$abo <- generateOutliers(pinguinos$ab, p = 0.05, sd_factor = 5, seed = NULL)
+
+pinguinos %>%
+  ggplot(aes(x=abo))+
+  geom_boxplot()
+
+```
+
+Tenemos ambas ‘outliers’ acá. El método general aceptado es usar la distribución normal y eliminar todo que esta mas de 3 deviaciones estándar desde el promedio (arriba y abajo).
+
+![](images/outliers_2.png)
+
+A hacerse, identificar los valores atípicos y después eliminarlos y guardar en un dataframe nuevo.
+
+```{r}
+library(rstatix)
+
+
+quartiles <- quantile(pinguinos$abo, probs=c(.25, .75), na.rm = FALSE)
+IQR <- IQR(pinguinos$abo)
+
+# -3 deviaciónes estander 
+Lower <- quartiles[1] - 1.5*IQR
+
+# +3 deviaciónes estander
+Upper <- quartiles[2] + 1.5*IQR 
+
+pinguinos_sin_outliers <- subset(pinguinos, pinguinos$abo > Lower & pinguinos$abo < Upper)
+
+
+```
+
+```{r}
+pinguinos_sin_outliers %>%
+  ggplot(aes(x=abo))+
+  geom_boxplot()
+```
+
+La forma más común de modelos y funciones viene con suposiciones. Incluye: normalidad, homogeneidad de varianza, e independencia. Estos modelos se llama modelos normales. La última semana hablábamos de las funciones para hacer normal los variables, pero no se cumplen está requisito.
 
 ## Corrgram
 
-Hay varias maneras de probar correlación entre sus variables. Usualmente se pasa cuando tienes medidas de caracteristicas que quizas crecen juntos. Por ejemplo, si quieres usar largo de cuerpo y largo de sepalo de una planta, es posible que son correlados porque el largo de sepalo debe crecer con el largo de cuerpo de la planta. En este situación, puede probar y determinar si haya uno mejor que otro para usar. Puede hacerse eso antes con gráficos y después con el *variance inflation factor*.
+Hay varias maneras de probar correlación entre sus variables. Usualmente se pasa cuando tienes medidas de características que quizás crecen juntos. Por ejemplo, si quieres usar largo de cuerpo y largo de sépalo de una planta, es posible que son correlacionados porque el largo de sépalo debe crecer con el largo de cuerpo de la planta. En esta situación, puede probar y determinar si haya uno mejor que otro para usar. Puede hacerse eso antes con gráficos y después con elfactor de inflación de varianza.
 
 ```{r}
 library(corrgram)
@@ -22,7 +75,7 @@ corrgram(pinguinoscorr) # hacer el corrgram
 
 ```
 
-Acá podemos adivinar que largo aleta y masa corporal son correlados fuertemente positivamente (porque son azul oscuro). Además aparece que quizas son correlados el alto pico y el largo aleta negativamente (porque son rojo oscuro).
+Acá podemos adivinar que largo aleta y masa corporal son correlacionados fuertemente positivamente (porque son azul oscuro). Además, aparece que quizás son correlacionados el alto pico y el largo aleta negativamente (porque son rojo oscuro).
 
 Si intentemos un modelo con estas variables:
 
@@ -34,7 +87,7 @@ vif(lmpincorr) # * variance inflation factor *
 
 ```
 
-Números más que 2-3 son problemáticas. Acá, como pensamos en el corrgram, el masa corporal y largo aleta son correlados (más que 3). Entonces, sacamos el largo aleta (lo más grande) y intentamos otra vez.
+Números más que 2-3 son problemáticas. Acá, como pensamos en el corrgram, el masa corporal y largo aleta son correlacionados (más que 3). Entonces, sacamos el largo aleta (lo más grande) e intentamos otra vez.
 
 ```{r}
 lmpincorr2 <- lm(data=pinguinos, abundancia ~  largo_pico_mm + alto_pico_mm + masa_corporal_g)
@@ -43,9 +96,4 @@ vif(lmpincorr2) # * variance inflation factor *
 
 ```
 
-Ahora todo está bien, y podemos seguir con las otras pruebas!
-
-## 
-
-```{}
-```
+¡Ahora todo está bien, y podemos seguir con las otras pruebas!

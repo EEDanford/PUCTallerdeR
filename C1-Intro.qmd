@@ -41,7 +41,7 @@ Abajo no, porque:
 ![](images/badorg.png){fig-align="center"}
 
 | No....                                  | Sí                                                  |
-|--------------------------------|----------------------------------------|
+|-----------------------------------------|-----------------------------------------------------|
 | usa acentos/tildes en nombres           | Guardar sola una tabla por cada hoja de excel       |
 | usa símbolos (#%\^&\$\*) en sus nombres | Llamar sus columnas con algo corto pero descriptivo |
 | Pon espacios en los nombres de csv      |                                                     |

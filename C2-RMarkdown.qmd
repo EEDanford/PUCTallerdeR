@@ -49,7 +49,7 @@ Ademas, si guardaría su script en el mismo carpeta con su proyecto y csv, tiene
 ### R Script y R Markdown
 
 | R Script                                    | R Markdown                                              |
-|--------------------------------|----------------------------------------|
+|---------------------------------------------|---------------------------------------------------------|
 | Cada palabra esta considerada código        | Hay cajas para seperar códigos y texto                  |
 | Gráficos se exporta en su ventana de 'plot' | Incluír gráficos, sitios de web, y fotos en sus códigos |
 | Sus mensajes y errores está en 'consolo'    | sus mensajes y errores está en el markdown              |
