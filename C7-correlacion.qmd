@@ -29,6 +29,8 @@ pinguinos %>%
 
 Tenemos ambas ‘outliers’ acá. El método general aceptado es usar la distribución normal y eliminar todo que esta mas de 3 deviaciones estándar desde el promedio (arriba y abajo).
 
+![](images/outliers_2-01.png){fig-align="center"}
+
 A hacerse, identificar los valores atípicos y después eliminarlos y guardar en un dataframe nuevo.
 
 ```{r}
