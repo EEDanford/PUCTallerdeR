@@ -8,6 +8,8 @@ title: "C7-correlacion"
 
 Antes de que pueda hacer un modelo, debería tener en cuenta que sus datos pueden tener valores extremos, o sea, outliers.
 
+Outliers son valores extremos por sus datos. Pueden ser errores de observación o poblaciónes que son realmente más grande.
+
 Primero, hacer un boxplot de su variable de respuesta para ver si hay outliers (o sea, puntos).
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
