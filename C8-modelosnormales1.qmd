@@ -107,7 +107,7 @@ De nuevo hay un método numérico y un método visual.
 Con el grafico, debería ser sin relaciones entre los grupos (o sea, random).
 
 ```{r}
-plot(mod, 1)
+plot(norm, 1)
 ```
 
 Acá no aparece random, sino que con una curva.
@@ -126,7 +126,7 @@ No se cumplen los datos con la suposición de la homogeneidad de la varianza. En
 
 # Elegir su típo de modelo
 
-# ![](images/ANOVA choices-01.jpg)
+# ![](images/ANOVA%20choices-01.jpg)
 
 # Hacer su modelo
 
@@ -144,7 +144,7 @@ MasaEsKW <- kruskal.test(data=pinguinos, masa_corporal_g ~ especie)
 MasaEsKW
 ```
 
-## Prueba post-hoc 
+## Prueba post-hoc
 
 En el ejemplo arriba, puede ver que había distinciones entre los promedios, pero no es claro cual grupo tiene valores menores/mayores. Para adivinar eso, ocupa una prueba ‘post-hoc’ o después de hecho. Estas pruebas producir una tabla con comparaciones de cada promedio con cada otro promedio.
 

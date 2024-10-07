@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -242,6 +276,28 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#anova-kruskal-wallis" id="toc-anova-kruskal-wallis" class="nav-link active" data-scroll-target="#anova-kruskal-wallis">Anova &amp; Kruskal-Wallis</a></li>
+  <li><a href="#suposiciones-anova" id="toc-suposiciones-anova" class="nav-link" data-scroll-target="#suposiciones-anova">Suposiciones (ANOVA)</a>
+  <ul class="collapse">
+  <li><a href="#diseño-del-estudio-independencia" id="toc-diseño-del-estudio-independencia" class="nav-link" data-scroll-target="#diseño-del-estudio-independencia">1. Diseño del estudio: independencia</a></li>
+  <li><a href="#identificareliminar-outliers-ver-clase-7" id="toc-identificareliminar-outliers-ver-clase-7" class="nav-link" data-scroll-target="#identificareliminar-outliers-ver-clase-7">2. identificar/eliminar outliers (ver Clase 7)</a></li>
+  <li><a href="#probar-normalidad-por-cada-gruponivel-o-con-todo" id="toc-probar-normalidad-por-cada-gruponivel-o-con-todo" class="nav-link" data-scroll-target="#probar-normalidad-por-cada-gruponivel-o-con-todo">3. Probar normalidad por cada grupo/nivel o con todo</a>
+  <ul class="collapse">
+  <li><a href="#versión-antes" id="toc-versión-antes" class="nav-link" data-scroll-target="#versión-antes">Versión antes:</a></li>
+  <li><a href="#versión-después" id="toc-versión-después" class="nav-link" data-scroll-target="#versión-después">Versión después</a></li>
+  </ul></li>
+  <li><a href="#homogeneidad-de-la-varianza" id="toc-homogeneidad-de-la-varianza" class="nav-link" data-scroll-target="#homogeneidad-de-la-varianza">4. Homogeneidad de la varianza</a>
+  <ul class="collapse">
+  <li><a href="#visual" id="toc-visual" class="nav-link" data-scroll-target="#visual">visual</a></li>
+  <li><a href="#prueba-de-levene" id="toc-prueba-de-levene" class="nav-link" data-scroll-target="#prueba-de-levene">Prueba de Levene</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  <li><a href="#elegir-su-típo-de-modelo" id="toc-elegir-su-típo-de-modelo" class="nav-link" data-scroll-target="#elegir-su-típo-de-modelo">Elegir su típo de modelo</a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><img src="images/ANOVA choices-01.jpg" class="img-fluid"></a></li>
+  <li><a href="#hacer-su-modelo" id="toc-hacer-su-modelo" class="nav-link" data-scroll-target="#hacer-su-modelo">Hacer su modelo</a>
+  <ul class="collapse">
+  <li><a href="#prueba-post-hoc" id="toc-prueba-post-hoc" class="nav-link" data-scroll-target="#prueba-post-hoc">Prueba post-hoc</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -253,11 +309,25 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="anova-kruskal-wallis" class="level1">
 <h1>Anova &amp; Kruskal-Wallis</h1>
+<p>Anova- análisis de la varianza</p>
 <p>Ocupa las pruebas Anova/Kruskal-Wallis para analizar si existe diferencias significativas entre un grupo y otro. O sea, debería ser una prueba entre niveles o grupos específicos. No deba usar una Anova para analizar un variable numérico.</p>
 <p>¿Por qué? Porque el proceso de hacer una anova (análisis de varianza) es tomar los promedios de su variable de interés por cada grupo y compararlas para decidir si hay una diferencia que es mas que lo que se pasa naturalmente o por casualidad.</p>
-<p>Por ejemplo: Con los datos de pingüinos, supone que quiere probar si una especie u otra tiene una masa corporal más grande que cualquiera otra especie. Acá una anova se sirve con masa corporal con su variable de respuesta y especie con su variable explicativa. Porque especie es un grupo, o sea, que todos los pingüinos son de una de las tres especies, podemos usar un anova.</p>
-<p>Pero, si quiere analizar si el largo pico cambia por la masa corporal, no puede usar un anova porque la masa corporal no tiene niveles, cada masa es distinto. Su variable explicativa debe ser categórica.</p>
+<p>Por ejemplo: Con los datos de pingüinos, supone que quiere probar si una especie u otra tiene una masa corporal más grande que cualquiera otra especie. Acá una anova se sirve con masa corporal con su variable de respuesta y especie con su variable explicativa. Porque especie es un grupo, o sea, que todos los pingüinos son de una de las tres especies, podemos usar una anova.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datos)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstatix)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>pinguinos <span class="ot">&lt;-</span> datos<span class="sc">::</span>pinguinos</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>pinguinos <span class="sc">%&gt;%</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>especie, <span class="at">y=</span>masa_corporal_g, <span class="at">color=</span>especie))<span class="sc">+</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"especie"</span>, <span class="at">y=</span><span class="st">"masa corporal (g)"</span>)<span class="sc">+</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)<span class="sc">+</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Masa Corporal por Especie de Pingüino"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -266,8 +336,230 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
+<p>Pero, si quiere analizar si el largo pico cambia por la masa corporal, no puede usar una anova porque la masa corporal no tiene niveles, cada masa es distinto. Su variable explicativa debe ser categórica. Una prueba, si no sea seguro, es hacer un boxplot con su variable explicativa como el y, e su respuesta como x. Si no puedas, no usa una anova.</p>
+</section>
+<section id="suposiciones-anova" class="level1">
+<h1>Suposiciones (ANOVA)</h1>
+<section id="diseño-del-estudio-independencia" class="level2">
+<h2 class="anchored" data-anchor-id="diseño-del-estudio-independencia">1. Diseño del estudio: independencia</h2>
+<p>No puede ser relaciones entre observaciones entre grupos. Por ejemplo, no pueda tener un pingunio individual que tiene datos por la isla B y la isla A, debe ser una o otra.</p>
+</section>
+<section id="identificareliminar-outliers-ver-clase-7" class="level2">
+<h2 class="anchored" data-anchor-id="identificareliminar-outliers-ver-clase-7">2. identificar/eliminar outliers (ver Clase 7)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pinguinos <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(especie) <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">identify_outliers</span>(masa_corporal_g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 10
+  especie isla  largo_pico_mm alto_pico_mm largo_aleta_mm masa_corporal_g sexo  
+  &lt;fct&gt;   &lt;fct&gt;         &lt;dbl&gt;        &lt;dbl&gt;          &lt;int&gt;           &lt;int&gt; &lt;fct&gt; 
+1 Barbijo Dream          52           20.7            210            4800 macho 
+2 Barbijo Dream          46.9         16.6            192            2700 hembra
+# ℹ 3 more variables: anio &lt;int&gt;, is.outlier &lt;lgl&gt;, is.extreme &lt;lgl&gt;</code></pre>
+</div>
+</div>
+<p>Acá tenemos dos outliers, pero niguno son extremos, puede elegir a quedarlos o eliminarlos.</p>
+</section>
+<section id="probar-normalidad-por-cada-gruponivel-o-con-todo" class="level2">
+<h2 class="anchored" data-anchor-id="probar-normalidad-por-cada-gruponivel-o-con-todo">3. Probar normalidad por cada grupo/nivel o con todo</h2>
+<p>Pueda hacer esta prueba antes o después de su ANOVA y en grupos dividios o juntos.</p>
+<p>Por los dos, había un método numérico y un gráfico. El numérico es más sensible, y a veces puede ser demasiado sensible (especialmente con mayores cantidades de datos), entonces es recomendable usar los dos.</p>
+<section id="versión-antes" class="level3">
+<h3 class="anchored" data-anchor-id="versión-antes">Versión antes:</h3>
+<p>Debería probar normalidad por los grupos con la prueba de shapiro (valor P &gt; 0.05 es normal)</p>
+<p>Ej: Pruebo de Shapiro</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pinguinos <span class="sc">%&gt;%</span>          <span class="co"># con datos pinguinos</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(especie)<span class="sc">%&gt;%</span> <span class="co"># niveles/grupos = especie (3 grupos)</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro_test</span>(masa_corporal_g) <span class="co"># variable respuesta: masa corporal</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  especie variable        statistic      p
+  &lt;fct&gt;   &lt;chr&gt;               &lt;dbl&gt;  &lt;dbl&gt;
+1 Adelia  masa_corporal_g     0.981 0.0324
+2 Barbijo masa_corporal_g     0.984 0.561 
+3 Papúa   masa_corporal_g     0.986 0.234 </code></pre>
+</div>
+</div>
+<p>Desde la prueba de Shapiro, el espeice ‘Adelia’ no es normal, pero los otros dos si son.</p>
+<p>Ej: QQplot</p>
+<p>El QQplot se muestra los valores y su correlación con la distribución (o curva) normal. Un QQplot con datos normales tiene los puntos mas o menos siguiendo la línea.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggqqplot</span>(pinguinos, <span class="st">"masa_corporal_g"</span>, <span class="at">facet.by =</span> <span class="st">"especie"</span>) <span class="co"># paquete ggpubr</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C8-modelosnormales1_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Puede ver que Adelia y Papua tienen variaciones a la partida y el fin, pero son más o menos con la línea. Puede seguir con la ANOVA, pero con caución, o puede usar el Kruskal-Wallis. Pero la ANOVA si tiene poquito más flexibilidad de, por ejemplo, los modelos lineales generales (glm), entonces con variación menor (como acá) todavía puede usar. Pero si no este seguro, usar el Kruskal-Wallis.</p>
+</section>
+<section id="versión-después" class="level3">
+<h3 class="anchored" data-anchor-id="versión-después">Versión después</h3>
+<p>Es posbile usar ‘lm’ (modelo lineal) o ‘aov’ (anova) acá. Resulta exactamente lo mismo.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>normmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data=</span>pinguinos, masa_corporal_g <span class="sc">~</span> especie)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggqqplot</span>(<span class="fu">residuals</span>(normmod))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C8-modelosnormales1_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>norm <span class="ot">&lt;-</span> <span class="fu">aov</span>(<span class="at">data=</span>pinguinos, masa_corporal_g <span class="sc">~</span> especie)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggqqplot</span>(<span class="fu">residuals</span>(norm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C8-modelosnormales1_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro_test</span>(<span class="fu">residuals</span>(normmod))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  variable           statistic p.value
+  &lt;chr&gt;                  &lt;dbl&gt;   &lt;dbl&gt;
+1 residuals(normmod)     0.992  0.0512</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro_test</span>(<span class="fu">residuals</span>(norm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  variable        statistic p.value
+  &lt;chr&gt;               &lt;dbl&gt;   &lt;dbl&gt;
+1 residuals(norm)     0.992  0.0512</code></pre>
+</div>
+</div>
+<p>Desde esta prueba anterior, es normal (el valor P es un poquito arriba del 0.05), entonces vamos con ANOVA.</p>
+</section>
+</section>
+<section id="homogeneidad-de-la-varianza" class="level2">
+<h2 class="anchored" data-anchor-id="homogeneidad-de-la-varianza">4. Homogeneidad de la varianza</h2>
+<p>Sus grupos también debería cumplir con la homogeneidad de la varianza. O sea, todos sus grupos deberían tener niveles de varianza similares. Si haya un grupo que tiene una varianza tan larga y los otros muy poco, es probable que este grupo va a cambiar sus resultados.</p>
+<p>Es importante probar la homogeneidad de la varianza antes de hacer su ANOVA.</p>
+<p>De nuevo hay un método numérico y un método visual.</p>
+<section id="visual" class="level3">
+<h3 class="anchored" data-anchor-id="visual">visual</h3>
+<p>Con el grafico, debería ser sin relaciones entre los grupos (o sea, random).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(norm, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C8-modelosnormales1_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Acá no aparece random, sino que con una curva.</p>
+</section>
+<section id="prueba-de-levene" class="level3">
+<h3 class="anchored" data-anchor-id="prueba-de-levene">Prueba de Levene</h3>
+<p>La prueba de Levene se usa para probar la homogeneidad de la varianza también (valor P &gt; 0.05 está bien).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levene_test</span>(<span class="at">data=</span>pinguinos, masa_corporal_g <span class="sc">~</span> especie)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+    df1   df2 statistic       p
+  &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+1     2   339      5.12 0.00645</code></pre>
+</div>
+</div>
+<p>No se cumplen los datos con la suposición de la homogeneidad de la varianza. Entonces, deberíamos usar Kruskal-Wallis, intentar a transformar los datos, o usar la Welch ANOVA (welch_anova_test)</p>
+</section>
+</section>
+</section>
+<section id="section" class="level1">
+<h1></h1>
+</section>
+<section id="elegir-su-típo-de-modelo" class="level1">
+<h1>Elegir su típo de modelo</h1>
+</section>
+<section id="section-1" class="level1">
+<h1><img src="images/ANOVA choices-01.jpg" class="img-fluid"></h1>
+</section>
+<section id="hacer-su-modelo" class="level1">
+<h1>Hacer su modelo</h1>
+<p>La gramática de modelos casi siempre es así: prueba(data= datos, variable respuesta ~ variable(s) explicativa)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># llamarmodelo &lt;- aov(data=datos, var.res ~ var.expl) # ANOVA</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># llamarmodelo &lt;- kruskal.test(data=datos, var.res ~ var.expl) # kruskal wallis</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>MasaEsAN <span class="ot">&lt;-</span> <span class="fu">aov</span>(<span class="at">data=</span>pinguinos, masa_corporal_g <span class="sc">~</span> especie)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(MasaEsAN)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Df    Sum Sq  Mean Sq F value Pr(&gt;F)    
+especie       2 146864214 73432107   343.6 &lt;2e-16 ***
+Residuals   339  72443483   213698                   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+2 observations deleted due to missingness</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># invalido porque no se cumplen con la homogeneidad de la varianza, solo un ejemplo de comó hacerse</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>MasaEsKW <span class="ot">&lt;-</span> <span class="fu">kruskal.test</span>(<span class="at">data=</span>pinguinos, masa_corporal_g <span class="sc">~</span> especie)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>MasaEsKW</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Kruskal-Wallis rank sum test
+
+data:  masa_corporal_g by especie
+Kruskal-Wallis chi-squared = 217.6, df = 2, p-value &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<section id="prueba-post-hoc" class="level2">
+<h2 class="anchored" data-anchor-id="prueba-post-hoc">Prueba post-hoc</h2>
+<p>En el ejemplo arriba, puede ver que había distinciones entre los promedios, pero no es claro cual grupo tiene valores menores/mayores. Para adivinar eso, ocupa una prueba ‘post-hoc’ o después de hecho. Estas pruebas producir una tabla con comparaciones de cada promedio con cada otro promedio.</p>
+<p>Por ejemplo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>DunnsMCE <span class="ot">&lt;-</span> <span class="fu">dunn_test</span>(<span class="at">data=</span>pinguinos, masa_corporal_g <span class="sc">~</span> especie)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>DunnsMCE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 9
+  .y.         group1 group2    n1    n2 statistic        p    p.adj p.adj.signif
+* &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt;  &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;       
+1 masa_corpo… Adelia Barbi…   151    68     0.397 6.91e- 1 6.91e- 1 ns          
+2 masa_corpo… Adelia Papúa    151   123    13.8   1.73e-43 5.18e-43 ****        
+3 masa_corpo… Barbi… Papúa     68   123    10.7   7.33e-27 1.47e-26 ****        </code></pre>
+</div>
+</div>
+<p>Pueda ver que los individuos del especies Adelia y Barbijo son significativamente distino del los de Papúa.</p>
+<p>Recuerda el boxplot original:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pinguinos <span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>especie, <span class="at">y=</span>masa_corporal_g, <span class="at">color=</span>especie))<span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"especie"</span>, <span class="at">y=</span><span class="st">"masa corporal (g)"</span>)<span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)<span class="sc">+</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Masa Corporal por Especie de Pingüino"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite outside the scale range
+(`stat_boxplot()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C8-modelosnormales1_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Ahora, es correcto decir que los pingüinos de la especie Papúa tienen una masa corporal significativamente más grande de los del Adelia o Barbijo.</p>
+<p>Por Kruskal-Wallis, el post-hoc es la prueba de Dunn (dunn_test()). Por ANOVA normal es la prueba de Tukey (tukey_HSD()). Por el Welch ANOVA es la prueba de Games-Howell (games_howell_test())</p>
+<p>Recursos:</p>
+<p><a href="https://fastercapital.com/es/contenido/Homogeneidad-de-la-varianza--supuesto-de-ANOVA.html">Homogeneidad de la varianza- Español</a></p>
+<p><a href="https://www.datanovia.com/en/lessons/anova-in-r/">Proceso general- inglés</a></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
