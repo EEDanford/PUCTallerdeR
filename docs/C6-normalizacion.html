@@ -213,7 +213,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./C9-modelosnormales2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">C9-modelosnormales2.html</span></a>
+ <span class="menu-text">Modelos lineales</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -424,22 +424,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>Best Normalizing transformation with 342 Observations
  Estimated Normality Statistics (Pearson P / df, lower =&gt; more normal):
- - arcsinh(x): 1.366
- - Box-Cox: 1.3587
- - Center+scale: 1.6267
- - Double Reversed Log_b(x+a): 2.9706
- - Log_b(x+a): 1.366
- - orderNorm (ORQ): 1.1776
- - sqrt(x + a): 1.4231
- - Yeo-Johnson: 1.3587
+ - arcsinh(x): 1.2243
+ - Box-Cox: 1.1629
+ - Center+scale: 1.5643
+ - Double Reversed Log_b(x+a): 2.9765
+ - Log_b(x+a): 1.2243
+ - orderNorm (ORQ): 1.2254
+ - sqrt(x + a): 1.3722
+ - Yeo-Johnson: 1.1629
 Estimation method: Out-of-sample via CV with 10 folds and 5 repeats
  
 Based off these, bestNormalize chose:
-orderNorm Transformation with 342 nonmissing obs and ties
- - 95 unique values 
- - Original quantiles:
-  0%  25%  50%  75% 100% 
-2700 3550 4050 4750 6300 </code></pre>
+Standardized Box Cox Transformation with 342 nonmissing obs.:
+ Estimated statistics:
+ - lambda = -0.465651 
+ - mean (before standardization) = 2.10287 
+ - sd (before standardization) = 0.003880517 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ON.MasaCorpg <span class="ot">&lt;-</span> <span class="fu">orderNorm</span>(pinguinos<span class="sc">$</span>masa_corporal_g) <span class="co">#orderNorming y guardar como factor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">

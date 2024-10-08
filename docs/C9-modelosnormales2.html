@@ -82,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./clases.html">Clases</a></li><li class="breadcrumb-item"><a href="./C9-modelosnormales2.html">C9-modelosnormales2.html</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./clases.html">Clases</a></li><li class="breadcrumb-item"><a href="./C9-modelosnormales2.html">Modelos lineales</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -179,7 +179,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./C9-modelosnormales2.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">C9-modelosnormales2.html</span></a>
+ <span class="menu-text">Modelos lineales</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -237,7 +237,22 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#modelos-lineales" id="toc-modelos-lineales" class="nav-link active" data-scroll-target="#modelos-lineales">Modelos lineales</a></li>
+  <li><a href="#tilde-es-ctl-alt" id="toc-tilde-es-ctl-alt" class="nav-link" data-scroll-target="#tilde-es-ctl-alt">TILDE es ‘ctl + alt + ]’</a></li>
+  <li><a href="#opciones-con-glm" id="toc-opciones-con-glm" class="nav-link" data-scroll-target="#opciones-con-glm">Opciones con GLM</a></li>
+  <li><a href="#sintaxis-por-modelos-generalizados" id="toc-sintaxis-por-modelos-generalizados" class="nav-link" data-scroll-target="#sintaxis-por-modelos-generalizados">Sintaxis por modelos (generalizados)</a>
+  <ul class="collapse">
+  <li><a href="#sintaxis-general-una-variable-explicativa" id="toc-sintaxis-general-una-variable-explicativa" class="nav-link" data-scroll-target="#sintaxis-general-una-variable-explicativa">Sintaxis general (una variable explicativa)</a></li>
+  <li><a href="#sintaxis-general-dos-variables-explicativas" id="toc-sintaxis-general-dos-variables-explicativas" class="nav-link" data-scroll-target="#sintaxis-general-dos-variables-explicativas">Sintaxis general (dos+ variables explicativas)</a></li>
+  <li><a href="#sintaxis-general-dos-variables-explicativas-y-interacciones" id="toc-sintaxis-general-dos-variables-explicativas-y-interacciones" class="nav-link" data-scroll-target="#sintaxis-general-dos-variables-explicativas-y-interacciones">Sintaxis general (dos+ variables explicativas y interacciones)</a></li>
+  <li><a href="#sintaxis-completo-para-un-glm" id="toc-sintaxis-completo-para-un-glm" class="nav-link" data-scroll-target="#sintaxis-completo-para-un-glm">Sintaxis completo para un glm</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -245,8 +260,43 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<section id="modelos-lineales" class="level1">
+<h1>Modelos lineales</h1>
+</section>
+<section id="tilde-es-ctl-alt" class="level1">
+<h1>TILDE es ‘ctl + alt + ]’</h1>
+<p>Había un montón de tipos de modelos que puede ocupar para analizar sus datos, desde lo más básico hasta ellos que pueden tomar combinaciones complicadas para representar sus datos. El prepósito de un modelo, generalmente, es crear una combinación de variables que puede representar una relación entre variables en una manera correcta y que crear valores predictivos.</p>
+<p>Con sistemas naturales, la idea puede ser tener predicciones para el futuro, pero frecuentemente se interesa mas la pregunta si haya relaciones entre variables o no.</p>
+<p>Es super importante tener y saber una hipótesis acá, y anota que nunca puede probar que tu hipótesis es verdad, sino que significancia decía que no hay evidencia que tu hipótesis es incorrecto. Tampoco, puede decir que una variable explicativa causa su variable de respuesta.</p>
+<p><img src="images/Correlation_Vs_Causation_-_2019-es.png" class="img-fluid"></p>
+<p>¡Por esta razón, su interpretación de sus propios resultados con conocimiento profundo de su proyecto es super importante!</p>
+<p>Casi nunca puede decir que algo causa otra, pero si conozca bien su proyecto y sistema, podría elucidar conclusiones e ideas desde sus correlaciones.</p>
+</section>
+<section id="opciones-con-glm" class="level1">
+<h1>Opciones con GLM</h1>
+</section>
+<section id="sintaxis-por-modelos-generalizados" class="level1">
+<h1>Sintaxis por modelos (generalizados)</h1>
+<p>Anota: para hacer la tilde (~), usa ‘ctrl + alt + ]’</p>
+<section id="sintaxis-general-una-variable-explicativa" class="level3">
+<h3 class="anchored" data-anchor-id="sintaxis-general-una-variable-explicativa">Sintaxis general (una variable explicativa)</h3>
+<p>TipodeModelo(data=data, variable_respuesta ~ variable_explicativa)</p>
+</section>
+<section id="sintaxis-general-dos-variables-explicativas" class="level3">
+<h3 class="anchored" data-anchor-id="sintaxis-general-dos-variables-explicativas">Sintaxis general (dos+ variables explicativas)</h3>
+<p>TipodeModelo(data=data, variable_respuesta ~ variable_explicativa + var_ex2 + varex3)</p>
+</section>
+<section id="sintaxis-general-dos-variables-explicativas-y-interacciones" class="level3">
+<h3 class="anchored" data-anchor-id="sintaxis-general-dos-variables-explicativas-y-interacciones">Sintaxis general (dos+ variables explicativas y interacciones)</h3>
+<p>TipodeModelo(data=data, variable_respuesta ~ variable_explicativa + var_ex2* varex3)</p>
+</section>
+<section id="sintaxis-completo-para-un-glm" class="level3">
+<h3 class="anchored" data-anchor-id="sintaxis-completo-para-un-glm">Sintaxis completo para un glm</h3>
+<p>glm(data=data, var_res ~ var_exp1 + var_exp2 + var_exp3 * var_exp4, family=“poisson”)</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

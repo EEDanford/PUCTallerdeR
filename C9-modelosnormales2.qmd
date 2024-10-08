@@ -1,1 +1,37 @@
+# Modelos lineales 
 
+# TILDE es 'ctl + alt + \]'
+
+Había un montón de tipos de modelos que puede ocupar para analizar sus datos, desde lo más básico hasta ellos que pueden tomar combinaciones complicadas para representar sus datos. El prepósito de un modelo, generalmente, es crear una combinación de variables que puede representar una relación entre variables en una manera correcta y que crear valores predictivos.
+
+Con sistemas naturales, la idea puede ser tener predicciones para el futuro, pero frecuentemente se interesa mas la pregunta si haya relaciones entre variables o no.
+
+Es super importante tener y saber una hipótesis acá, y anota que nunca puede probar que tu hipótesis es verdad, sino que significancia decía que no hay evidencia que tu hipótesis es incorrecto. Tampoco, puede decir que una variable explicativa causa su variable de respuesta.
+
+![](images/Correlation_Vs_Causation_-_2019-es.png)
+
+¡Por esta razón, su interpretación de sus propios resultados con conocimiento profundo de su proyecto es super importante!
+
+Casi nunca puede decir que algo causa otra, pero si conozca bien su proyecto y sistema, podría elucidar conclusiones e ideas desde sus correlaciones.
+
+# Opciones con GLM
+
+# Sintaxis por modelos (generalizados)
+
+Anota: para hacer la tilde (\~), usa 'ctrl + alt + \]'
+
+### Sintaxis general (una variable explicativa)
+
+TipodeModelo(data=data, variable_respuesta \~ variable_explicativa)
+
+### Sintaxis general (dos+ variables explicativas)
+
+TipodeModelo(data=data, variable_respuesta \~ variable_explicativa + var_ex2 + varex3)
+
+### Sintaxis general (dos+ variables explicativas y interacciones)
+
+TipodeModelo(data=data, variable_respuesta \~ variable_explicativa + var_ex2\* varex3)
+
+### Sintaxis completo para un glm
+
+glm(data=data, var_res \~ var_exp1 + var_exp2 + var_exp3 \* var_exp4, family="poisson")

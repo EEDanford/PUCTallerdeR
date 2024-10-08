@@ -78,6 +78,7 @@ Puede ver que Adelia y Papua tienen variaciones a la partida y el fin, pero son 
 Es posbile usar 'lm' (modelo lineal) o 'aov' (anova) acá. Resulta exactamente lo mismo.
 
 ```{r}
+# TILDE es 'ctl + alt + ]'
 normmod <- lm(data=pinguinos, masa_corporal_g ~ especie)
 
 ggqqplot(residuals(normmod))
@@ -124,7 +125,7 @@ No se cumplen los datos con la suposición de la homogeneidad de la varianza. En
 
 # 
 
-# Elegir su típo de modelo
+# Elegir su típo de modelo (un modelo explicativa)
 
 # ![](images/ANOVA%20choices-01.jpg)
 
@@ -132,7 +133,11 @@ No se cumplen los datos con la suposición de la homogeneidad de la varianza. En
 
 La gramática de modelos casi siempre es así: prueba(data= datos, variable respuesta \~ variable(s) explicativa)
 
+#### tilde = ctrl + alt + \]
+
 ```{r}
+# TILDE es 'ctl + alt + ]'
+
 # llamarmodelo <- aov(data=datos, var.res ~ var.expl) # ANOVA
 # llamarmodelo <- kruskal.test(data=datos, var.res ~ var.expl) # kruskal wallis
 
@@ -173,8 +178,21 @@ Ahora, es correcto decir que los pingüinos de la especie Papúa tienen una masa
 
 Por Kruskal-Wallis, el post-hoc es la prueba de Dunn (dunn_test()). Por ANOVA normal es la prueba de Tukey (tukey_HSD()). Por el Welch ANOVA es la prueba de Games-Howell (games_howell_test())
 
-Recursos:
+# Otros opciónes
+
+| Prueba                          | Uso                                                                       |
+|---------------------------------|---------------------------------------------------------------------------|
+| ANOVA bidirecional              | Con dos variables categoricas explicativas                                |
+| ANCOVA (análisis de covarianza) | Con 1/2 variables categoricas explicativas y una covarianza númerica      |
+| MANOVA                          | Probar efectos de las variables explicativas en dos+ variables respuestas |
+| Prueba T (t-test)               | Comparación entre promedios de solo dos grupos/niveles                    |
+
+# Recursos:
 
 [Homogeneidad de la varianza- Español](https://fastercapital.com/es/contenido/Homogeneidad-de-la-varianza--supuesto-de-ANOVA.html)
 
 [Proceso general- inglés](https://www.datanovia.com/en/lessons/anova-in-r/)
+
+[MANOVA- Español](https://www.ibm.com/docs/es/spss-statistics/beta?topic=statistics-multivariate-analysis-variance-manova)
+
+[ANCOVA](https://www.ibm.com/docs/es/spss-statistics/beta?topic=features-analysis-covariance-ancova)

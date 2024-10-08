@@ -213,7 +213,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./C9-modelosnormales2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">C9-modelosnormales2.html</span></a>
+ <span class="menu-text">Modelos lineales</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -292,12 +292,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   </ul></li>
   <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
-  <li><a href="#elegir-su-típo-de-modelo" id="toc-elegir-su-típo-de-modelo" class="nav-link" data-scroll-target="#elegir-su-típo-de-modelo">Elegir su típo de modelo</a></li>
+  <li><a href="#elegir-su-típo-de-modelo-un-modelo-explicativa" id="toc-elegir-su-típo-de-modelo-un-modelo-explicativa" class="nav-link" data-scroll-target="#elegir-su-típo-de-modelo-un-modelo-explicativa">Elegir su típo de modelo (un modelo explicativa)</a></li>
   <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><img src="images/ANOVA choices-01.jpg" class="img-fluid"></a></li>
   <li><a href="#hacer-su-modelo" id="toc-hacer-su-modelo" class="nav-link" data-scroll-target="#hacer-su-modelo">Hacer su modelo</a>
   <ul class="collapse">
   <li><a href="#prueba-post-hoc" id="toc-prueba-post-hoc" class="nav-link" data-scroll-target="#prueba-post-hoc">Prueba post-hoc</a></li>
   </ul></li>
+  <li><a href="#otros-opciónes" id="toc-otros-opciónes" class="nav-link" data-scroll-target="#otros-opciónes">Otros opciónes</a></li>
+  <li><a href="#recursos" id="toc-recursos" class="nav-link" data-scroll-target="#recursos">Recursos:</a></li>
   </ul>
 </nav>
     </div>
@@ -401,9 +403,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="versión-después">Versión después</h3>
 <p>Es posbile usar ‘lm’ (modelo lineal) o ‘aov’ (anova) acá. Resulta exactamente lo mismo.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>normmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data=</span>pinguinos, masa_corporal_g <span class="sc">~</span> especie)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggqqplot</span>(<span class="fu">residuals</span>(normmod))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># TILDE es 'ctl + alt + ]'</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>normmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data=</span>pinguinos, masa_corporal_g <span class="sc">~</span> especie)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggqqplot</span>(<span class="fu">residuals</span>(normmod))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -480,8 +483,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="section" class="level1">
 <h1></h1>
 </section>
-<section id="elegir-su-típo-de-modelo" class="level1">
-<h1>Elegir su típo de modelo</h1>
+<section id="elegir-su-típo-de-modelo-un-modelo-explicativa" class="level1">
+<h1>Elegir su típo de modelo (un modelo explicativa)</h1>
 </section>
 <section id="section-1" class="level1">
 <h1><img src="images/ANOVA choices-01.jpg" class="img-fluid"></h1>
@@ -489,12 +492,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="hacer-su-modelo" class="level1">
 <h1>Hacer su modelo</h1>
 <p>La gramática de modelos casi siempre es así: prueba(data= datos, variable respuesta ~ variable(s) explicativa)</p>
+<section id="tilde-ctrl-alt" class="level4">
+<h4 class="anchored" data-anchor-id="tilde-ctrl-alt">tilde = ctrl + alt + ]</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># llamarmodelo &lt;- aov(data=datos, var.res ~ var.expl) # ANOVA</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># llamarmodelo &lt;- kruskal.test(data=datos, var.res ~ var.expl) # kruskal wallis</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>MasaEsAN <span class="ot">&lt;-</span> <span class="fu">aov</span>(<span class="at">data=</span>pinguinos, masa_corporal_g <span class="sc">~</span> especie)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(MasaEsAN)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># TILDE es 'ctl + alt + ]'</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># llamarmodelo &lt;- aov(data=datos, var.res ~ var.expl) # ANOVA</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># llamarmodelo &lt;- kruskal.test(data=datos, var.res ~ var.expl) # kruskal wallis</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>MasaEsAN <span class="ot">&lt;-</span> <span class="fu">aov</span>(<span class="at">data=</span>pinguinos, masa_corporal_g <span class="sc">~</span> especie)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(MasaEsAN)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Df    Sum Sq  Mean Sq F value Pr(&gt;F)    
 especie       2 146864214 73432107   343.6 &lt;2e-16 ***
@@ -515,6 +522,7 @@ data:  masa_corporal_g by especie
 Kruskal-Wallis chi-squared = 217.6, df = 2, p-value &lt; 2.2e-16</code></pre>
 </div>
 </div>
+</section>
 <section id="prueba-post-hoc" class="level2">
 <h2 class="anchored" data-anchor-id="prueba-post-hoc">Prueba post-hoc</h2>
 <p>En el ejemplo arriba, puede ver que había distinciones entre los promedios, pero no es claro cual grupo tiene valores menores/mayores. Para adivinar eso, ocupa una prueba ‘post-hoc’ o después de hecho. Estas pruebas producir una tabla con comparaciones de cada promedio con cada otro promedio.</p>
@@ -554,12 +562,49 @@ Kruskal-Wallis chi-squared = 217.6, df = 2, p-value &lt; 2.2e-16</code></pre>
 </div>
 <p>Ahora, es correcto decir que los pingüinos de la especie Papúa tienen una masa corporal significativamente más grande de los del Adelia o Barbijo.</p>
 <p>Por Kruskal-Wallis, el post-hoc es la prueba de Dunn (dunn_test()). Por ANOVA normal es la prueba de Tukey (tukey_HSD()). Por el Welch ANOVA es la prueba de Games-Howell (games_howell_test())</p>
-<p>Recursos:</p>
+</section>
+</section>
+<section id="otros-opciónes" class="level1">
+<h1>Otros opciónes</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 69%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Prueba</th>
+<th>Uso</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ANOVA bidirecional</td>
+<td>Con dos variables categoricas explicativas</td>
+</tr>
+<tr class="even">
+<td>ANCOVA (análisis de covarianza)</td>
+<td>Con 1/2 variables categoricas explicativas y una covarianza númerica</td>
+</tr>
+<tr class="odd">
+<td>MANOVA</td>
+<td>Probar efectos de las variables explicativas en dos+ variables respuestas</td>
+</tr>
+<tr class="even">
+<td>Prueba T (t-test)</td>
+<td>Comparación entre promedios de solo dos grupos/niveles</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="recursos" class="level1">
+<h1>Recursos:</h1>
 <p><a href="https://fastercapital.com/es/contenido/Homogeneidad-de-la-varianza--supuesto-de-ANOVA.html">Homogeneidad de la varianza- Español</a></p>
 <p><a href="https://www.datanovia.com/en/lessons/anova-in-r/">Proceso general- inglés</a></p>
+<p><a href="https://www.ibm.com/docs/es/spss-statistics/beta?topic=statistics-multivariate-analysis-variance-manova">MANOVA- Español</a></p>
+<p><a href="https://www.ibm.com/docs/es/spss-statistics/beta?topic=features-analysis-covariance-ancova">ANCOVA</a></p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -979,8 +1024,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./C9-modelosnormales2.html" class="pagination-link" aria-label="C9-modelosnormales2.html">
-        <span class="nav-page-text">C9-modelosnormales2.html</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./C9-modelosnormales2.html" class="pagination-link" aria-label="Modelos lineales">
+        <span class="nav-page-text">Modelos lineales</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
