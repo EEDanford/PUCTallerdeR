@@ -127,7 +127,9 @@ No se cumplen los datos con la suposición de la homogeneidad de la varianza. En
 
 # Elegir su típo de modelo (un modelo explicativa)
 
-# ![](images/ANOVA%20choices-01.jpg)
+# 
+
+![](images/ANOVA choices-01.jpg){fig-align="left"}
 
 # Hacer su modelo
 
