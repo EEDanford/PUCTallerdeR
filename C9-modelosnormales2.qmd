@@ -1,6 +1,4 @@
-# Modelos lineales 
-
-# TILDE es 'ctl + alt + \]'
+# Modelos lineales
 
 Había un montón de tipos de modelos que puede ocupar para analizar sus datos, desde lo más básico hasta ellos que pueden tomar combinaciones complicadas para representar sus datos. El prepósito de un modelo, generalmente, es crear una combinación de variables que puede representar una relación entre variables en una manera correcta y que crear valores predictivos.
 
@@ -14,7 +12,28 @@ Es super importante tener y saber una hipótesis acá, y anota que nunca puede p
 
 Casi nunca puede decir que algo causa otra, pero si conozca bien su proyecto y sistema, podría elucidar conclusiones e ideas desde sus correlaciones.
 
-# Opciones con GLM
+# Empezando con GLM
+
+```{r, echo=FALSE}
+library(vegan)
+library(lme4)
+library(tidyverse)
+
+data(BCI) # 50
+data(BCI.env)
+
+cbi <- merge(BCI[,50], BCI.env)
+cbi <- cbi %>%
+  rename("Cordia bicolor" = x, "Elevacion" = Elevation, "Geologia" = Geology, "Rio Presente" = Stream, "Edad del Bosque" = Age.cat, "HetMA"= EnvHet)
+
+cbs <- cbi[,c(1, 4:10)]
+
+
+```
+
+```{r}
+head(cbs)
+```
 
 # Sintaxis por modelos (generalizados)
 
