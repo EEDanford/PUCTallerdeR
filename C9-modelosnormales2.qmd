@@ -21,6 +21,7 @@ library(tidyverse)
 library(DHARMa)
 library(car)
 library(MASS)
+library(rstatix)
 
 
 data("mite")
@@ -60,6 +61,25 @@ ac$Sustrato <- as.factor(ac$Sustrato)
 ac$Arbusto <- as.factor(ac$Arbusto)
 ac$Topo <- as.factor(ac$Topo)
 
+
+```
+
+\* Y sacar sus outliers
+
+```{r}
+ac %>% 
+  identify_outliers(AcaroBrachy)
+
+quartiles <- quantile(ac$AcaroBrachy, probs=c(.25, .75), na.rm = FALSE)
+IQR <- IQR(ac$AcaroBrachy)
+
+# -3 deviaciónes estander 
+Lower <- quartiles[1] - 1.5*IQR
+
+# +3 deviaciónes estander
+Upper <- quartiles[2] + 1.5*IQR 
+
+acso <- subset(ac, ac$AcaroBrachy > Lower & ac$AcaroBrachy < Upper)
 
 ```
 
