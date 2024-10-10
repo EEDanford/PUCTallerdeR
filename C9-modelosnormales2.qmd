@@ -42,7 +42,7 @@ Por ejemplo: acá tenemos la abundancia de Cordia bicolor, precipitación, eleva
 head(ac)
 ```
 
-La hipótesis puede incluir cualquier de los variables o todos.
+La hipótesis puede incluir algunas de las variables o todos.
 
 Una hipótesis puede ser así: Habría una abundancia más alta de Cordia bicolor con más precipitación y menos elevación. Entonces, probamos los variables de precipitación y elevación. Podemos incluir también geología, hábitat o edad del bosque, pero no son lo prioridad.
 
