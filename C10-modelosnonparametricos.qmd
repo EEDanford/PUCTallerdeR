@@ -1,1 +1,61 @@
+# Modelos aditivos generalizados (GAM/MAG)
 
+## En que situación necesita un GAM?
+
+Por supuesto si tenga datos non-normales, o que no se cumplen con el homogeneidad de varianza. O si ya intentaba con GLM y ningúna familia adecuada funciona.
+
+Pero además, si los datos no son lineales, o sea, hay curvas en la distribución. O si el GLM no es super adecuada.
+
+```{r}
+{r, message=FALSE, warning=FALSE, error=FALSE, include=FALSE}
+library(vegan)
+library(lme4)
+library(tidyverse)
+library(DHARMa)
+library(car)
+library(MASS)
+library(rstatix)
+
+
+data("mite")
+data("mite.env")
+
+ac <- bind_cols(mite$Brachy, mite.env)
+ac <- ac %>%
+  rename("AcaroBrachy" = ...1, "DensSustrato" = SubsDens, "CuentaAgua" = WatrCont, "Sustrato" = Substrate, "Arbusto" = Shrub)
+
+ac$DensSustrato <- as.numeric(ac$DensSustrato)
+ac$CuentaAgua <- as.numeric(ac$CuentaAgua)
+ac$Sustrato <- as.factor(ac$Sustrato)
+ac$Arbusto <- as.factor(ac$Arbusto)
+ac$Topo <- as.factor(ac$Topo)
+
+ac %>% 
+  identify_outliers(AcaroBrachy)
+
+quartiles <- quantile(ac$AcaroBrachy, probs=c(.25, .75), na.rm = FALSE)
+IQR <- IQR(ac$AcaroBrachy)
+
+# -3 deviaciónes estander 
+Lower <- quartiles[1] - 1.5*IQR
+
+# +3 deviaciónes estander
+Upper <- quartiles[2] + 1.5*IQR 
+
+acso <- subset(ac, ac$AcaroBrachy > Lower & ac$AcaroBrachy < Upper)
+
+ABBaseBN3 <- glm.nb(data=ac, AcaroBrachy ~ Sustrato + Topo)
+
+simResABBaseBN3 <-simulateResiduals(ABBaseBN3) 
+
+plot(simResABBaseBN3)
+```
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+
+
+ac %>%
+  ggplot(aes(AcaroBrachy, DensSustrato, col = Topo)) + 
+    geom_point(size = 2) + 
+    geom_smooth(method = "glm", , se = F)
+```

@@ -6,15 +6,31 @@ Con sistemas naturales, la idea puede ser tener predicciones para el futuro, per
 
 Es super importante tener y saber una hipótesis acá, y anota que nunca puede probar que tu hipótesis es verdad, sino que significancia decía que no hay evidencia que tu hipótesis es incorrecto. Tampoco, puede decir que una variable explicativa causa su variable de respuesta.
 
-![](images/Correlation_Vs_Causation_-_2019-es.png)
+![](images/Correlation_Vs_Causation_-_2019-es.png){fig-align="center" width="600"}
 
 ¡Por esta razón, su interpretación de sus propios resultados con conocimiento profundo de su proyecto es super importante!
 
 Casi nunca puede decir que algo causa otra, pero si conozca bien su proyecto y sistema, podría elucidar conclusiones e ideas desde sus correlaciones.
 
-# Empezando con GLM
+# ¿Como funciona los modelos lineales?
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
+De nivel más básico, un modelo lineal toma dos variables y te cuenta la relación entre los dos, incluyendo si suben/bajan juntos y con qué incremento.  
+
+La fórmula super básico es así:
+
+**Y = mX + b**
+
+X e Y son tus variables explicativas (X) y respuesta (Y)
+
+M es la inclinación, o sea, el rato de cambio por Y con cada unidad de X
+
+B es la intersección (o sea, cuando no hay ninguna del Y: ¿cuántas unidades del X hay?)
+
+Entonces, desde un modelo lineal básico, puede aprender mucho. Este tipo de modelo mas básico, con una variable de respuesta y una variable explicativa es un modelo lineal, y se usa el función ‘lm()’
+
+Por ejemplo:
+
+```{r, include = FALSE}
 library(vegan)
 library(lme4)
 library(tidyverse)
@@ -31,9 +47,25 @@ ac <- bind_cols(mite$Brachy, mite.env)
 ac <- ac %>%
   rename("AcaroBrachy" = ...1, "DensSustrato" = SubsDens, "CuentaAgua" = WatrCont, "Sustrato" = Substrate, "Arbusto" = Shrub)
 
-
-
 ```
+
+
+```{r, message=FALSE, warning=FALSE}
+ac %>%
+  ggplot(aes(x=AcaroBrachy, y=CuentaAgua))+
+  geom_point()+
+  geom_smooth(method="lm")
+```
+
+```{r}
+lmej <- lm(data=ac, AcaroBrachy ~ CuentaAgua)
+summary(lmej)
+```
+Eso es un ejemplo básico, pero normalmente en ecología/agronomía, los datos y relaciones son complicados. Si haya algo en el campo, tendría mas que una variable explicativa, porque hay otras cosas que se afectan su variable respuesta. Además, hay mas etapas que hacer su gráfico y después el modelo. Los supuestos son super importantes y sus tipos de datos también. Así que, empezamos con GLM.
+
+# Empezando con GLM
+
+GLMs son similares a modelos lineales, pero son mas flexible, y tienen poquito más tolerancia a residuos non-normales. Entonces, puede hacer un análisis/modelo más complicado con GLM.
 
 Para hacer un modelo, necesita una pregunta y/o una hipótesis.
 
@@ -51,7 +83,7 @@ Una pregunta puede ser: ¿Cuáles factores medio ambientales impacta la abundanc
 
 Así podemos usar todos los variables para ver cual tiene impacto.
 
-\* No olvide a cambiar los tipos de datos ANTES de hacer modelos (y si quiere, transformar)
+* No olvide a cambiar los tipos de datos ANTES de hacer modelos (y si quiere, transformar)
 
 ```{r}
 
@@ -64,7 +96,7 @@ ac$Topo <- as.factor(ac$Topo)
 
 ```
 
-\* Y sacar sus outliers
+* Y sacar sus outliers
 
 ```{r}
 ac %>% 
@@ -83,7 +115,7 @@ acso <- subset(ac, ac$AcaroBrachy > Lower & ac$AcaroBrachy < Upper)
 
 ```
 
-\* Además debería probar por correlaciónes antes
+* Además debería probar por correlaciónes antes
 
 ```{r}
 library(corrgram)
@@ -234,6 +266,10 @@ simResABBaseBN3 <-simulateResiduals(ABBaseBN3)
 plot(simResABBaseBN3)
 
 vif(ABBaseBN3)
+
+plot(ABBaseBN3)
+
+
 ```
 
 Así que el modelo se cumple con todos los supuestos, ve los resultados.
@@ -330,6 +366,8 @@ vif(RB3)
 # podemos ver que no es exactamente bien
 
 summary(RB3)
+
+plot(RB3)
 ```
 
 Acá se sale lo mismo como regresión 'forward' pero distinto a 'stepwise backward'. Depende en su cantidad de variables, puede salir de cualquier manera.
