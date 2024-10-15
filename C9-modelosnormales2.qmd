@@ -69,7 +69,7 @@ GLMs son similares a modelos lineales, pero son mas flexible, y tienen poquito m
 
 Para hacer un modelo, necesita una pregunta y/o una hipótesis.
 
-Por ejemplo: acá tenemos la abundancia de Cordia bicolor, precipitación, elevación, edad del bosque, geología, y hábitat. Supongo que la pregunta central es cuales factores se impactan lo distribución de un árbol, Cordia bicolor en la isla Barro Colorado.
+Por ejemplo: acá tenemos la abundancia de Acaro Brachy, densidad del sustrato, cantidad del agua en el sustrato, sustrato, nivel de cobertura de arbustos y topografia. Supongo que la pregunta central es cuales factores se impactan lo distribución de Acaro Brachy.
 
 ```{r}
 head(ac)
@@ -77,9 +77,9 @@ head(ac)
 
 La hipótesis puede incluir algunas de las variables o todos.
 
-Una hipótesis puede ser así: Habría una abundancia más alta de Cordia bicolor con más precipitación y menos elevación. Entonces, probamos los variables de precipitación y elevación. Podemos incluir también geología, hábitat o edad del bosque, pero no son lo prioridad.
+Una hipótesis puede ser así: Habría una abundancia más alta de Acaro Brachy con sustratos mas densos y un nivel de cobertura de arbustos menos denso.. Entonces, probamos los variables 'DensSustrato' y 'Arbusto'. Podemos incluir también el resto, pero no son lo prioridad.
 
-Una pregunta puede ser: ¿Cuáles factores medio ambientales impacta la abundancia del Cordia bicolor?
+Una pregunta puede ser: ¿Cuáles factores medio ambientales impacta la abundancia del Acaro Brachy?
 
 Así podemos usar todos los variables para ver cual tiene impacto.
 

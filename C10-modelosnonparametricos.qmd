@@ -6,8 +6,7 @@ Por supuesto si tenga datos non-normales, o que no se cumplen con el homogeneida
 
 Pero además, si los datos no son lineales, o sea, hay curvas en la distribución. O si el GLM no es super adecuada.
 
-```{r}
-{r, message=FALSE, warning=FALSE, error=FALSE, include=FALSE}
+```{r, message=FALSE, warning=FALSE, include=FALSE}
 library(vegan)
 library(lme4)
 library(tidyverse)
@@ -15,6 +14,8 @@ library(DHARMa)
 library(car)
 library(MASS)
 library(rstatix)
+library(mgcv)
+library(MuMIn)
 
 
 data("mite")
@@ -49,13 +50,65 @@ ABBaseBN3 <- glm.nb(data=ac, AcaroBrachy ~ Sustrato + Topo)
 simResABBaseBN3 <-simulateResiduals(ABBaseBN3) 
 
 plot(simResABBaseBN3)
+
 ```
 
-```{r, message=FALSE, warning=FALSE, echo=FALSE}
+La ultima semana, trabaje con GLMs y como elegir un modelo desde un par de modelos. Los valores de AIC, sus grados de libertad (degrees of freedom/df), y cumplimiento con los supuestos pueden ayudarse a elegir el modelo mas adecuado. 
+
+Pero hay mas que debe hacer. Un modelo puede ser adecuado, y técnicamente correcto, pero todavía ser lo menos apto, o sea, que pueda todavía crear un modelo mejor. El valor de R2 esta usado para evaluar la fuerza de su modelo. 
+
+
+```{r}
+ABBaseBN3 <- glm.nb(data=ac, AcaroBrachy ~ DensSustrato + Topo)
+
+summary(ABBaseBN3)
+r.squaredGLMM(ABBaseBN3)
+```
+
+
+
+```{r, echo=FALSE}
 
 
 ac %>%
   ggplot(aes(AcaroBrachy, DensSustrato, col = Topo)) + 
     geom_point(size = 2) + 
     geom_smooth(method = "glm", , se = F)
+
+gammod <- gam(AcaroBrachy ~ s(DensSustrato) + s(CuentaAgua) + Topo, data=ac)
+
+summary(gammod)
+
+#geom_smooth(aes(group=manner, colour=manner),
+          #    method="gam", formula = y ~ s(x, bs = "cs") 
+
+              
+#plot(ggeffects::ggpredict(gammod), facets = TRUE)
+
+
+
+ac %>%
+  ggplot(aes(AcaroBrachy, DensSustrato, col = Topo)) + 
+  geom_point(size = 2) + 
+  geom_smooth(aes(group=Topo, colour=Topo), method = "gam", formula= y ~ s(x))
+
+ac %>%
+  ggplot(aes(x=AcaroBrachy, y=DensSustrato))+
+  geom_point()+
+  geom_smooth(aes(y=fitted(gammod)))
+              
+  #geom_line(aes(y = fitted(gammod)),
+    #colour = "blue", size = 1.2)
+
+
 ```
+
+# GAM
+
+El modelo aditivo generalizado presenta otra opción para trabajar con datos, especialmente datos irregulares. Con los modelos lineales generalizados, había una tolerancia baja para non-normalidad, porque son lineal. O sea, que relaciones entre variables que no son lineal, no son bueno para el GAM.
+
+A revés, un GAM está diseñado a ajustar su línea para los variables que tienen relaciones non-lineales. O sea, pueda ajustar la curva por cada variable para crear una forma que si reflejen sus datos de hecho.
+
+# Suposiciones
+
+El GAM es semi-parametrico. O sea, hay algunos supuestos, pero el supuesto de normalidad y heterogeneidad no están. Todavía debería asegurar que no hay autocorrelación, que sus observaciones son independentes, y
