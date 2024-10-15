@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -82,7 +116,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./clases.html">Clases</a></li><li class="breadcrumb-item"><a href="./C10-modelosnonparametricos.html">C10-modelosnonparametricos.html</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./clases.html">Clases</a></li><li class="breadcrumb-item"><a href="./C10-modelosnonparametricos.html">Modelos aditivos generalizados (GAM/MAG)</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -185,7 +219,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./C10-modelosnonparametricos.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">C10-modelosnonparametricos.html</span></a>
+ <span class="menu-text">Modelos aditivos generalizados (GAM/MAG)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -237,7 +271,18 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#modelos-aditivos-generalizados-gammag" id="toc-modelos-aditivos-generalizados-gammag" class="nav-link active" data-scroll-target="#modelos-aditivos-generalizados-gammag">Modelos aditivos generalizados (GAM/MAG)</a>
+  <ul class="collapse">
+  <li><a href="#en-que-situación-necesita-un-gam" id="toc-en-que-situación-necesita-un-gam" class="nav-link" data-scroll-target="#en-que-situación-necesita-un-gam">En que situación necesita un GAM?</a></li>
+  </ul></li>
+  <li><a href="#gam" id="toc-gam" class="nav-link" data-scroll-target="#gam">GAM</a></li>
+  <li><a href="#suposiciones" id="toc-suposiciones" class="nav-link" data-scroll-target="#suposiciones">Suposiciones</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -245,8 +290,124 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<section id="modelos-aditivos-generalizados-gammag" class="level1">
+<h1>Modelos aditivos generalizados (GAM/MAG)</h1>
+<section id="en-que-situación-necesita-un-gam" class="level2">
+<h2 class="anchored" data-anchor-id="en-que-situación-necesita-un-gam">En que situación necesita un GAM?</h2>
+<p>Por supuesto si tenga datos non-normales, o que no se cumplen con el homogeneidad de varianza. O si ya intentaba con GLM y ningúna familia adecuada funciona.</p>
+<p>Pero además, si los datos no son lineales, o sea, hay curvas en la distribución. O si el GLM no es super adecuada.</p>
+<p>La ultima semana, trabaje con GLMs y como elegir un modelo desde un par de modelos. Los valores de AIC, sus grados de libertad (degrees of freedom/df), y cumplimiento con los supuestos pueden ayudarse a elegir el modelo mas adecuado.</p>
+<p>Pero hay mas que debe hacer. Un modelo puede ser adecuado, y técnicamente correcto, pero todavía ser lo menos apto, o sea, que pueda todavía crear un modelo mejor. El valor de R2 esta usado para evaluar la fuerza de su modelo.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ABBaseBN3 <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> DensSustrato <span class="sc">+</span> Topo)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ABBaseBN3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm.nb(formula = AcaroBrachy ~ DensSustrato + Topo, data = ac, 
+    init.theta = 1.011224335, link = log)
+
+Coefficients:
+             Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)   2.27583    0.48372   4.705 2.54e-06 ***
+DensSustrato -0.00903    0.01105  -0.817    0.414    
+TopoHummock   0.54501    0.26673   2.043    0.041 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for Negative Binomial(1.0112) family taken to be 1)
+
+    Null deviance: 84.907  on 69  degrees of freedom
+Residual deviance: 79.446  on 67  degrees of freedom
+AIC: 453.64
+
+Number of Fisher Scoring iterations: 1
+
+              Theta:  1.011 
+          Std. Err.:  0.191 
+
+ 2 x log-likelihood:  -445.643 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">r.squaredGLMM</span>(ABBaseBN3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: the null model is only correct if all the variables it uses are identical 
+to those used in fitting the original model.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 R2m        R2c
+delta     0.07979600 0.07979600
+lognormal 0.11401243 0.11401243
+trigamma  0.04788092 0.04788092</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Family: gaussian 
+Link function: identity 
+
+Formula:
+AcaroBrachy ~ s(DensSustrato) + s(CuentaAgua) + Topo
+
+Parametric coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    7.423      1.480   5.016 4.38e-06 ***
+TopoHummock    3.514      2.613   1.345    0.183    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Approximate significance of smooth terms:
+                  edf Ref.df     F p-value  
+s(DensSustrato) 2.341  2.965 1.807  0.1948  
+s(CuentaAgua)   1.000  1.000 3.982  0.0502 .
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+R-sq.(adj) =   0.14   Deviance explained = 19.4%
+GCV = 94.601  Scale est. = 87.382    n = 70</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-3-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="gam" class="level1">
+<h1>GAM</h1>
+<p>El modelo aditivo generalizado presenta otra opción para trabajar con datos, especialmente datos irregulares. Con los modelos lineales generalizados, había una tolerancia baja para non-normalidad, porque son lineal. O sea, que relaciones entre variables que no son lineal, no son bueno para el GAM.</p>
+<p>A revés, un GAM está diseñado a ajustar su línea para los variables que tienen relaciones non-lineales. O sea, pueda ajustar la curva por cada variable para crear una forma que si reflejen sus datos de hecho.</p>
+</section>
+<section id="suposiciones" class="level1">
+<h1>Suposiciones</h1>
+<p>El GAM es semi-parametrico. O sea, hay algunos supuestos, pero el supuesto de normalidad y heterogeneidad no están. Todavía debería asegurar que no hay autocorrelación, que sus observaciones son independentes, y</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

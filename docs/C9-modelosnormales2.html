@@ -219,7 +219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./C10-modelosnonparametricos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">C10-modelosnonparametricos.html</span></a>
+ <span class="menu-text">Modelos aditivos generalizados (GAM/MAG)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -276,6 +276,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#modelos-lineales" id="toc-modelos-lineales" class="nav-link active" data-scroll-target="#modelos-lineales">Modelos lineales</a></li>
+  <li><a href="#como-funciona-los-modelos-lineales" id="toc-como-funciona-los-modelos-lineales" class="nav-link" data-scroll-target="#como-funciona-los-modelos-lineales">¿Como funciona los modelos lineales?</a></li>
   <li><a href="#empezando-con-glm" id="toc-empezando-con-glm" class="nav-link" data-scroll-target="#empezando-con-glm">Empezando con GLM</a></li>
   <li><a href="#opciones-para-evaluar" id="toc-opciones-para-evaluar" class="nav-link" data-scroll-target="#opciones-para-evaluar">Opciones para evaluar</a></li>
   <li><a href="#familia-y-supuestos" id="toc-familia-y-supuestos" class="nav-link" data-scroll-target="#familia-y-supuestos">familia y supuestos</a>
@@ -304,16 +305,70 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Había un montón de tipos de modelos que puede ocupar para analizar sus datos, desde lo más básico hasta ellos que pueden tomar combinaciones complicadas para representar sus datos. El prepósito de un modelo, generalmente, es crear una combinación de variables que puede representar una relación entre variables en una manera correcta y que crear valores predictivos.</p>
 <p>Con sistemas naturales, la idea puede ser tener predicciones para el futuro, pero frecuentemente se interesa mas la pregunta si haya relaciones entre variables o no.</p>
 <p>Es super importante tener y saber una hipótesis acá, y anota que nunca puede probar que tu hipótesis es verdad, sino que significancia decía que no hay evidencia que tu hipótesis es incorrecto. Tampoco, puede decir que una variable explicativa causa su variable de respuesta.</p>
-<p><img src="images/Correlation_Vs_Causation_-_2019-es.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Correlation_Vs_Causation_-_2019-es.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+</figure>
+</div>
 <p>¡Por esta razón, su interpretación de sus propios resultados con conocimiento profundo de su proyecto es super importante!</p>
 <p>Casi nunca puede decir que algo causa otra, pero si conozca bien su proyecto y sistema, podría elucidar conclusiones e ideas desde sus correlaciones.</p>
 </section>
+<section id="como-funciona-los-modelos-lineales" class="level1">
+<h1>¿Como funciona los modelos lineales?</h1>
+<p>De nivel más básico, un modelo lineal toma dos variables y te cuenta la relación entre los dos, incluyendo si suben/bajan juntos y con qué incremento. &nbsp;</p>
+<p>La fórmula super básico es así:</p>
+<p><strong>Y = mX + b</strong></p>
+<p>X e Y son tus variables explicativas (X) y respuesta (Y)</p>
+<p>M es la inclinación, o sea, el rato de cambio por Y con cada unidad de X</p>
+<p>B es la intersección (o sea, cuando no hay ninguna del Y: ¿cuántas unidades del X hay?)</p>
+<p>Entonces, desde un modelo lineal básico, puede aprender mucho. Este tipo de modelo mas básico, con una variable de respuesta y una variable explicativa es un modelo lineal, y se usa el función ‘lm()’</p>
+<p>Por ejemplo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ac <span class="sc">%&gt;%</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>AcaroBrachy, <span class="at">y=</span>CuentaAgua))<span class="sc">+</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lmej <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> CuentaAgua)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmej)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = AcaroBrachy ~ CuentaAgua, data = ac)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-11.540  -6.439  -2.891   3.974  31.352 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 17.736018   3.545694   5.002 4.24e-06 ***
+CuentaAgua  -0.021935   0.008165  -2.687  0.00906 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 9.655 on 68 degrees of freedom
+Multiple R-squared:  0.09596,   Adjusted R-squared:  0.08267 
+F-statistic: 7.218 on 1 and 68 DF,  p-value: 0.009063</code></pre>
+</div>
+</div>
+<p>Eso es un ejemplo básico, pero normalmente en ecología/agronomía, los datos y relaciones son complicados. Si haya algo en el campo, tendría mas que una variable explicativa, porque hay otras cosas que se afectan su variable respuesta. Además, hay mas etapas que hacer su gráfico y después el modelo. Los supuestos son super importantes y sus tipos de datos también. Así que, empezamos con GLM.</p>
+</section>
 <section id="empezando-con-glm" class="level1">
 <h1>Empezando con GLM</h1>
+<p>GLMs son similares a modelos lineales, pero son mas flexible, y tienen poquito más tolerancia a residuos non-normales. Entonces, puede hacer un análisis/modelo más complicado con GLM.</p>
 <p>Para hacer un modelo, necesita una pregunta y/o una hipótesis.</p>
-<p>Por ejemplo: acá tenemos la abundancia de Cordia bicolor, precipitación, elevación, edad del bosque, geología, y hábitat. Supongo que la pregunta central es cuales factores se impactan lo distribución de un árbol, Cordia bicolor en la isla Barro Colorado.</p>
+<p>Por ejemplo: acá tenemos la abundancia de Acaro Brachy, densidad del sustrato, cantidad del agua en el sustrato, sustrato, nivel de cobertura de arbustos y topografia. Supongo que la pregunta central es cuales factores se impactan lo distribución de Acaro Brachy.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ac)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ac)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  AcaroBrachy DensSustrato CuentaAgua  Sustrato Arbusto    Topo
 1          17        39.18     350.15   Sphagn1     Few Hummock
@@ -325,21 +380,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>La hipótesis puede incluir algunas de las variables o todos.</p>
-<p>Una hipótesis puede ser así: Habría una abundancia más alta de Cordia bicolor con más precipitación y menos elevación. Entonces, probamos los variables de precipitación y elevación. Podemos incluir también geología, hábitat o edad del bosque, pero no son lo prioridad.</p>
-<p>Una pregunta puede ser: ¿Cuáles factores medio ambientales impacta la abundancia del Cordia bicolor?</p>
+<p>Una hipótesis puede ser así: Habría una abundancia más alta de Acaro Brachy con sustratos mas densos y un nivel de cobertura de arbustos menos denso.. Entonces, probamos los variables ‘DensSustrato’ y ‘Arbusto’. Podemos incluir también el resto, pero no son lo prioridad.</p>
+<p>Una pregunta puede ser: ¿Cuáles factores medio ambientales impacta la abundancia del Acaro Brachy?</p>
 <p>Así podemos usar todos los variables para ver cual tiene impacto.</p>
-<p>* No olvide a cambiar los tipos de datos ANTES de hacer modelos (y si quiere, transformar)</p>
+<ul>
+<li>No olvide a cambiar los tipos de datos ANTES de hacer modelos (y si quiere, transformar)</li>
+</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ac<span class="sc">$</span>DensSustrato <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(ac<span class="sc">$</span>DensSustrato)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ac<span class="sc">$</span>CuentaAgua <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(ac<span class="sc">$</span>CuentaAgua)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ac<span class="sc">$</span>Sustrato <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(ac<span class="sc">$</span>Sustrato)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ac<span class="sc">$</span>Arbusto <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(ac<span class="sc">$</span>Arbusto)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>ac<span class="sc">$</span>Topo <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(ac<span class="sc">$</span>Topo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ac<span class="sc">$</span>DensSustrato <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(ac<span class="sc">$</span>DensSustrato)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ac<span class="sc">$</span>CuentaAgua <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(ac<span class="sc">$</span>CuentaAgua)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>ac<span class="sc">$</span>Sustrato <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(ac<span class="sc">$</span>Sustrato)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>ac<span class="sc">$</span>Arbusto <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(ac<span class="sc">$</span>Arbusto)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>ac<span class="sc">$</span>Topo <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(ac<span class="sc">$</span>Topo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>* Y sacar sus outliers</p>
+<ul>
+<li>Y sacar sus outliers</li>
+</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ac <span class="sc">%&gt;%</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">identify_outliers</span>(AcaroBrachy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ac <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">identify_outliers</span>(AcaroBrachy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   AcaroBrachy DensSustrato CuentaAgua  Sustrato Arbusto    Topo is.outlier
 11          36        35.59     134.13   Sphagn3    Many Blanket       TRUE
@@ -354,20 +413,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 29       TRUE
 33      FALSE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>quartiles <span class="ot">&lt;-</span> <span class="fu">quantile</span>(ac<span class="sc">$</span>AcaroBrachy, <span class="at">probs=</span><span class="fu">c</span>(.<span class="dv">25</span>, .<span class="dv">75</span>), <span class="at">na.rm =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>IQR <span class="ot">&lt;-</span> <span class="fu">IQR</span>(ac<span class="sc">$</span>AcaroBrachy)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># -3 deviaciónes estander </span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>Lower <span class="ot">&lt;-</span> quartiles[<span class="dv">1</span>] <span class="sc">-</span> <span class="fl">1.5</span><span class="sc">*</span>IQR</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># +3 deviaciónes estander</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>Upper <span class="ot">&lt;-</span> quartiles[<span class="dv">2</span>] <span class="sc">+</span> <span class="fl">1.5</span><span class="sc">*</span>IQR </span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>acso <span class="ot">&lt;-</span> <span class="fu">subset</span>(ac, ac<span class="sc">$</span>AcaroBrachy <span class="sc">&gt;</span> Lower <span class="sc">&amp;</span> ac<span class="sc">$</span>AcaroBrachy <span class="sc">&lt;</span> Upper)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>quartiles <span class="ot">&lt;-</span> <span class="fu">quantile</span>(ac<span class="sc">$</span>AcaroBrachy, <span class="at">probs=</span><span class="fu">c</span>(.<span class="dv">25</span>, .<span class="dv">75</span>), <span class="at">na.rm =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>IQR <span class="ot">&lt;-</span> <span class="fu">IQR</span>(ac<span class="sc">$</span>AcaroBrachy)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># -3 deviaciónes estander </span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>Lower <span class="ot">&lt;-</span> quartiles[<span class="dv">1</span>] <span class="sc">-</span> <span class="fl">1.5</span><span class="sc">*</span>IQR</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># +3 deviaciónes estander</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>Upper <span class="ot">&lt;-</span> quartiles[<span class="dv">2</span>] <span class="sc">+</span> <span class="fl">1.5</span><span class="sc">*</span>IQR </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>acso <span class="ot">&lt;-</span> <span class="fu">subset</span>(ac, ac<span class="sc">$</span>AcaroBrachy <span class="sc">&gt;</span> Lower <span class="sc">&amp;</span> ac<span class="sc">$</span>AcaroBrachy <span class="sc">&lt;</span> Upper)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>* Además debería probar por correlaciónes antes</p>
+<ul>
+<li>Además debería probar por correlaciónes antes</li>
+</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrgram)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrgram)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'corrgram'</code></pre>
@@ -377,12 +438,12 @@ Attaching package: 'corrgram'</code></pre>
 
     panel.fill</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>acc <span class="ot">&lt;-</span> ac[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">corrgram</span>(acc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>acc <span class="ot">&lt;-</span> ac[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">corrgram</span>(acc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -403,47 +464,13 @@ Attaching package: 'corrgram'</code></pre>
 <section id="emepzar-con-una-familia-si-no-elije-una-es-gaussian" class="level3">
 <h3 class="anchored" data-anchor-id="emepzar-con-una-familia-si-no-elije-una-es-gaussian">1. Emepzar con una familia (si no elije una, es Gaussian)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># acá es gaussian</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>ABBase <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> DensSustrato <span class="sc">+</span> CuentaAgua <span class="sc">+</span> Sustrato <span class="sc">+</span> Topo)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>simResABBase <span class="ot">&lt;-</span><span class="fu">simulateResiduals</span>(ABBase) <span class="co">#DHARMa: hace resiudos y graficos para evaluar normalidad y homogeneidad de varianza</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># si hay líneas super curvados, rojo o valor P&lt;0.05) en el QQ plot (izquierda) no vale</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(simResABBase)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># entonces acá es malo</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># intenta de nuevo con distinta familia (binomio negativo)</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>ABBaseBN <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> DensSustrato <span class="sc">+</span> CuentaAgua <span class="sc">+</span> Sustrato <span class="sc">+</span> Topo)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>simResABBaseBN <span class="ot">&lt;-</span><span class="fu">simulateResiduals</span>(ABBaseBN) <span class="co">#DHARMa: hace resiudos y graficos para evaluar normalidad y homogeneidad de varianza</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># si hay líneas super curvados, rojo o valor P&lt;0.05) en el QQ plot (izquierda) no vale</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(simResABBaseBN)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mejor, pero todavia con problemas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># intenta de nuevo con distinta familia (binomio negativo)</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>ABBasep <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> DensSustrato <span class="sc">+</span> CuentaAgua <span class="sc">+</span> Sustrato <span class="sc">+</span> Topo, <span class="at">family=</span><span class="st">"poisson"</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>simResABBasep <span class="ot">&lt;-</span><span class="fu">simulateResiduals</span>(ABBasep) <span class="co">#DHARMa: hace resiudos y graficos para evaluar normalidad y homogeneidad de varianza</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># si hay líneas super curvados, rojo o valor P&lt;0.05) en el QQ plot (izquierda) no vale</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(simResABBasep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># acá es gaussian</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>ABBase <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> DensSustrato <span class="sc">+</span> CuentaAgua <span class="sc">+</span> Sustrato <span class="sc">+</span> Topo)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>simResABBase <span class="ot">&lt;-</span><span class="fu">simulateResiduals</span>(ABBase) <span class="co">#DHARMa: hace resiudos y graficos para evaluar normalidad y homogeneidad de varianza</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># si hay líneas super curvados, rojo o valor P&lt;0.05) en el QQ plot (izquierda) no vale</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(simResABBase)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -451,16 +478,50 @@ Attaching package: 'corrgram'</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># superrr mal</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># entonces acá es malo</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># intenta de nuevo con distinta familia (binomio negativo)</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>ABBaseBN <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> DensSustrato <span class="sc">+</span> CuentaAgua <span class="sc">+</span> Sustrato <span class="sc">+</span> Topo)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>simResABBaseBN <span class="ot">&lt;-</span><span class="fu">simulateResiduals</span>(ABBaseBN) <span class="co">#DHARMa: hace resiudos y graficos para evaluar normalidad y homogeneidad de varianza</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># si hay líneas super curvados, rojo o valor P&lt;0.05) en el QQ plot (izquierda) no vale</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(simResABBaseBN)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mejor, pero todavia con problemas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># intenta de nuevo con distinta familia (binomio negativo)</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>ABBasep <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> DensSustrato <span class="sc">+</span> CuentaAgua <span class="sc">+</span> Sustrato <span class="sc">+</span> Topo, <span class="at">family=</span><span class="st">"poisson"</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>simResABBasep <span class="ot">&lt;-</span><span class="fu">simulateResiduals</span>(ABBasep) <span class="co">#DHARMa: hace resiudos y graficos para evaluar normalidad y homogeneidad de varianza</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># si hay líneas super curvados, rojo o valor P&lt;0.05) en el QQ plot (izquierda) no vale</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(simResABBasep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># superrr mal</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Ninguno de estos tres modelos se cumple con los supuestos. Pero, puede elegir lo que es mejor ahora, porque a veces cuando eliminar variables, resultara que uno u otro fue el problema. Hice esto con los valores del criterio de información de Akaike (CIA o AIC).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MuMIn)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>lr_output.AIC <span class="ot">&lt;-</span> <span class="fu">model.sel</span>(ABBase, ABBaseBN, ABBasep) <span class="co"># incluir los modelos de interés</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>lr_AIC.table<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(lr_output.AIC)[<span class="dv">7</span><span class="sc">:</span><span class="dv">12</span>] <span class="co"># estas columnas pueden cambiar, entonces puede ver en el tab 'environment' también</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>lr_AIC.table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MuMIn)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>lr_output.AIC <span class="ot">&lt;-</span> <span class="fu">model.sel</span>(ABBase, ABBaseBN, ABBasep) <span class="co"># incluir los modelos de interés</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>lr_AIC.table<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(lr_output.AIC)[<span class="dv">7</span><span class="sc">:</span><span class="dv">12</span>] <span class="co"># estas columnas pueden cambiar, entonces puede ver en el tab 'environment' también</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>lr_AIC.table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          class init.theta link df    logLik     AICc
 ABBaseBN negbin       1.39  log 11 -211.5763 449.7044
@@ -470,7 +531,7 @@ ABBasep     glm                 10 -352.4087 728.5461</code></pre>
 </div>
 <p>Acá la mejor familia es el binomio negativo, que también fue lo mas cerca a normal según los gráficos. Entonces parte allá. Antes que sigue, tenemos que probar el intercorrelación también con ‘VIF’ del paquete ‘car’.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(ABBaseBN) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(ABBaseBN) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 GVIF Df GVIF^(1/(2*Df))
 DensSustrato 1.278126  1        1.130542
@@ -478,7 +539,7 @@ CuentaAgua   1.537536  1        1.239974
 Sustrato     1.650343  6        1.042632
 Topo         1.529773  1        1.236840</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># todos los valores deben ser &lt;2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># todos los valores deben ser &lt;2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>No hay intercorrelación problemática, entonces siga.</p>
 </section>
@@ -496,8 +557,8 @@ Topo         1.529773  1        1.236840</code></pre>
 <li>Rehacerlo hasta que queda uno o que todos son significantes</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># parte con 'ABBaseBN' del los modelos que ya he hecho</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">drop1</span>(ABBaseBN, <span class="at">test=</span><span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># parte con 'ABBaseBN' del los modelos que ya he hecho</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">drop1</span>(ABBaseBN, <span class="at">test=</span><span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Single term deletions
 
@@ -512,27 +573,27 @@ Topo          1   81.171 446.97  5.8160  0.01588 *
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lo menos fuerte es DensSustrato (número más grande)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lo menos fuerte es DensSustrato (número más grande)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>ABBaseBN2 <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> CuentaAgua <span class="sc">+</span> Sustrato <span class="sc">+</span> Topo)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>simResABBaseBN2 <span class="ot">&lt;-</span><span class="fu">simulateResiduals</span>(ABBaseBN2) <span class="co">#DHARMa: hace resiudos y graficos para evaluar normalidad y homogeneidad de varianza</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># si hay líneas super curvados, rojo o valor P&lt;0.05) en el QQ plot (izquierda) no vale</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(simResABBaseBN2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>ABBaseBN2 <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> CuentaAgua <span class="sc">+</span> Sustrato <span class="sc">+</span> Topo)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>simResABBaseBN2 <span class="ot">&lt;-</span><span class="fu">simulateResiduals</span>(ABBaseBN2) <span class="co">#DHARMa: hace resiudos y graficos para evaluar normalidad y homogeneidad de varianza</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># si hay líneas super curvados, rojo o valor P&lt;0.05) en el QQ plot (izquierda) no vale</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(simResABBaseBN2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># todavia no cumple con los supuestos</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># todavia no cumple con los supuestos</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>De nuevo</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">drop1</span>(ABBaseBN2, <span class="at">test=</span><span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">drop1</span>(ABBaseBN2, <span class="at">test=</span><span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Single term deletions
 
@@ -546,26 +607,26 @@ Topo        1   80.967 445.54  5.6095  0.01786 *
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cuenta agua</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cuenta agua</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>ABBaseBN3 <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> Sustrato <span class="sc">+</span> Topo)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>simResABBaseBN3 <span class="ot">&lt;-</span><span class="fu">simulateResiduals</span>(ABBaseBN3) </span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(simResABBaseBN3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>ABBaseBN3 <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> Sustrato <span class="sc">+</span> Topo)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>simResABBaseBN3 <span class="ot">&lt;-</span><span class="fu">simulateResiduals</span>(ABBaseBN3) </span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(simResABBaseBN3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># excelente! Ahora se cumple con los supuestos</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># excelente! Ahora se cumple con los supuestos</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>De nuevo</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">drop1</span>(ABBaseBN3, <span class="at">test=</span><span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">drop1</span>(ABBaseBN3, <span class="at">test=</span><span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Single term deletions
 
@@ -578,16 +639,16 @@ Topo      1   85.592 450.42 10.004 0.001562 **
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># todo tiene significancia, entonces podemos parar</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># todo tiene significancia, entonces podemos parar</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Así que ahora todo es significante, es la hora de probar todos los modelos con AIC.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MuMIn)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>lr_output.AIC <span class="ot">&lt;-</span> <span class="fu">model.sel</span>(ABBase, ABBaseBN, ABBasep, ABBaseBN2, ABBaseBN3) <span class="co"># incluir los modelos de interés</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>lr_AIC.table<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(lr_output.AIC)[<span class="dv">7</span><span class="sc">:</span><span class="dv">12</span>] <span class="co"># estas columnas pueden cambiar, entonces puede ver en el tab 'environment' también</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>lr_AIC.table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MuMIn)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>lr_output.AIC <span class="ot">&lt;-</span> <span class="fu">model.sel</span>(ABBase, ABBaseBN, ABBasep, ABBaseBN2, ABBaseBN3) <span class="co"># incluir los modelos de interés</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>lr_AIC.table<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(lr_output.AIC)[<span class="dv">7</span><span class="sc">:</span><span class="dv">12</span>] <span class="co"># estas columnas pueden cambiar, entonces puede ver en el tab 'environment' también</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>lr_AIC.table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           class init.theta link df    logLik     AICc
 ABBaseBN3 negbin       1.31  log  9 -213.2054 447.4108
@@ -599,28 +660,61 @@ ABBasep      glm                 10 -352.4087 728.5461</code></pre>
 </div>
 <p>ABBaseBN3, o sea el último, es lo mejor modelo.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># probar supuestos </span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>simResABBaseBN3 <span class="ot">&lt;-</span><span class="fu">simulateResiduals</span>(ABBaseBN3) </span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(simResABBaseBN3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># probar supuestos </span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>simResABBaseBN3 <span class="ot">&lt;-</span><span class="fu">simulateResiduals</span>(ABBaseBN3) </span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(simResABBaseBN3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(ABBaseBN3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(ABBaseBN3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            GVIF Df GVIF^(1/(2*Df))
 Sustrato 1.19508  6        1.014962
 Topo     1.19508  1        1.093197</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ABBaseBN3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: not plotting observations with leverage one:
+  11</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-19-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-19-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-19-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-19-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <p>Así que el modelo se cumple con todos los supuestos, ve los resultados.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># resultados</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ABBaseBN3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># resultados</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ABBaseBN3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -668,11 +762,11 @@ Number of Fisher Scoring iterations: 1
 <p>Usa el función ‘step’ para elegir la proxima variable que debería añadir hasta que nada son significados en step.</p>
 <p>Puede probar/elegir su modelo mejor con AIC y no olvide a probar los supuestos.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>ModVac <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> <span class="dv">1</span>) <span class="co"># modelo con ninguna variable explicativa</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>ModTodo <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> DensSustrato <span class="sc">+</span> CuentaAgua <span class="sc">+</span> Sustrato <span class="sc">+</span> Topo ) <span class="co"># modelo con todas las variables explicativas</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co"># nombre       step(partida, scope=list(lower=vacio, upper=todo))</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>Mod_forward <span class="ot">&lt;-</span> <span class="fu">step</span>(ModVac, <span class="at">scope=</span><span class="fu">list</span>(<span class="at">lower=</span>ModVac, <span class="at">upper=</span>ModTodo))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>ModVac <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> <span class="dv">1</span>) <span class="co"># modelo con ninguna variable explicativa</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>ModTodo <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> DensSustrato <span class="sc">+</span> CuentaAgua <span class="sc">+</span> Sustrato <span class="sc">+</span> Topo ) <span class="co"># modelo con todas las variables explicativas</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="co"># nombre       step(partida, scope=list(lower=vacio, upper=todo))</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>Mod_forward <span class="ot">&lt;-</span> <span class="fu">step</span>(ModVac, <span class="at">scope=</span><span class="fu">list</span>(<span class="at">lower=</span>ModVac, <span class="at">upper=</span>ModTodo))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Start:  AIC=525.13
 AcaroBrachy ~ 1
@@ -698,10 +792,10 @@ AcaroBrachy ~ CuentaAgua
 <p>Acá tiene dos respuestas a la pregunta, cuales variables son mejores por el modelo. Usa AIC para decidir, y puede ver que el modelo mejor con un variable es Cuenta Agua y no se da un modelo con 2 variables porque no sea mejor.</p>
 <p>Pero, si ya no he probado sus supuestos, esto puede ser equivocado. Por ejemplo, los modelos acá están hechos con la familia gaussian, que es malo. Si hace de nuevo con binomio negativo, cambiaría los datos.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>ModVac <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> <span class="dv">1</span>)</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>ModTodo <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> DensSustrato <span class="sc">+</span> CuentaAgua <span class="sc">+</span> Sustrato <span class="sc">+</span> Topo )</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>Mod_forward <span class="ot">&lt;-</span> <span class="fu">step</span>(ModVac, <span class="at">scope=</span><span class="fu">list</span>(<span class="at">lower=</span>ModVac, <span class="at">upper=</span>ModTodo))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>ModVac <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> <span class="dv">1</span>)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>ModTodo <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> DensSustrato <span class="sc">+</span> CuentaAgua <span class="sc">+</span> Sustrato <span class="sc">+</span> Topo )</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>Mod_forward <span class="ot">&lt;-</span> <span class="fu">step</span>(ModVac, <span class="at">scope=</span><span class="fu">list</span>(<span class="at">lower=</span>ModVac, <span class="at">upper=</span>ModTodo))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Start:  AIC=452.91
 AcaroBrachy ~ 1
@@ -747,28 +841,28 @@ AcaroBrachy ~ CuentaAgua + Topo + Sustrato
 <p>Así que ahora ocupa la familia adecuada, había más opciones. Había modelos hasta tres variables explicativas y lo mejor AIC es lo con tres.</p>
 <p>Probamos esta variable:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>RF3 <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> CuentaAgua <span class="sc">+</span> Topo <span class="sc">+</span> Sustrato)</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>simResRF3 <span class="ot">&lt;-</span><span class="fu">simulateResiduals</span>(RF3) </span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(simResRF3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>RF3 <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> CuentaAgua <span class="sc">+</span> Topo <span class="sc">+</span> Sustrato)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>simResRF3 <span class="ot">&lt;-</span><span class="fu">simulateResiduals</span>(RF3) </span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(simResRF3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(RF3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(RF3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               GVIF Df GVIF^(1/(2*Df))
 CuentaAgua 1.420439  1        1.191822
 Topo       1.524958  1        1.234892
 Sustrato   1.425558  6        1.029988</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># podemos ver que no es exactamente bien</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(RF3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># podemos ver que no es exactamente bien</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(RF3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -802,7 +896,7 @@ Number of Fisher Scoring iterations: 1
 
  2 x log-likelihood:  -423.927 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pero se sale similar que el topo hummock es super significante y con el error más chico</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pero se sale similar que el topo hummock es super significante y con el error más chico</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Siempre, siempre probar sus modelos después de elegirlas, porque sus resultados no son validos si no cumpla con los supuestos.</p>
 </section>
@@ -810,10 +904,10 @@ Number of Fisher Scoring iterations: 1
 <h3 class="anchored" data-anchor-id="regresión-backward">3. regresión ‘backward’</h3>
 <p>Regresión hacia atrás, o sea, backward, es lo mismo idea que ‘forward’ pero empezamos con un modelo lleno y eliminar variables en vez de añadir. La distinción entre eso y la versión ‘stepwise’ es que acá hice todo el mismo tiempo. Puede ser bueno, pero también hay más posibilidad de error porque no prueba los supuestos en cada etapa.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>ModVac <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> <span class="dv">1</span>)</span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>ModTodo <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> DensSustrato <span class="sc">+</span> CuentaAgua <span class="sc">+</span> Sustrato <span class="sc">+</span> Topo )</span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co"># acá empieza con el modelo lleno, porque va a eliminar no añadir</span></span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>Mod_forward <span class="ot">&lt;-</span> <span class="fu">step</span>(ModTodo, <span class="at">scope=</span><span class="fu">list</span>(<span class="at">lower=</span>ModVac, <span class="at">upper=</span>ModTodo), <span class="at">direction=</span><span class="st">'backward'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>ModVac <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> <span class="dv">1</span>)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>ModTodo <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> DensSustrato <span class="sc">+</span> CuentaAgua <span class="sc">+</span> Sustrato <span class="sc">+</span> Topo )</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="co"># acá empieza con el modelo lleno, porque va a eliminar no añadir</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>Mod_forward <span class="ot">&lt;-</span> <span class="fu">step</span>(ModTodo, <span class="at">scope=</span><span class="fu">list</span>(<span class="at">lower=</span>ModVac, <span class="at">upper=</span>ModTodo), <span class="at">direction=</span><span class="st">'backward'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Start:  AIC=443.15
 AcaroBrachy ~ DensSustrato + CuentaAgua + Sustrato + Topo
@@ -836,30 +930,30 @@ AcaroBrachy ~ CuentaAgua + Sustrato + Topo
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>RB3 <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> CuentaAgua <span class="sc">+</span> Sustrato <span class="sc">+</span> Topo)</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>RB3 <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> CuentaAgua <span class="sc">+</span> Topo <span class="sc">+</span> Sustrato)</span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>simResRB3 <span class="ot">&lt;-</span><span class="fu">simulateResiduals</span>(RB3) </span>
-<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(simResRB3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>RB3 <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> CuentaAgua <span class="sc">+</span> Sustrato <span class="sc">+</span> Topo)</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>RB3 <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> CuentaAgua <span class="sc">+</span> Topo <span class="sc">+</span> Sustrato)</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>simResRB3 <span class="ot">&lt;-</span><span class="fu">simulateResiduals</span>(RB3) </span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(simResRB3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(RB3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(RB3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               GVIF Df GVIF^(1/(2*Df))
 CuentaAgua 1.420439  1        1.191822
 Topo       1.524958  1        1.234892
 Sustrato   1.425558  6        1.029988</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># podemos ver que no es exactamente bien</span></span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(RB3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># podemos ver que no es exactamente bien</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(RB3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -892,6 +986,39 @@ Number of Fisher Scoring iterations: 1
           Std. Err.:  0.275 
 
  2 x log-likelihood:  -423.927 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(RB3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: not plotting observations with leverage one:
+  11</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-25-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-25-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-25-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C9-modelosnormales2_files/figure-html/unnamed-chunk-25-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Acá se sale lo mismo como regresión ‘forward’ pero distinto a ‘stepwise backward’. Depende en su cantidad de variables, puede salir de cualquier manera.</p>
@@ -1322,8 +1449,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./C10-modelosnonparametricos.html" class="pagination-link" aria-label="C10-modelosnonparametricos.html">
-        <span class="nav-page-text">C10-modelosnonparametricos.html</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./C10-modelosnonparametricos.html" class="pagination-link" aria-label="Modelos aditivos generalizados (GAM/MAG)">
+        <span class="nav-page-text">Modelos aditivos generalizados (GAM/MAG)</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

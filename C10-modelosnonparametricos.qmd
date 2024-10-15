@@ -90,7 +90,7 @@ summary(gammod)
 ac %>%
   ggplot(aes(AcaroBrachy, DensSustrato, col = Topo)) + 
   geom_point(size = 2) + 
-  geom_smooth(aes(group=Topo, colour=Topo), method = "gam", formula= y ~ s(x))
+  geom_smooth(aes(group=Topo, colour=Topo), method = "gam", formula= y ~ s(x, bs="cs"))
 
 ac %>%
   ggplot(aes(x=AcaroBrachy, y=DensSustrato))+
@@ -99,6 +99,7 @@ ac %>%
               
   #geom_line(aes(y = fitted(gammod)),
     #colour = "blue", size = 1.2)
+
 
 
 ```
