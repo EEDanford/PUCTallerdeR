@@ -116,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./clases.html">Clases</a></li><li class="breadcrumb-item"><a href="./C10-modelosnonparametricos.html">Modelos aditivos generalizados (GAM/MAG)</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./clases.html">Clases</a></li><li class="breadcrumb-item"><a href="./C10-modelosnonparametricos.html">Variables con GLM/GAM</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -219,7 +219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./C10-modelosnonparametricos.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Modelos aditivos generalizados (GAM/MAG)</span></a>
+ <span class="menu-text">Variables con GLM/GAM</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -275,12 +275,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#modelos-aditivos-generalizados-gammag" id="toc-modelos-aditivos-generalizados-gammag" class="nav-link active" data-scroll-target="#modelos-aditivos-generalizados-gammag">Modelos aditivos generalizados (GAM/MAG)</a>
-  <ul class="collapse">
-  <li><a href="#en-que-situación-necesita-un-gam" id="toc-en-que-situación-necesita-un-gam" class="nav-link" data-scroll-target="#en-que-situación-necesita-un-gam">En que situación necesita un GAM?</a></li>
-  </ul></li>
-  <li><a href="#gam" id="toc-gam" class="nav-link" data-scroll-target="#gam">GAM</a></li>
+  <li><a href="#variables-con-glmgam" id="toc-variables-con-glmgam" class="nav-link active" data-scroll-target="#variables-con-glmgam">Variables con GLM/GAM</a></li>
+  <li><a href="#modelos-aditivos-generalizados-gammag" id="toc-modelos-aditivos-generalizados-gammag" class="nav-link" data-scroll-target="#modelos-aditivos-generalizados-gammag">Modelos aditivos generalizados (GAM/MAG)</a></li>
   <li><a href="#suposiciones" id="toc-suposiciones" class="nav-link" data-scroll-target="#suposiciones">Suposiciones</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen">Resumen</a></li>
   </ul>
 </nav>
     </div>
@@ -290,61 +288,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="modelos-aditivos-generalizados-gammag" class="level1">
-<h1>Modelos aditivos generalizados (GAM/MAG)</h1>
-<section id="en-que-situación-necesita-un-gam" class="level2">
-<h2 class="anchored" data-anchor-id="en-que-situación-necesita-un-gam">En que situación necesita un GAM?</h2>
-<p>Por supuesto si tenga datos non-normales, o que no se cumplen con el homogeneidad de varianza. O si ya intentaba con GLM y ningúna familia adecuada funciona.</p>
-<p>Pero además, si los datos no son lineales, o sea, hay curvas en la distribución. O si el GLM no es super adecuada.</p>
-<p>La ultima semana, trabaje con GLMs y como elegir un modelo desde un par de modelos. Los valores de AIC, sus grados de libertad (degrees of freedom/df), y cumplimiento con los supuestos pueden ayudarse a elegir el modelo mas adecuado.</p>
-<p>Pero hay mas que debe hacer. Un modelo puede ser adecuado, y técnicamente correcto, pero todavía ser lo menos apto, o sea, que pueda todavía crear un modelo mejor. El valor de R2 esta usado para evaluar la fuerza de su modelo.</p>
+<section id="variables-con-glmgam" class="level1">
+<h1>Variables con GLM/GAM</h1>
+<p>Es importante elegir todos los variables que pueden afectar su variable respuesta.Para evaluar cuales variables sean importantes, puedes ver a sus dotplots.Por ejemplo, si quiere saber si el largo pico de un pingüino es predicado por su masa corporal, puede analizar la relación con solo largo pico y masa corporal.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ABBaseBN3 <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(<span class="at">data=</span>ac, AcaroBrachy <span class="sc">~</span> DensSustrato <span class="sc">+</span> Topo)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ABBaseBN3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-glm.nb(formula = AcaroBrachy ~ DensSustrato + Topo, data = ac, 
-    init.theta = 1.011224335, link = log)
-
-Coefficients:
-             Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)   2.27583    0.48372   4.705 2.54e-06 ***
-DensSustrato -0.00903    0.01105  -0.817    0.414    
-TopoHummock   0.54501    0.26673   2.043    0.041 *  
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-(Dispersion parameter for Negative Binomial(1.0112) family taken to be 1)
-
-    Null deviance: 84.907  on 69  degrees of freedom
-Residual deviance: 79.446  on 67  degrees of freedom
-AIC: 453.64
-
-Number of Fisher Scoring iterations: 1
-
-              Theta:  1.011 
-          Std. Err.:  0.191 
-
- 2 x log-likelihood:  -445.643 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">r.squaredGLMM</span>(ABBaseBN3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: the null model is only correct if all the variables it uses are identical 
-to those used in fitting the original model.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                 R2m        R2c
-delta     0.07979600 0.07979600
-lognormal 0.11401243 0.11401243
-trigamma  0.04788092 0.04788092</code></pre>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
+</div>
+<p>Pero, si ve el grafico de la regresión lineal por solo largo pico y masa corporal, aparece que hay mucha variación. Así es importante añadir variables que quizás afecten los pingüinos.</p>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -352,59 +309,240 @@ trigamma  0.04788092 0.04788092</code></pre>
 </figure>
 </div>
 </div>
+</div>
+<p>Según los gráficos, ve que los especies son buen separados, y la isla también. Ano y sexo no aparece tal tan distinto, pero quizás hay poquita variación con sexo. Entonces, deberíamos empezar este modelo con masa corporal, especie, isla y sexo.</p>
+<p>Así que ahora sabe todos los variables que quizás tengan afecto, puede empezar a modelar.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           R2m       R2c
+[1,] 0.4771225 0.4771225</code></pre>
+</div>
+</div>
+<p>Resulta que el modelo final contiene la isla y el masa corporal como variables explicativas.</p>
+<p>Pero, hay dos problemas: 1. el valor R2 es bajo (.47) y 2) no se cumple con el homogeneidad de la varianza. Que puede hacer?</p>
+<p>Puede añadir una interacción. Por ejemplo entre la especie y la isla (así que sabe que había especies en una isla que no son en otros).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>te <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data=</span>pinguinos, largo_pico_mm <span class="sc">~</span> isla<span class="sc">*</span>especie <span class="sc">+</span> masa_corporal_g)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ter <span class="ot">&lt;-</span><span class="fu">simulateResiduals</span>(te)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ter)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">r.squaredGLMM</span>(te)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           R2m       R2c
+[1,] 0.8061791 0.8061791</code></pre>
+</div>
+</div>
+<p>Ahora el modelo se cumple con los supuestos y tambien tiene un R2 alta.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(te)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = largo_pico_mm ~ isla * especie + masa_corporal_g, 
+    data = pinguinos)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-6.949 -1.673  0.100  1.497  9.290 
+
+Coefficients: (4 not defined because of singularities)
+                               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                  25.0830286  1.1101663  22.594  &lt; 2e-16 ***
+islaDream                    -0.3935763  0.4849432  -0.812    0.418    
+islaTorgersen                -0.0117121  0.4952551  -0.024    0.981    
+especieBarbijo               10.1646621  0.4345343  23.392  &lt; 2e-16 ***
+especiePapúa                  3.4131290  0.5728131   5.959 6.43e-09 ***
+masa_corporal_g               0.0037448  0.0002828  13.241  &lt; 2e-16 ***
+islaDream:especieBarbijo             NA         NA      NA       NA    
+islaTorgersen:especieBarbijo         NA         NA      NA       NA    
+islaDream:especiePapúa               NA         NA      NA       NA    
+islaTorgersen:especiePapúa           NA         NA      NA       NA    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.407 on 336 degrees of freedom
+  (2 observations deleted due to missingness)
+Multiple R-squared:  0.8085,    Adjusted R-squared:  0.8056 
+F-statistic: 283.7 on 5 and 336 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="modelos-aditivos-generalizados-gammag" class="level1">
+<h1>Modelos aditivos generalizados (GAM/MAG)</h1>
+<p>En que situación necesita un GAM?</p>
+<p>Por supuesto si tenga datos non-normales, o que no se cumplen con el homogeneidad de varianza. O si ya intentaba con GLM y ningúna familia adecuada funciona incluso con interacciones.</p>
+<p>Pero, la idea del GAM es que puede usarla para ajustar sus valores por datos que no son exactamente lineal, o que son super non-lineal. Funciona a hacer una línea que, en cada parte, ajuste la inclinación para representar mejor sus datos. Un GAM está diseñado a ajustar su línea para los variables que tienen relaciones non-lineales. O sea, pueda ajustar la curva por cada variable para crear una forma que si reflejen sus datos de hecho.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] Tiempo_ms  accel      is.outlier is.extreme
+&lt;0 rows&gt; (or 0-length row.names)</code></pre>
+</div>
+</div>
+<p>Por ejemplo, este gráfico es una relación lineal entre tiempo y acceleración de motos experimentales.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Como pude esperar desde las leyes físicas, no es una relación lineal, así que un glm no sea apto para estos datos.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Según los gráficos, es obvio que un gam se representa mejor el forma y relación de los datos.</p>
+</section>
+<section id="suposiciones" class="level1">
+<h1>Suposiciones</h1>
+<p>El GAM es semi-parametrico. O sea, hay algunos supuestos, pero el supuesto de normalidad y heterogeneidad no están. Todavía debería asegurar que no hay autocorrelación, y que sus observaciones son independentes. También eliminar algunas outliers, cambiar los tipos de datos, y transformar sus datos si los medidas sean distintos.</p>
+<ul>
+<li>Ya lo hizo la normalización, eliminación de outliers, pruebas por correlación, y cambio de tipos de datos, pero no olvide a hacerlos antes de hacer un gam</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mgcv)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mgcViz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: qgam</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'qgam'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:permute':
+
+    check</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Registered S3 method overwritten by 'GGally':
+  method from   
+  +.gg   ggplot2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Registered S3 method overwritten by 'mgcViz':
+  method from  
+  +.gg   GGally</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'mgcViz'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:lattice':
+
+    qq</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    qqline, qqnorm, qqplot</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mcgam <span class="ot">&lt;-</span> <span class="fu">gam</span>(<span class="at">data=</span>mcy, accel <span class="sc">~</span> <span class="fu">s</span>(Tiempo_ms))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gam.check</span>(mcgam)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Method: GCV   Optimizer: magic
+Smoothing parameter selection converged after 8 iterations.
+The RMS GCV score gradient at convergence was 4.130761e-07 .
+The Hessian was positive definite.
+Model rank =  10 / 10 
+
+Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
+indicate that k is too low, especially if edf is close to k'.
+
+               k'  edf k-index p-value
+s(Tiempo_ms) 9.00 8.69    1.15    0.94</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mcgam)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Family: gaussian 
 Link function: identity 
 
 Formula:
-AcaroBrachy ~ s(DensSustrato) + s(CuentaAgua) + Topo
+accel ~ s(Tiempo_ms)
 
 Parametric coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)    7.423      1.480   5.016 4.38e-06 ***
-TopoHummock    3.514      2.613   1.345    0.183    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+             Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) 6.739e-17  4.036e-02       0        1
 
 Approximate significance of smooth terms:
-                  edf Ref.df     F p-value  
-s(DensSustrato) 2.341  2.965 1.807  0.1948  
-s(CuentaAgua)   1.000  1.000 3.982  0.0502 .
+               edf Ref.df     F p-value    
+s(Tiempo_ms) 8.693  8.972 53.52  &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-R-sq.(adj) =   0.14   Deviance explained = 19.4%
-GCV = 94.601  Scale est. = 87.382    n = 70</code></pre>
+R-sq.(adj) =  0.783   Deviance explained = 79.8%
+GCV = 0.23374  Scale est. = 0.2167    n = 133</code></pre>
 </div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
 </div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gratia)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Registered S3 method overwritten by 'gratia':
+  method       from  
+  simulate.gam mgcViz</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+<pre><code>
+Attaching package: 'gratia'</code></pre>
 </div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:latticeExtra':
+
+    rootogram</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:stringr':
+
+    boundary</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">draw</span>(mcgam, <span class="at">residuals =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-3-3.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>El grafico se muestra los residuos y aparece super bien. Los residuos son los números que resultan cuando entra un x en su ecuación, entonces quiere que su grafico de residuos y los puntos originales sean juntos, porque eso es un modelo fuerte. Acá puede ver que los residuos si capturan la mayoría de los puntos y esta a medida de los partes mas anchos. Entonces, es un buen modelo.</p>
+<p>También, sabe desde el ‘summary’ que el R2 es 0.78, o sea, que el modelo cuenta por 78% de la variación en acceleración. Eso es bueno.</p>
 </section>
-</section>
-<section id="gam" class="level1">
-<h1>GAM</h1>
-<p>El modelo aditivo generalizado presenta otra opción para trabajar con datos, especialmente datos irregulares. Con los modelos lineales generalizados, había una tolerancia baja para non-normalidad, porque son lineal. O sea, que relaciones entre variables que no son lineal, no son bueno para el GAM.</p>
-<p>A revés, un GAM está diseñado a ajustar su línea para los variables que tienen relaciones non-lineales. O sea, pueda ajustar la curva por cada variable para crear una forma que si reflejen sus datos de hecho.</p>
-</section>
-<section id="suposiciones" class="level1">
-<h1>Suposiciones</h1>
-<p>El GAM es semi-parametrico. O sea, hay algunos supuestos, pero el supuesto de normalidad y heterogeneidad no están. Todavía debería asegurar que no hay autocorrelación, que sus observaciones son independentes, y</p>
+<section id="resumen" class="level1">
+<h1>Resumen</h1>
+<p>En resumen, los GAMs son bueno para datos/relaciones non-lineales porque puede ajustar los variables explicativas y representar curvas.</p>
+<p>Los datos no tendrían que ser normales ni tampoco cumplir con la homogeneidad de la varianza. Pero sí deben ser sin outliers, transformada si había medidas distintas, y sin correlaciones entre variables explicativas.</p>
+<p>Puede evaluar su GAM con gráficos diagnósticos, con el R2, y con el ‘gam.check’.</p>
 
 
 </section>

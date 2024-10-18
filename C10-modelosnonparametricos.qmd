@@ -1,10 +1,4 @@
-# Modelos aditivos generalizados (GAM/MAG)
-
-## En que situación necesita un GAM?
-
-Por supuesto si tenga datos non-normales, o que no se cumplen con el homogeneidad de varianza. O si ya intentaba con GLM y ningúna familia adecuada funciona.
-
-Pero además, si los datos no son lineales, o sea, hay curvas en la distribución. O si el GLM no es super adecuada.
+# Variables con GLM/GAM
 
 ```{r, message=FALSE, warning=FALSE, include=FALSE}
 library(vegan)
@@ -17,9 +11,27 @@ library(rstatix)
 library(mgcv)
 library(MuMIn)
 
-
+pinguinos <- datos:: pinguinos
 data("mite")
 data("mite.env")
+
+pinguinos$especie <- as.factor(pinguinos$especie)
+pinguinos$isla <- as.factor(pinguinos$isla)
+pinguinos$largo_pico_mm <- as.numeric(pinguinos$largo_pico_mm)
+pinguinos$largo_aleta_mm <- as.numeric(pinguinos$largo_aleta_mm)
+pinguinos$masa_corporal_g <- as.numeric(pinguinos$masa_corporal_g)
+pinguinos$sexo <- as.factor(pinguinos$sexo)
+pinguinos$anio <- as.factor(pinguinos$anio)
+
+pinguinos%>%
+  group_by(especie)%>%
+  identify_outliers(largo_pico_mm)
+
+
+pinguinos$largo_pico_z <- scale(pinguinos$largo_pico_mm)
+pinguinos$largo_aleta_z <- scale(pinguinos$largo_aleta_mm)
+pinguinos$masa_corporal_z <- scale(pinguinos$masa_corporal_g)
+
 
 ac <- bind_cols(mite$Brachy, mite.env)
 ac <- ac %>%
@@ -50,66 +62,197 @@ ABBaseBN3 <- glm.nb(data=ac, AcaroBrachy ~ Sustrato + Topo)
 simResABBaseBN3 <-simulateResiduals(ABBaseBN3) 
 
 plot(simResABBaseBN3)
+```
+
+
+Es importante elegir todos los variables que pueden afectar su variable respuesta.Para evaluar cuales variables sean importantes, puedes ver a sus dotplots.Por ejemplo, si quiere saber si el largo pico de un pingüino es predicado por su masa corporal, puede analizar la relación con solo largo pico y masa corporal. 
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+pinguinos %>%
+  ggplot(aes(x=largo_pico_mm, y=masa_corporal_g))+
+  geom_point()+
+  geom_smooth()
 
 ```
 
-La ultima semana, trabaje con GLMs y como elegir un modelo desde un par de modelos. Los valores de AIC, sus grados de libertad (degrees of freedom/df), y cumplimiento con los supuestos pueden ayudarse a elegir el modelo mas adecuado. 
+Pero, si ve el grafico de la regresión lineal por solo largo pico y masa corporal, aparece que hay mucha variación. Así es importante añadir variables que quizás afecten los pingüinos. 
 
-Pero hay mas que debe hacer. Un modelo puede ser adecuado, y técnicamente correcto, pero todavía ser lo menos apto, o sea, que pueda todavía crear un modelo mejor. El valor de R2 esta usado para evaluar la fuerza de su modelo. 
 
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+
+Es <-pinguinos %>%
+  ggplot(aes(x=largo_pico_mm, y=masa_corporal_g, color=especie))+
+  geom_point()+
+  geom_smooth()
+
+Is <- pinguinos %>%
+  ggplot(aes(x=largo_pico_mm, y=masa_corporal_g, color=isla))+
+  geom_point()+
+  geom_smooth()
+
+Se <- pinguinos %>%
+  ggplot(aes(x=largo_pico_mm, y=masa_corporal_g, color=sexo))+
+  geom_point()+
+  geom_smooth()
+
+An <- pinguinos %>%
+  ggplot(aes(x=largo_pico_mm, y=masa_corporal_g, color=anio))+
+  geom_point()+
+  geom_smooth()
+
+library(patchwork)
+Es+Is+Se+An
+
+```
+
+Según los gráficos, ve que los especies son buen separados, y la isla también. Ano y sexo no aparece tal tan distinto, pero quizás hay poquita variación con sexo. Entonces, deberíamos empezar este modelo con masa corporal, especie, isla y sexo. 
+
+Así que ahora sabe todos los variables que quizás tengan afecto, puede empezar a modelar.
+
+```{r, include=FALSE}
+
+lpg <- glm(data=pinguinos, largo_pico_mm ~ masa_corporal_z + sexo + isla + especie)
+
+srg <- simulateResiduals(lpg)
+plot(srg)
+
+vif(lpg)
+
+lgpm <- glm(data=pinguinos, largo_pico_mm ~ sexo + isla + masa_corporal_z)
+lgpr <- simulateResiduals(lgpm)
+plot(lgpr)
+
+vif(lgpm)
+
+
+
+ModVac <- glm(data=pinguinos, largo_pico_mm ~1)
+
+ModTod <- glm(glm(data=pinguinos, largo_pico_mm ~ sexo + isla + masa_corporal_z))
+
+stepmod <- step(ModVac, scope=list(lower=ModVac, upper=ModTod))
+
+finm <- glm(data=pinguinos, largo_pico_mm ~ isla + masa_corporal_g)
+fnr <- simulateResiduals(finm)
+plot(fnr)
+
+te <- lm(data=pinguinos, largo_pico_mm ~ isla*especie + masa_corporal_g)
+ter <-simulateResiduals(te)
+plot(ter)
+
+library(HH)
+vif(te)
+```
+
+```{r, echo=FALSE}
+plot(fnr)
+
+r.squaredGLMM(finm)
+```
+Resulta que el modelo final contiene la isla y el masa corporal como variables explicativas. 
+
+Pero, hay dos problemas: 1. el valor R2 es bajo (.47) y 2) no se cumple con el homogeneidad de la varianza. Que puede hacer?
+
+
+Puede añadir una interacción. Por ejemplo entre la especie y la isla (así que sabe que había especies en una isla que no son en otros).
 
 ```{r}
-ABBaseBN3 <- glm.nb(data=ac, AcaroBrachy ~ DensSustrato + Topo)
+te <- lm(data=pinguinos, largo_pico_mm ~ isla*especie + masa_corporal_g)
+ter <-simulateResiduals(te)
+plot(ter)
 
-summary(ABBaseBN3)
-r.squaredGLMM(ABBaseBN3)
+r.squaredGLMM(te)
+```
+Ahora el modelo se cumple con los supuestos y tambien tiene un R2 alta. 
+
+```{r}
+summary(te)
 ```
 
+# Modelos aditivos generalizados (GAM/MAG)
+
+En que situación necesita un GAM?
+
+Por supuesto si tenga datos non-normales, o que no se cumplen con el homogeneidad de varianza. O si ya intentaba con GLM y ningúna familia adecuada funciona incluso con interacciones.
+
+Pero, la idea del GAM es que puede usarla para ajustar sus valores por datos que no son exactamente lineal, o que son super non-lineal. Funciona a hacer una línea que, en cada parte, ajuste la inclinación para representar mejor sus datos.
+Un GAM está diseñado a ajustar su línea para los variables que tienen relaciones non-lineales. O sea, pueda ajustar la curva por cada variable para crear una forma que si reflejen sus datos de hecho.
 
 
 ```{r, echo=FALSE}
 
+data("mcycle")
 
-ac %>%
-  ggplot(aes(AcaroBrachy, DensSustrato, col = Topo)) + 
-    geom_point(size = 2) + 
-    geom_smooth(method = "glm", , se = F)
+mcy <- mcycle %>%
+  rename("Tiempo_ms"=times)
 
-gammod <- gam(AcaroBrachy ~ s(DensSustrato) + s(CuentaAgua) + Topo, data=ac)
-
-summary(gammod)
-
-#geom_smooth(aes(group=manner, colour=manner),
-          #    method="gam", formula = y ~ s(x, bs = "cs") 
-
-              
-#plot(ggeffects::ggpredict(gammod), facets = TRUE)
+mcy %>%
+  identify_outliers(accel)
 
 
+mcy$Tiempo_ms <- as.numeric(mcy$Tiempo_ms)
+mcy$accel <- as.numeric(mcy$accel)
 
-ac %>%
-  ggplot(aes(AcaroBrachy, DensSustrato, col = Topo)) + 
-  geom_point(size = 2) + 
-  geom_smooth(aes(group=Topo, colour=Topo), method = "gam", formula= y ~ s(x, bs="cs"))
-
-ac %>%
-  ggplot(aes(x=AcaroBrachy, y=DensSustrato))+
-  geom_point()+
-  geom_smooth(aes(y=fitted(gammod)))
-              
-  #geom_line(aes(y = fitted(gammod)),
-    #colour = "blue", size = 1.2)
-
-
+mcy$Tiempo_ms <- scale(mcy$Tiempo_ms)
+mcy$accel <- scale(mcy$accel)
 
 ```
 
-# GAM
+Por ejemplo, este gráfico es una relación lineal entre tiempo y acceleración de motos experimentales. 
 
-El modelo aditivo generalizado presenta otra opción para trabajar con datos, especialmente datos irregulares. Con los modelos lineales generalizados, había una tolerancia baja para non-normalidad, porque son lineal. O sea, que relaciones entre variables que no son lineal, no son bueno para el GAM.
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+MC <- mcy %>%
+  ggplot(aes(x=Tiempo_ms, y=accel))+
+  geom_point()+
+  geom_smooth(method="lm")
+MC
+```
 
-A revés, un GAM está diseñado a ajustar su línea para los variables que tienen relaciones non-lineales. O sea, pueda ajustar la curva por cada variable para crear una forma que si reflejen sus datos de hecho.
+Como pude esperar desde las leyes físicas, no es una relación lineal, así que un glm no sea apto para estos datos.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+MG <- mcy %>%
+  ggplot(aes(x=Tiempo_ms, y=accel))+
+  geom_point()+
+  geom_smooth(method="gam")
+
+library(patchwork)
+MC + MG
+```
+Según los gráficos, es obvio que un gam se representa mejor el forma y relación de los datos.
 
 # Suposiciones
 
-El GAM es semi-parametrico. O sea, hay algunos supuestos, pero el supuesto de normalidad y heterogeneidad no están. Todavía debería asegurar que no hay autocorrelación, que sus observaciones son independentes, y
+El GAM es semi-parametrico. O sea, hay algunos supuestos, pero el supuesto de normalidad y heterogeneidad no están. Todavía debería asegurar que no hay autocorrelación, y que sus observaciones son independentes. También eliminar algunas outliers, cambiar los tipos de datos, y transformar sus datos si los medidas sean distintos.
+
+*	Ya lo hizo la normalización, eliminación de outliers, pruebas por correlación, y cambio de tipos de datos, pero no olvide a hacerlos antes de hacer un gam
+
+```{r}
+library(mgcv)
+library(mgcViz)
+
+mcgam <- gam(data=mcy, accel ~ s(Tiempo_ms))
+
+gam.check(mcgam)
+
+summary(mcgam)
+
+```
+```{r}
+library(gratia)
+draw(mcgam, residuals = TRUE)
+
+```
+El grafico se muestra los residuos y aparece super bien. Los residuos son los números que resultan cuando entra un x en su ecuación, entonces quiere que su grafico de residuos y los puntos originales sean juntos, porque eso es un modelo fuerte. Acá puede ver que los residuos si capturan la mayoría de los puntos y esta a medida de los partes mas anchos. Entonces, es un buen modelo.
+
+También, sabe desde el 'summary' que el R2 es 0.78, o sea, que el modelo cuenta por 78% de la variación en acceleración. Eso es bueno.
+
+# Resumen
+
+En resumen, los GAMs son bueno para datos/relaciones non-lineales porque puede ajustar los variables explicativas y representar curvas. 
+
+Los datos no tendrían que ser normales ni tampoco cumplir con la homogeneidad de la varianza. Pero sí deben ser sin outliers, transformada si había medidas distintas, y sin correlaciones entre variables explicativas.
+
+Puede evaluar su GAM con gráficos diagnósticos, con el R2, y con el ‘gam.check’.
+
+
