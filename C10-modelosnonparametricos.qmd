@@ -204,7 +204,10 @@ Por ejemplo, este gráfico es una relación lineal entre tiempo y acceleración 
 MC <- mcy %>%
   ggplot(aes(x=Tiempo_ms, y=accel))+
   geom_point()+
-  geom_smooth(method="lm")
+  geom_smooth(method="lm")+
+  labs(x="Tiempo m/s", y="Acceleración")+
+  ggtitle("Tiempo y acceleración con LM")+
+  theme(plot.title = element_text(hjust = 0.5))
 MC
 ```
 
@@ -214,7 +217,10 @@ Como pude esperar desde las leyes físicas, no es una relación lineal, así que
 MG <- mcy %>%
   ggplot(aes(x=Tiempo_ms, y=accel))+
   geom_point()+
-  geom_smooth(method="gam")
+  geom_smooth(method="gam")+
+  labs(x="Tiempo m/s", y="Acceleración")+
+  ggtitle("Tiempo y acceleración con GAM")+
+  theme(plot.title = element_text(hjust = 0.5))
 
 library(patchwork)
 MC + MG
@@ -235,12 +241,21 @@ mcgam <- gam(data=mcy, accel ~ s(Tiempo_ms))
 
 gam.check(mcgam)
 
-summary(mcgam)
-
 ```
 ```{r}
+options(scipen=14)
+coef(mcgam)
+summary(mcgam)
+```
+
+
+```{r, message=FALSE, warning=FALSE}
 library(gratia)
-draw(mcgam, residuals = TRUE)
+GAM <- draw(mcgam, residuals = TRUE)
+
+GAM + ggtitle("Acceleración por tiempo")+
+  theme(plot.title = element_text(hjust = 0.5))+
+  labs(x="Tiempo m/s", y="Partial effect: acceleración")
 
 ```
 El grafico se muestra los residuos y aparece super bien. Los residuos son los números que resultan cuando entra un x en su ecuación, entonces quiere que su grafico de residuos y los puntos originales sean juntos, porque eso es un modelo fuerte. Acá puede ver que los residuos si capturan la mayoría de los puntos y esta a medida de los partes mas anchos. Entonces, es un buen modelo.
