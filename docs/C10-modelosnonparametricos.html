@@ -480,9 +480,25 @@ Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
 indicate that k is too low, especially if edf is close to k'.
 
                k'  edf k-index p-value
-s(Tiempo_ms) 9.00 8.69    1.15    0.94</code></pre>
+s(Tiempo_ms) 9.00 8.69    1.15    0.95</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mcgam)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">14</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(mcgam)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               (Intercept)             s(Tiempo_ms).1 
+ 0.00000000000000006738798 -1.31861142706740652741360 
+            s(Tiempo_ms).2             s(Tiempo_ms).3 
+ 0.89970612207623523737254 -2.28363927466190208548369 
+            s(Tiempo_ms).4             s(Tiempo_ms).5 
+-0.45902452981953001387438  0.72501937838857033469253 
+            s(Tiempo_ms).6             s(Tiempo_ms).7 
+ 1.92823893195741558059808 -0.19210729728026415541464 
+            s(Tiempo_ms).8             s(Tiempo_ms).9 
+-2.31077678544641162972084  0.36430122408040899184556 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mcgam)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Family: gaussian 
@@ -492,12 +508,12 @@ Formula:
 accel ~ s(Tiempo_ms)
 
 Parametric coefficients:
-             Estimate Std. Error t value Pr(&gt;|t|)
-(Intercept) 6.739e-17  4.036e-02       0        1
+                          Estimate             Std. Error t value Pr(&gt;|t|)
+(Intercept) 0.00000000000000006739 0.04036498563473278622       0        1
 
 Approximate significance of smooth terms:
-               edf Ref.df     F p-value    
-s(Tiempo_ms) 8.693  8.972 53.52  &lt;2e-16 ***
+               edf Ref.df     F             p-value    
+s(Tiempo_ms) 8.693  8.972 53.52 &lt;0.0000000000000002 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -506,31 +522,16 @@ GCV = 0.23374  Scale est. = 0.2167    n = 133</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gratia)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Registered S3 method overwritten by 'gratia':
-  method       from  
-  simulate.gam mgcViz</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'gratia'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:latticeExtra':
-
-    rootogram</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:stringr':
-
-    boundary</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">draw</span>(mcgam, <span class="at">residuals =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gratia)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>GAM <span class="ot">&lt;-</span> <span class="fu">draw</span>(mcgam, <span class="at">residuals =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>GAM <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Acceleración por tiempo"</span>)<span class="sc">+</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))<span class="sc">+</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Tiempo m/s"</span>, <span class="at">y=</span><span class="st">"Partial effect: acceleración"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
