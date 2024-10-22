@@ -314,9 +314,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Según los gráficos, ve que los especies son buen separados, y la isla también. Ano y sexo no aparece tal tan distinto, pero quizás hay poquita variación con sexo. Entonces, deberíamos empezar este modelo con masa corporal, especie, isla y sexo.</p>
 <p>Así que ahora sabe todos los variables que quizás tengan afecto, puede empezar a modelar.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>te <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data=</span>pinguinos, largo_pico_mm <span class="sc">~</span> isla<span class="sc">*</span>especie <span class="sc">+</span> masa_corporal_g)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>ter <span class="ot">&lt;-</span><span class="fu">simulateResiduals</span>(te)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ter)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>finm <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data=</span>pinguinos, largo_pico_mm <span class="sc">~</span> isla <span class="sc">+</span> masa_corporal_g)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>fnr <span class="ot">&lt;-</span> <span class="fu">simulateResiduals</span>(finm)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fnr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -324,29 +324,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(HH)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(te)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                   islaDream                islaTorgersen 
-                    3.208324                     1.837128 
-              especieBarbijo                 especiePapúa 
-                         Inf                     4.460601 
-             masa_corporal_g     islaDream:especieBarbijo 
-                    3.027864                          Inf 
-islaTorgersen:especieBarbijo       islaDream:especiePapúa 
-                         NaN                          NaN 
-  islaTorgersen:especiePapúa 
-                         NaN </code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">r.squaredGLMM</span>(finm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           R2m       R2c
 [1,] 0.4771225 0.4771225</code></pre>
@@ -356,56 +334,23 @@ islaTorgersen:especieBarbijo       islaDream:especiePapúa
 <p>Pero, hay dos problemas: 1. el valor R2 es bajo (.47) y 2) no se cumple con el homogeneidad de la varianza. Que puede hacer?</p>
 <p>Puede añadir una interacción. Por ejemplo entre la especie y la isla (así que sabe que había especies en una isla que no son en otros).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>te <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data=</span>pinguinos, largo_pico_mm <span class="sc">~</span> isla<span class="sc">*</span>especie <span class="sc">+</span> masa_corporal_g)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ter <span class="ot">&lt;-</span><span class="fu">simulateResiduals</span>(te)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ter)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>te <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data=</span>pinguinos, largo_pico_mm <span class="sc">~</span> isla<span class="sc">*</span>especie <span class="sc">+</span> masa_corporal_g)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>ter <span class="ot">&lt;-</span><span class="fu">simulateResiduals</span>(te)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ter)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">r.squaredGLMM</span>(te)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">r.squaredGLMM</span>(te)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           R2m       R2c
 [1,] 0.8061791 0.8061791</code></pre>
 </div>
 </div>
 <p>Ahora el modelo se cumple con los supuestos y tambien tiene un R2 alta.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(te)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = largo_pico_mm ~ isla * especie + masa_corporal_g, 
-    data = pinguinos)
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--6.949 -1.673  0.100  1.497  9.290 
-
-Coefficients: (4 not defined because of singularities)
-                               Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)                  25.0830286  1.1101663  22.594  &lt; 2e-16 ***
-islaDream                    -0.3935763  0.4849432  -0.812    0.418    
-islaTorgersen                -0.0117121  0.4952551  -0.024    0.981    
-especieBarbijo               10.1646621  0.4345343  23.392  &lt; 2e-16 ***
-especiePapúa                  3.4131290  0.5728131   5.959 6.43e-09 ***
-masa_corporal_g               0.0037448  0.0002828  13.241  &lt; 2e-16 ***
-islaDream:especieBarbijo             NA         NA      NA       NA    
-islaTorgersen:especieBarbijo         NA         NA      NA       NA    
-islaDream:especiePapúa               NA         NA      NA       NA    
-islaTorgersen:especiePapúa           NA         NA      NA       NA    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 2.407 on 336 degrees of freedom
-  (2 observations deleted due to missingness)
-Multiple R-squared:  0.8085,    Adjusted R-squared:  0.8056 
-F-statistic: 283.7 on 5 and 336 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
 </section>
 <section id="modelos-aditivos-generalizados-gammag" class="level1">
 <h1>Modelos aditivos generalizados (GAM/MAG)</h1>
@@ -417,7 +362,7 @@ F-statistic: 283.7 on 5 and 336 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -427,7 +372,7 @@ F-statistic: 283.7 on 5 and 336 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -441,16 +386,16 @@ F-statistic: 283.7 on 5 and 336 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li>Ya lo hizo la normalización, eliminación de outliers, pruebas por correlación, y cambio de tipos de datos, pero no olvide a hacerlos antes de hacer un gam</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mgcv)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mgcViz)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>mcgam <span class="ot">&lt;-</span> <span class="fu">gam</span>(<span class="at">data=</span>mcy, accel <span class="sc">~</span> <span class="fu">s</span>(Tiempo_ms))</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">gam.check</span>(mcgam)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mgcv)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mgcViz)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>mcgam <span class="ot">&lt;-</span> <span class="fu">gam</span>(<span class="at">data=</span>mcy, accel <span class="sc">~</span> <span class="fu">s</span>(Tiempo_ms))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">gam.check</span>(mcgam)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -466,12 +411,12 @@ Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
 indicate that k is too low, especially if edf is close to k'.
 
                k'  edf k-index p-value
-s(Tiempo_ms) 9.00 8.69    1.15    0.94</code></pre>
+s(Tiempo_ms) 9.00 8.69    1.15    0.93</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">14</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(mcgam)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">14</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(mcgam)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               (Intercept)             s(Tiempo_ms).1 
  0.00000000000000006738798 -1.31861142706740652741360 
@@ -484,7 +429,7 @@ s(Tiempo_ms) 9.00 8.69    1.15    0.94</code></pre>
             s(Tiempo_ms).8             s(Tiempo_ms).9 
 -2.31077678544641162972084  0.36430122408040899184556 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mcgam)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mcgam)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Family: gaussian 
@@ -508,16 +453,16 @@ GCV = 0.23374  Scale est. = 0.2167    n = 133</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gratia)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>GAM <span class="ot">&lt;-</span> <span class="fu">draw</span>(mcgam, <span class="at">residuals =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>GAM <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Acceleración por tiempo"</span>)<span class="sc">+</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))<span class="sc">+</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Tiempo m/s"</span>, <span class="at">y=</span><span class="st">"Partial effect: acceleración"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gratia)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>GAM <span class="ot">&lt;-</span> <span class="fu">draw</span>(mcgam, <span class="at">residuals =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>GAM <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Acceleración por tiempo"</span>)<span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))<span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Tiempo m/s"</span>, <span class="at">y=</span><span class="st">"Partial effect: acceleración"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="C10-modelosnonparametricos_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>

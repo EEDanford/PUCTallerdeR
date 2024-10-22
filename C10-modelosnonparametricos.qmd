@@ -135,18 +135,10 @@ fnr <- simulateResiduals(finm)
 plot(fnr)
 ```
 
-```{R, message=FALSE, warning=FALSE}
-te <- lm(data=pinguinos, largo_pico_mm ~ isla*especie + masa_corporal_g)
-ter <-simulateResiduals(te)
-plot(ter)
-
-library(HH)
-vif(te)
-```
-
-```{r, echo=FALSE}
+```{r, message=FALSE, warning=FALSE}
+finm <- glm(data=pinguinos, largo_pico_mm ~ isla + masa_corporal_g)
+fnr <- simulateResiduals(finm)
 plot(fnr)
-
 r.squaredGLMM(finm)
 ```
 
@@ -165,10 +157,6 @@ r.squaredGLMM(te)
 ```
 
 Ahora el modelo se cumple con los supuestos y tambien tiene un R2 alta.
-
-```{r}
-summary(te)
-```
 
 # Modelos aditivos generalizados (GAM/MAG)
 
