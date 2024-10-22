@@ -135,7 +135,10 @@ stepmod <- step(ModVac, scope=list(lower=ModVac, upper=ModTod))
 finm <- glm(data=pinguinos, largo_pico_mm ~ isla + masa_corporal_g)
 fnr <- simulateResiduals(finm)
 plot(fnr)
+```
 
+
+```{R, message=FALSE, warning=FALSE}
 te <- lm(data=pinguinos, largo_pico_mm ~ isla*especie + masa_corporal_g)
 ter <-simulateResiduals(te)
 plot(ter)
@@ -179,7 +182,7 @@ Pero, la idea del GAM es que puede usarla para ajustar sus valores por datos que
 Un GAM está diseñado a ajustar su línea para los variables que tienen relaciones non-lineales. O sea, pueda ajustar la curva por cada variable para crear una forma que si reflejen sus datos de hecho.
 
 
-```{r, echo=FALSE}
+```{r, include=FALSE}
 
 data("mcycle")
 
@@ -233,7 +236,7 @@ El GAM es semi-parametrico. O sea, hay algunos supuestos, pero el supuesto de no
 
 *	Ya lo hizo la normalización, eliminación de outliers, pruebas por correlación, y cambio de tipos de datos, pero no olvide a hacerlos antes de hacer un gam
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 library(mgcv)
 library(mgcViz)
 
