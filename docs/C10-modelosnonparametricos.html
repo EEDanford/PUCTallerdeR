@@ -279,6 +279,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#modelos-aditivos-generalizados-gammag" id="toc-modelos-aditivos-generalizados-gammag" class="nav-link" data-scroll-target="#modelos-aditivos-generalizados-gammag">Modelos aditivos generalizados (GAM/MAG)</a></li>
   <li><a href="#suposiciones" id="toc-suposiciones" class="nav-link" data-scroll-target="#suposiciones">Suposiciones</a></li>
   <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen">Resumen</a></li>
+  <li><a href="#recursos" id="toc-recursos" class="nav-link" data-scroll-target="#recursos">Recursos</a></li>
   </ul>
 </nav>
     </div>
@@ -465,7 +466,7 @@ Basis dimension (k) checking results. Low p-value (k-index&lt;1) may
 indicate that k is too low, especially if edf is close to k'.
 
                k'  edf k-index p-value
-s(Tiempo_ms) 9.00 8.69    1.15    0.92</code></pre>
+s(Tiempo_ms) 9.00 8.69    1.15    0.94</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -529,6 +530,12 @@ GCV = 0.23374  Scale est. = 0.2167    n = 133</code></pre>
 <p>En resumen, los GAMs son bueno para datos/relaciones non-lineales porque puede ajustar los variables explicativas y representar curvas.</p>
 <p>Los datos no tendrían que ser normales ni tampoco cumplir con la homogeneidad de la varianza. Pero sí deben ser sin outliers, transformada si había medidas distintas, y sin correlaciones entre variables explicativas.</p>
 <p>Puede evaluar su GAM con gráficos diagnósticos, con el R2, y con el ‘gam.check’.</p>
+</section>
+<section id="recursos" class="level1">
+<h1>Recursos</h1>
+<p><a href="https://limno-con-r.github.io/libro/gam.html">GAM (español)</a></p>
+<p><a href="http://r.qcbs.ca/workshop08/book-en/introduction-to-gams.html">GAMS (Ingles)</a></p>
+<p><a href="https://stat.ethz.ch/R-manual/R-devel/library/mgcv/html/family.mgcv.html">Familias del GAM (Ingles)</a></p>
 
 
 </section>

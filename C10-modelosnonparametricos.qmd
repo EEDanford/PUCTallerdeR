@@ -64,8 +64,7 @@ simResABBaseBN3 <-simulateResiduals(ABBaseBN3)
 plot(simResABBaseBN3)
 ```
 
-
-Es importante elegir todos los variables que pueden afectar su variable respuesta.Para evaluar cuales variables sean importantes, puedes ver a sus dotplots.Por ejemplo, si quiere saber si el largo pico de un pingüino es predicado por su masa corporal, puede analizar la relación con solo largo pico y masa corporal. 
+Es importante elegir todos los variables que pueden afectar su variable respuesta.Para evaluar cuales variables sean importantes, puedes ver a sus dotplots.Por ejemplo, si quiere saber si el largo pico de un pingüino es predicado por su masa corporal, puede analizar la relación con solo largo pico y masa corporal.
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 pinguinos %>%
@@ -75,8 +74,7 @@ pinguinos %>%
 
 ```
 
-Pero, si ve el grafico de la regresión lineal por solo largo pico y masa corporal, aparece que hay mucha variación. Así es importante añadir variables que quizás afecten los pingüinos. 
-
+Pero, si ve el grafico de la regresión lineal por solo largo pico y masa corporal, aparece que hay mucha variación. Así es importante añadir variables que quizás afecten los pingüinos.
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 
@@ -105,7 +103,7 @@ Es+Is+Se+An
 
 ```
 
-Según los gráficos, ve que los especies son buen separados, y la isla también. Ano y sexo no aparece tal tan distinto, pero quizás hay poquita variación con sexo. Entonces, deberíamos empezar este modelo con masa corporal, especie, isla y sexo. 
+Según los gráficos, ve que los especies son buen separados, y la isla también. Ano y sexo no aparece tal tan distinto, pero quizás hay poquita variación con sexo. Entonces, deberíamos empezar este modelo con masa corporal, especie, isla y sexo.
 
 Así que ahora sabe todos los variables que quizás tengan afecto, puede empezar a modelar.
 
@@ -137,7 +135,6 @@ fnr <- simulateResiduals(finm)
 plot(fnr)
 ```
 
-
 ```{R, message=FALSE, warning=FALSE}
 te <- lm(data=pinguinos, largo_pico_mm ~ isla*especie + masa_corporal_g)
 ter <-simulateResiduals(te)
@@ -152,10 +149,10 @@ plot(fnr)
 
 r.squaredGLMM(finm)
 ```
-Resulta que el modelo final contiene la isla y el masa corporal como variables explicativas. 
+
+Resulta que el modelo final contiene la isla y el masa corporal como variables explicativas.
 
 Pero, hay dos problemas: 1. el valor R2 es bajo (.47) y 2) no se cumple con el homogeneidad de la varianza. Que puede hacer?
-
 
 Puede añadir una interacción. Por ejemplo entre la especie y la isla (así que sabe que había especies en una isla que no son en otros).
 
@@ -166,7 +163,8 @@ plot(ter)
 
 r.squaredGLMM(te)
 ```
-Ahora el modelo se cumple con los supuestos y tambien tiene un R2 alta. 
+
+Ahora el modelo se cumple con los supuestos y tambien tiene un R2 alta.
 
 ```{r}
 summary(te)
@@ -178,9 +176,7 @@ En que situación necesita un GAM?
 
 Por supuesto si tenga datos non-normales, o que no se cumplen con el homogeneidad de varianza. O si ya intentaba con GLM y ningúna familia adecuada funciona incluso con interacciones.
 
-Pero, la idea del GAM es que puede usarla para ajustar sus valores por datos que no son exactamente lineal, o que son super non-lineal. Funciona a hacer una línea que, en cada parte, ajuste la inclinación para representar mejor sus datos.
-Un GAM está diseñado a ajustar su línea para los variables que tienen relaciones non-lineales. O sea, pueda ajustar la curva por cada variable para crear una forma que si reflejen sus datos de hecho.
-
+Pero, la idea del GAM es que puede usarla para ajustar sus valores por datos que no son exactamente lineal, o que son super non-lineal. Funciona a hacer una línea que, en cada parte, ajuste la inclinación para representar mejor sus datos. Un GAM está diseñado a ajustar su línea para los variables que tienen relaciones non-lineales. O sea, pueda ajustar la curva por cada variable para crear una forma que si reflejen sus datos de hecho.
 
 ```{r, include=FALSE}
 
@@ -201,7 +197,7 @@ mcy$accel <- scale(mcy$accel)
 
 ```
 
-Por ejemplo, este gráfico es una relación lineal entre tiempo y acceleración de motos experimentales. 
+Por ejemplo, este gráfico es una relación lineal entre tiempo y acceleración de motos experimentales.
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 MC <- mcy %>%
@@ -228,13 +224,14 @@ MG <- mcy %>%
 library(patchwork)
 MC + MG
 ```
+
 Según los gráficos, es obvio que un gam se representa mejor el forma y relación de los datos.
 
 # Suposiciones
 
 El GAM es semi-parametrico. O sea, hay algunos supuestos, pero el supuesto de normalidad y heterogeneidad no están. Todavía debería asegurar que no hay autocorrelación, y que sus observaciones son independentes. También eliminar algunas outliers, cambiar los tipos de datos, y transformar sus datos si los medidas sean distintos.
 
-*	Ya lo hizo la normalización, eliminación de outliers, pruebas por correlación, y cambio de tipos de datos, pero no olvide a hacerlos antes de hacer un gam
+-   Ya lo hizo la normalización, eliminación de outliers, pruebas por correlación, y cambio de tipos de datos, pero no olvide a hacerlos antes de hacer un gam
 
 ```{r, message=FALSE, warning=FALSE}
 library(mgcv)
@@ -245,12 +242,12 @@ mcgam <- gam(data=mcy, accel ~ s(Tiempo_ms))
 gam.check(mcgam)
 
 ```
+
 ```{r}
 options(scipen=14)
 coef(mcgam)
 summary(mcgam)
 ```
-
 
 ```{r, message=FALSE, warning=FALSE}
 library(gratia)
@@ -261,16 +258,23 @@ GAM + ggtitle("Acceleración por tiempo")+
   labs(x="Tiempo m/s", y="Partial effect: acceleración")
 
 ```
+
 El grafico se muestra los residuos y aparece super bien. Los residuos son los números que resultan cuando entra un x en su ecuación, entonces quiere que su grafico de residuos y los puntos originales sean juntos, porque eso es un modelo fuerte. Acá puede ver que los residuos si capturan la mayoría de los puntos y esta a medida de los partes mas anchos. Entonces, es un buen modelo.
 
 También, sabe desde el 'summary' que el R2 es 0.78, o sea, que el modelo cuenta por 78% de la variación en acceleración. Eso es bueno.
 
 # Resumen
 
-En resumen, los GAMs son bueno para datos/relaciones non-lineales porque puede ajustar los variables explicativas y representar curvas. 
+En resumen, los GAMs son bueno para datos/relaciones non-lineales porque puede ajustar los variables explicativas y representar curvas.
 
 Los datos no tendrían que ser normales ni tampoco cumplir con la homogeneidad de la varianza. Pero sí deben ser sin outliers, transformada si había medidas distintas, y sin correlaciones entre variables explicativas.
 
 Puede evaluar su GAM con gráficos diagnósticos, con el R2, y con el ‘gam.check’.
 
+# Recursos
 
+[GAM (español)](https://limno-con-r.github.io/libro/gam.html)
+
+[GAMS (Ingles)](http://r.qcbs.ca/workshop08/book-en/introduction-to-gams.html)
+
+[Familias del GAM (Ingles)](https://stat.ethz.ch/R-manual/R-devel/library/mgcv/html/family.mgcv.html)
