@@ -1,3 +1,0 @@
----
-title: "C11-Fuerzademodelos"
----

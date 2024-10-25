@@ -1,0 +1,164 @@
+---
+title: "C11-Gráficos del communicación"
+---
+
+# Gráficos para communicar
+
+## Diseño
+
+Cuando hicimos estadística la parte que quizás se cuesta mas es comunicar los resultados. Hay distintas formas de mostrarlos que depende en su audiencia y los pruebas que ha usado.
+
+Pero siempre debe pensar en tu diseño para que sea claro y accesible sus datos. Por ejemplo, si quiere usar colores para distinguir grupos, no ocupes verde y rojo, porque hay gente que no pueden verlos. O si necesite usar, puede cambiar las formas de sus puntos también.
+
+Generalmente los papers no se usan colores, o sea, que prefieren que todos sus gráficos son blancos/negros. \*anota que en ggplot, el ‘theme_classic()’ funciona super bien para eso.
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+library(tidyverse)
+library(datos)
+library(vegan)
+library(rstatix)
+library(ggpubr)
+
+
+pinguinos <- datos::pinguinos
+
+pinguinos$masa_corporal_z <- scale(pinguinos$masa_corporal_g)
+
+
+pinguinos %>%
+  ggplot(aes(x=especie, y=masa_corporal_z))+
+  geom_boxplot()+
+  theme_classic()
+```
+
+Siempre hay que asegurar que tiene un titulo (por gráfico o grupo de gráficos), que sus ejes también lo tienen y que solo tiene números en ejes que lo necesitan, y que los números tiene sentido (así que cambiar la renga de sus ejes si es necesario para mostrar bien sus datos).
+
+```{r, message=FALSE, warning=FALSE}
+pinguinos %>%
+  ggplot(aes(x=especie, y=masa_corporal_z))+
+  geom_boxplot()+
+  theme_classic()+
+  labs(x="Especie", y="Masa Corporal")+
+  ggtitle("Masa Corporal de pinguinos por Especie")+
+  theme(plot.title=element_text(hjust=0.5))
+```
+
+También, así que hice modelos con datos transformados, es super común que los profesores no le gustan si hace gráficos con datos transformados. Así que debería hacer sus gráficos sin outliers, pero con sus datos originales, o sea, no transformados.
+
+```{r, message=FALSE, warning=FALSE}
+pinguinos %>%
+  ggplot(aes(x=especie, y=masa_corporal_g))+
+  geom_boxplot()+
+  theme_classic()+
+  labs(x="Especie", y="Masa Corporal (g)")+
+  ggtitle("Masa Corporal de pinguinos por Especie")+
+  theme(plot.title=element_text(hjust=0.5))
+```
+
+Además, frecuentemente es necesario anotar sus gráficos con un valor p o algo así. Había varios métodos como siempre, pero voy a mostrarle solo algunos.
+
+### 1. stat_compare_means()
+
+Si ya lo hice una prueba de algún tipo, y quiere mostrar los resultados en su grafico, puede usar stat_compare_means para hacerlo. Pero, sea super seguro que ya lo hice, lo pruebe los supuestos y todo, porque puede hacer stat_compare_means y ser equivocado.
+
+```{r}
+pinguinos %>%
+  group_by(especie)%>%
+  shapiro_test(masa_corporal_g)
+
+levene_test(data=pinguinos, masa_corporal_g ~ especie)
+```
+
+O sea que acá, no es todo normal, tampoco cumplen los datos con la homogeneidad de la varianza.
+
+```{r, warning=FALSE, message=FALSE}
+pinguinos %>%
+  ggplot(aes(x=especie, y=masa_corporal_g))+
+  geom_boxplot()+
+  theme_classic()+
+  labs(x="Especie", y="Masa Corporal (g)")+
+  ggtitle("Masa Corporal de pinguinos por Especie")+
+  theme(plot.title=element_text(hjust=0.5))+
+  stat_compare_means()
+  
+```
+
+Puede ver que el 'stat_compare_means' automáticamente seleccione lo mejor método (kruskal-wallis). Pero, siempre debe pruébalo para asegurar que es correcto.
+
+### De manera manual
+
+Puede también añadir texto de manera manual, si ya tiene su valor p o quiere añadir algo. Hay dos métodos parecidos, pero a veces el annotate se sale con calidad mejor que el geom_text, así que se muestro los dos
+
+### 2. annotate()
+
+```{r, message=FALSE, warning=FALSE}
+pinguinos %>%
+  ggplot(aes(x=especie, y=masa_corporal_g))+
+  geom_boxplot()+
+  theme_classic()+
+  labs(x="Especie", y="Masa Corporal (g)")+
+  ggtitle("Masa Corporal de pinguinos por Especie")+
+  theme(plot.title=element_text(hjust=0.5))+
+  stat_compare_means()+
+  ylim(2500, 7000)+
+  annotate(geom="text", x= "Papúa", y= 6750, label="*")
+```
+
+```{r, message=FALSE, warning=FALSE}
+pinguinos %>%
+  ggplot(aes(x=especie, y=masa_corporal_g))+
+  geom_boxplot()+
+  theme_classic()+
+  labs(x="Especie", y="Masa Corporal (g)")+
+  ggtitle("Masa Corporal de pinguinos por Especie")+
+  theme(plot.title=element_text(hjust=0.5))+
+  ylim(2500, 7000)+
+  annotate(geom="text", x= 1, y= 6750, label="Kruskal-wallis, p<2.2e-16")
+```
+
+### Gráficos para un paper
+
+Para un paper, generalmente pone boxplots con un anova/kruskal-wallis y un dotplot/gráfico lineal con un glm/gam.
+
+```{r, warning=FALSE, message=FALSE}
+
+AN <- pinguinos %>%
+  ggplot(aes(x=especie, y=masa_corporal_g))+
+  geom_boxplot()+
+  theme_classic()+
+  labs(x="Especie", y="Masa Corporal (g)")+
+  ggtitle("Masa Corporal de pinguinos por Especie")+
+  theme(plot.title=element_text(hjust=0.5))+
+  ylim(2500, 7000)+
+  annotate(geom="text", x= 1, y= 6750, label="Kruskal-wallis, p<2.2e-16")+
+  theme(aspect.ratio=1)
+
+GAM <- pinguinos %>%
+  ggplot(aes(x=largo_aleta_mm, y=masa_corporal_g, color=especie))+
+  geom_point()+
+  geom_smooth()+
+  theme_classic()+
+  labs(x="Especie", y="Masa Corporal (g)")+
+  ggtitle("Masa Corporal por Largo Aleta y Especie")+
+  theme(plot.title=element_text(hjust=0.5))+
+  ylim(2500, 7000)+
+  theme(aspect.ratio=1)
+
+library(patchwork)
+
+AN+GAM
+```
+
+Pero igual hay más tipos de gráficos que puede ocupar a mostrar las relaciones en sus datos. Por ejemplo, puede usar un 'dotplot' para mostrar relaciónes generales
+
+```{r}
+pinguinos %>%
+  ggplot(aes(x=especie, y=masa_corporal_g))+
+  geom_point()+
+  theme_classic()+
+  labs(x="Especie", y="Masa Corporal (g)")+
+  ggtitle("Masa Corporal de pinguinos por Especie")+
+  theme(plot.title=element_text(hjust=0.5))+
+  ylim(2500, 7000)+
+  theme(aspect.ratio=1)
+```
