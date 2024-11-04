@@ -25,8 +25,7 @@ website:
           - C8-modelosnormales1.qmd
           - C9-modelosnormales2.qmd
           - C10-modelosnonparametricos.qmd
-          - C11-Fuerzademodelos.qmd
-          - C12-graficos.qmd
+          - C11-Graficos.qmd
       - section: "Proyectos"
         href: proyectos.qmd
         contents:

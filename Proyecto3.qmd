@@ -1,3 +1,63 @@
 ---
 title: "Proyecto3"
 ---
+
+# Proyecto 3
+
+El propósito del último Proyecto es comunicar los resultados de sus modelos con gráficos.
+
+Ocupando sus modelos del proyecto 2, haz al menos un gráfico por cada modelo.
+
+Sus gráficos deben ser bien elegidos, diseñados con atención al estilo académico, y con leyendas descriptivas (como un paper).
+
+Debe entregar:
+
+-   El pdf de su R Markdown con todos los códigos mostrados
+
+-   Su ANOVA/kruskal-wallis con un gráfico (o más) adecuado con:
+
+    -   Valor p
+
+    -   Títulos de ejes descriptivas y titulo de grafico
+
+    -   Colores adecuados (puede ser blanco/negro o colores temáticos)
+
+    -   Variables non-transformados y en los ejes correctos
+
+    -   Leyenda que explica el gráfico y sus resultados según el gráfico
+
+-   Su modelo GLM/GAM con un gráfico (o más) adecuado con:
+
+```         
+-   Valor P y R2
+
+-   Títulos de ejes descriptivas y titulo de grafico
+
+-    Colores adecuados (puede ser blanco/negro o colores temáticos)
+
+-    Variables non-transformados y en los ejes correctos (puede elegir a mostrar un par de gráficos una para cada variable explicativa, o puede elegir a mostrar solo un variable)
+
+-   Leyenda que explica el gráfico y sus resultados según el gráfico
+```
+
+# Gráfico de ANOVA/Kruskal-Wallis
+
+|                                      |                     |                                                             |                                                                                            |                                                                                     |
+|--------------------------------------|---------------------|-------------------------------------------------------------|--------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|
+|                                      | 1                   | 3                                                           | 5                                                                                          | 7                                                                                   |
+| Tipo de grafico                      | Sin gráfico         | Gráfico mal elegido                                         |                                                                                            | Tipo de gráfico adecuado                                                            |
+| Diseño                               | Sin gráfico         | Gráfico básico y sin diseño intencional                     | Cambios pequeños, colores o ordenes que deben ser cambiados                                | Listo para un paper (colores adecuados, ordenes que tienen sentido, etc..)          |
+| Títulos (de los ejes y un principal) | Títulos automáticos | Falta titulo principal o de los ejes, o no son descriptivos | Títulos presentes, pero sin medidas o con un titulo principal que necesita más información | Títulos descriptivos con unidades de sus medidas, y un título principal descriptivo |
+| Variables                            | Sin gráfico         | Variables transformadas y en el eje incorrecto              | Variables transformadas o en el eje incorrecto                                             | Variables non-transformadas y en el eje correcto                                    |
+| Leyenda del gráfico                  | Sin leyenda         | Leyenda presente pero no explicativa                        | Leyenda presente y explicativa, pero con errores                                           | Leyenda presente que explica bien su gráfico y conclusiones                         |
+
+# Gráfico de GLM/GAM
+
+|                                      |                     |                                                             |                                                                                            |                                                                                     |
+|--------------------------------------|---------------------|-------------------------------------------------------------|--------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|
+|                                      | 1                   | 3                                                           | 5                                                                                          | 7                                                                                   |
+| Tipo de grafico                      | Sin gráfico         | Gráfico mal elegido                                         |                                                                                            | Tipo de gráfico adecuado                                                            |
+| Diseño                               | Sin gráfico         | Gráfico básico y sin diseño intencional                     | Cambios pequeños, colores o ordenes que deben ser cambiados                                | Listo para un paper (colores adecuados, ordenes que tienen sentido, etc..)          |
+| Títulos (de los ejes y un principal) | Títulos automáticos | Falta título principal o de los ejes, o no son descriptivos | Títulos presentes, pero sin medidas o con un título principal que necesita más información | Títulos descriptivos con unidades de sus medidas, y un título principal descriptivo |
+| Variables                            | Sin gráfico         | Variables transformadas y en el eje incorrecto              | Variables transformadas o en el eje incorrecto                                             | Variables non-transformadas y en el eje correcto                                    |
+| Leyenda del gráfico                  | Sin leyenda         | Leyenda presente pero no explicativa                        | Leyenda presente y explicativa, pero con errores                                           | Leyenda presente que explica bien su gráfico y conclusiones                         |

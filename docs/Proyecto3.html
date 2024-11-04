@@ -184,19 +184,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./C10-modelosnonparametricos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Modelos aditivos generalizados (GAM/MAG)</span></a>
+ <span class="menu-text">Variables con GLM/GAM</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./C11-Fuerzademodelos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">C11-Fuerzademodelos</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./C12-graficos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">C12-graficos</span></a>
+  <a href="./C11-Graficos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">C11-Gráficos del communicación</span></a>
   </div>
 </li>
       </ul>
@@ -236,7 +230,15 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#proyecto-3" id="toc-proyecto-3" class="nav-link active" data-scroll-target="#proyecto-3">Proyecto 3</a></li>
+  <li><a href="#gráfico-de-anovakruskal-wallis" id="toc-gráfico-de-anovakruskal-wallis" class="nav-link" data-scroll-target="#gráfico-de-anovakruskal-wallis">Gráfico de ANOVA/Kruskal-Wallis</a></li>
+  <li><a href="#gráfico-de-glmgam" id="toc-gráfico-de-glmgam" class="nav-link" data-scroll-target="#gráfico-de-glmgam">Gráfico de GLM/GAM</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -260,8 +262,148 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="proyecto-3" class="level1">
+<h1>Proyecto 3</h1>
+<p>El propósito del último Proyecto es comunicar los resultados de sus modelos con gráficos.</p>
+<p>Ocupando sus modelos del proyecto 2, haz al menos un gráfico por cada modelo.</p>
+<p>Sus gráficos deben ser bien elegidos, diseñados con atención al estilo académico, y con leyendas descriptivas (como un paper).</p>
+<p>Debe entregar:</p>
+<ul>
+<li><p>El pdf de su R Markdown con todos los códigos mostrados</p></li>
+<li><p>Su ANOVA/kruskal-wallis con un gráfico (o más) adecuado con:</p>
+<ul>
+<li><p>Valor p</p></li>
+<li><p>Títulos de ejes descriptivas y titulo de grafico</p></li>
+<li><p>Colores adecuados (puede ser blanco/negro o colores temáticos)</p></li>
+<li><p>Variables non-transformados y en los ejes correctos</p></li>
+<li><p>Leyenda que explica el gráfico y sus resultados según el gráfico</p></li>
+</ul></li>
+<li><p>Su modelo GLM/GAM con un gráfico (o más) adecuado con:</p></li>
+</ul>
+<pre><code>-   Valor P y R2
+
+-   Títulos de ejes descriptivas y titulo de grafico
+
+-    Colores adecuados (puede ser blanco/negro o colores temáticos)
+
+-    Variables non-transformados y en los ejes correctos (puede elegir a mostrar un par de gráficos una para cada variable explicativa, o puede elegir a mostrar solo un variable)
+
+-   Leyenda que explica el gráfico y sus resultados según el gráfico</code></pre>
+</section>
+<section id="gráfico-de-anovakruskal-wallis" class="level1">
+<h1>Gráfico de ANOVA/Kruskal-Wallis</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 7%">
+<col style="width: 20%">
+<col style="width: 30%">
+<col style="width: 28%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>1</td>
+<td>3</td>
+<td>5</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td>Tipo de grafico</td>
+<td>Sin gráfico</td>
+<td>Gráfico mal elegido</td>
+<td></td>
+<td>Tipo de gráfico adecuado</td>
+</tr>
+<tr class="odd">
+<td>Diseño</td>
+<td>Sin gráfico</td>
+<td>Gráfico básico y sin diseño intencional</td>
+<td>Cambios pequeños, colores o ordenes que deben ser cambiados</td>
+<td>Listo para un paper (colores adecuados, ordenes que tienen sentido, etc..)</td>
+</tr>
+<tr class="even">
+<td>Títulos (de los ejes y un principal)</td>
+<td>Títulos automáticos</td>
+<td>Falta titulo principal o de los ejes, o no son descriptivos</td>
+<td>Títulos presentes, pero sin medidas o con un titulo principal que necesita más información</td>
+<td>Títulos descriptivos con unidades de sus medidas, y un título principal descriptivo</td>
+</tr>
+<tr class="odd">
+<td>Variables</td>
+<td>Sin gráfico</td>
+<td>Variables transformadas y en el eje incorrecto</td>
+<td>Variables transformadas o en el eje incorrecto</td>
+<td>Variables non-transformadas y en el eje correcto</td>
+</tr>
+<tr class="even">
+<td>Leyenda del gráfico</td>
+<td>Sin leyenda</td>
+<td>Leyenda presente pero no explicativa</td>
+<td>Leyenda presente y explicativa, pero con errores</td>
+<td>Leyenda presente que explica bien su gráfico y conclusiones</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="gráfico-de-glmgam" class="level1">
+<h1>Gráfico de GLM/GAM</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 7%">
+<col style="width: 20%">
+<col style="width: 30%">
+<col style="width: 28%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>1</td>
+<td>3</td>
+<td>5</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td>Tipo de grafico</td>
+<td>Sin gráfico</td>
+<td>Gráfico mal elegido</td>
+<td></td>
+<td>Tipo de gráfico adecuado</td>
+</tr>
+<tr class="odd">
+<td>Diseño</td>
+<td>Sin gráfico</td>
+<td>Gráfico básico y sin diseño intencional</td>
+<td>Cambios pequeños, colores o ordenes que deben ser cambiados</td>
+<td>Listo para un paper (colores adecuados, ordenes que tienen sentido, etc..)</td>
+</tr>
+<tr class="even">
+<td>Títulos (de los ejes y un principal)</td>
+<td>Títulos automáticos</td>
+<td>Falta título principal o de los ejes, o no son descriptivos</td>
+<td>Títulos presentes, pero sin medidas o con un título principal que necesita más información</td>
+<td>Títulos descriptivos con unidades de sus medidas, y un título principal descriptivo</td>
+</tr>
+<tr class="odd">
+<td>Variables</td>
+<td>Sin gráfico</td>
+<td>Variables transformadas y en el eje incorrecto</td>
+<td>Variables transformadas o en el eje incorrecto</td>
+<td>Variables non-transformadas y en el eje correcto</td>
+</tr>
+<tr class="even">
+<td>Leyenda del gráfico</td>
+<td>Sin leyenda</td>
+<td>Leyenda presente pero no explicativa</td>
+<td>Leyenda presente y explicativa, pero con errores</td>
+<td>Leyenda presente que explica bien su gráfico y conclusiones</td>
+</tr>
+</tbody>
+</table>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

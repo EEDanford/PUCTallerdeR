@@ -3,7 +3,7 @@ title: "Horario"
 ---
 
 | Fecha    | Tema                            | Tareas sugeridas                                               | Entregar            |
-|--------------|--------------|-------------------------------|--------------|
+|----------|---------------------------------|----------------------------------------------------------------|---------------------|
 | 13/8/24  | Introducción a ciencia de datos | Organizar y guardar sus datos como csv, crear su proyecto en R |                     |
 | 20/8/24  | Introducción a R/R Studio       | Crear su R Markdown y cargar datos/paquetes                    |                     |
 | 27/8/24  | Introducción a tidyverse        | Practicar ‘pivot’ con sus datos                                |                     |

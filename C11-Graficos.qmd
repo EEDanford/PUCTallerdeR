@@ -43,7 +43,21 @@ pinguinos %>%
   theme(plot.title=element_text(hjust=0.5))
 ```
 
+Su titulo principal es importante para comunicar su propósito e información sobre sus datos. Generalmente (con ojo a presentaciones) es importante incluir el lugar y año/s de observación, y sus variables respuesta y explicativas. Igual, debería ser corto.
+
+```{r, message=FALSE, warning=FALSE}
+pinguinos %>%
+  ggplot(aes(x=especie, y=masa_corporal_z))+
+  geom_boxplot()+
+  theme_classic()+
+  labs(x="Especie", y="Masa Corporal")+
+  ggtitle("Masa Corporal de pinguinos por Especie (Isla, 2018)")+
+  theme(plot.title=element_text(hjust=0.5))
+```
+
 También, así que hice modelos con datos transformados, es super común que los profesores no le gustan si hace gráficos con datos transformados. Así que debería hacer sus gráficos sin outliers, pero con sus datos originales, o sea, no transformados.
+
+Además, incluir los unidades de las medidas en sus títulos de ejes.
 
 ```{r, message=FALSE, warning=FALSE}
 pinguinos %>%
@@ -54,6 +68,8 @@ pinguinos %>%
   ggtitle("Masa Corporal de pinguinos por Especie")+
   theme(plot.title=element_text(hjust=0.5))
 ```
+
+# Anotar resultados en sus gráficos
 
 Además, frecuentemente es necesario anotar sus gráficos con un valor p o algo así. Había varios métodos como siempre, pero voy a mostrarle solo algunos.
 
@@ -116,7 +132,7 @@ pinguinos %>%
   annotate(geom="text", x= 1, y= 6750, label="Kruskal-wallis, p<2.2e-16")
 ```
 
-### Gráficos para un paper
+## Gráficos para un paper
 
 Para un paper, generalmente pone boxplots con un anova/kruskal-wallis y un dotplot/gráfico lineal con un glm/gam.
 
@@ -146,19 +162,269 @@ GAM <- pinguinos %>%
 
 library(patchwork)
 
-AN+GAM
+AN/GAM
 ```
 
-Pero igual hay más tipos de gráficos que puede ocupar a mostrar las relaciones en sus datos. Por ejemplo, puede usar un 'dotplot' para mostrar relaciónes generales
+Pero igual hay más tipos de gráficos que puede ocupar a mostrar las relaciones en sus datos. Por ejemplo, puede usar un 'dotplot' para mostrar relaciones generales.
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 pinguinos %>%
-  ggplot(aes(x=especie, y=masa_corporal_g))+
+  ggplot(aes(x=largo_pico_mm, y=masa_corporal_g))+
   geom_point()+
   theme_classic()+
-  labs(x="Especie", y="Masa Corporal (g)")+
+  labs(x="Largo Pico (mm)", y="Masa Corporal (g)")+
   ggtitle("Masa Corporal de pinguinos por Especie")+
   theme(plot.title=element_text(hjust=0.5))+
   ylim(2500, 7000)+
   theme(aspect.ratio=1)
 ```
+
+También son útiles los gráficos de columnas con barras de error. Son super útiles con datos de abundancia.
+
+```{r, message=FALSE, warning=FALSE}
+
+flor <- datos::flores
+
+datsumir <- flores %>%
+  group_by(Especie)%>%
+  reframe(
+    mean=mean(Largo.Sepalo),
+    SE_am = sd(Largo.Sepalo)/sqrt(n()),
+    Largo.Sepalo
+  )
+
+
+le <- datsumir %>%
+  ggplot(aes(x=Especie, y=mean, fill=Especie))+
+  geom_col(position="dodge")+
+  labs(x="Especie de flor", y="promedio del largo sepalo (mm)")+
+  ggtitle("Promedio del largo sepalo de flores por especie")+
+  theme(axis.text.x = element_text(angle = 60, hjust=0.5, vjust=.6))+
+  theme(legend.position = "none")+
+  theme_classic()+
+  scale_fill_manual(values=c("#0d7244", "#3C5488FF", "#91D1C2FF"))
+
+
+
+le2 <- le + geom_errorbar(aes(ymin=mean-SE_am, ymax =mean+SE_am))
+le2
+```
+
+
+# Patchwork
+
+Al principio hablé del ‘facet’ que puede usar para mostrar más información en sus plots. También hay un paquete que se llama ‘patchwork’ que deja posible combinar más que un plot en un solo gráfico.
+
+Es útil si quiere mostrar un boxplot y una línea juntos, o si quiere mostrar dos boxplots pero no puede usar facet.
+
+A partir, hace los gráficos que quiere juntar y guárdelos con un nombre único.
+
+```{r}
+library(patchwork)
+
+A <- pinguinos %>%
+  ggplot(aes(x=especie, y=largo_pico_mm))+
+  geom_boxplot()+
+  theme_classic()+
+  labs(x="Especie", y="Largo pico (mm)")+
+  #ggtitle("Masa Corporal de pinguinos por Especie")+
+  theme(plot.title=element_text(hjust=0.5))+
+  stat_compare_means()
+
+
+B <- pinguinos %>%
+  ggplot(aes(x=especie, y=masa_corporal_g))+
+  geom_boxplot()+
+  theme_classic()+
+  labs(x="Especie", y="Masa corporal (g)")+
+  #ggtitle("Masa Corporal de pinguinos por Especie")+
+  theme(plot.title=element_text(hjust=0.5))+
+  stat_compare_means()
+
+C <- pinguinos %>%
+  ggplot(aes(x=especie, y=largo_aleta_mm))+
+  geom_boxplot()+
+  theme_classic()+
+  labs(x="Especie", y="Largo aleta (mm)")+
+  #ggtitle("Masa Corporal de pinguinos por Especie")+
+  theme(plot.title=element_text(hjust=0.5))+
+  stat_compare_means()
+
+D <- pinguinos %>%
+  ggplot(aes(x=especie, y=alto_pico_mm))+
+  geom_boxplot()+
+  theme_classic()+
+  labs(x="Especie", y="Alto pico (mm)")+
+  #ggtitle("Masa Corporal de pinguinos por Especie")+
+  theme(plot.title=element_text(hjust=0.5))+
+  stat_compare_means()
+
+```
+
+Ahora puede usar los nombres y el orden de las operaciones matemáticas para organizar sus gráficos.
+
+Recuerde PEMDAS: Paréntesis, exponenciales, multiplicación/división, suma/resta
+
+El paquete ‘patchwork’ ocupa específicamente los paréntesis, sumas y división.
+
+Por ejemplo:
+
+```{r, warning=FALSE, message=FALSE}
+A + B
+```
+
+``` {rwarning="FALSE," message="FALSE"}
+(A+B)/C
+```
+
+```{r, warning=FALSE, message=FALSE}
+A/C/B
+```
+
+```{r, warning=FALSE, message=FALSE}
+A + B + C
+```
+
+```{r, message=FALSE, warning=FALSE}
+A+B/C+D
+```
+
+```{r, message=FALSE, warning=FALSE}
+(A+B)/(C+D)
+```
+
+Hay muchas opciones, pero automáticamente no se organiza sus títulos y tamaños. Así que hay otras líneas que puede añadir a su grafico entero.
+
+## título principal
+
+plot_annotation(title= "título deseado")
+
+```{r, message=FALSE, warning=FALSE}
+A + B + C + plot_annotation(title = "Rasgos físicos de pinguinos")
+```
+
+## numerar sus gráficos
+
+Para una figura de un paper científico, es normal añadir números o letras a cada grafico para que puede explicar cada uno en su leyenda. Puede hacer ese de forma automática en patchwork así:
+por números: Plot_annotation(tag_levels = c(“1”)) 
+por letras: Plot_annotation(tag_levels = c(“a”)) 
+
+
+```{r, message=FALSE, warning=FALSE}
+A + B + C + plot_annotation(tag_levels = c("1"), title = "Rasgos físicos de pinguinos")
+
+A + B + C + plot_annotation(tag_levels = c("a"), title = "Rasgos físicos de pinguinos")
+                  
+```
+
+## Tamaño
+
+Puede ver que los tres gráficos acá son más altos que anchos y que no pueden leer todo el texto. Puede usar plot_layout() para cambiar sus tamaños y orden en varias maneras.
+
+plot_layout(ncol=2)
+
+Con ese código puede cambiar su numera de columnas. O sea que según el código principal debería tener los tres gráficos en una línea, pero según el ncol=2, solo va a tener dos.
+
+```{r, message=FALSE, warning=FALSE}
+A + B + C + plot_annotation(tag_levels = c("a"), title = "Rasgos físicos de pinguinos")+plot_layout(ncol = 2)
+```
+
+plot_layout(widths=c())
+
+Puede cambiar la ratio del ancho de sus gráficos también. Lo hice por cada columna. Por ejemplo, si hay dos columnas, puede poner ploy_layout(widths=c(1,2,1) y su columna central va a ser lo más ancho de todos.
+
+```{r, message=FALSE, warning=FALSE}
+A + B + C + plot_annotation(tag_levels = c("a"), title = "Rasgos físicos de pinguinos")+ plot_layout(widths = c(1, 2, 1))
+```
+
+
+Lo mismo con heights=c()
+
+```{r, message=FALSE, warning=FALSE}
+A + B + C + plot_annotation(tag_levels = c("a"), title = "Rasgos físicos de pinguinos")+ plot_layout(ncol=2, widths=c(1,1), heights = c(5,1))
+
+```
+También puede ocupar unidades especificas para cambiar tamaño. 
+
+plot_layout(widths=unit(c(4,4,4), c('cm','cm','cm)))
+
+O sea, que cada colúmna debe tener un ancho de 4cm.
+
+ploy_layout(heights=unit(c(5), c('cm')))
+
+o sea, así que solo hay una colúmna ahora, esta colúmna va a tener una altura de 5cm.
+
+```{r, message=FALSE, warning=FALSE}
+A + B + C + plot_annotation(tag_levels = c("a"), title = "Rasgos físicos de pinguinos")+ plot_layout(widths=unit(c(4,4,4), c('cm','cm','cm')), height = unit(c(5), c('cm')))
+```
+Generalmente, funciona mejor con no más de dos gráficos por fila, y de forma más cuadrado, pero funciona igual si quiere cambiar.
+
+```{r, message=FALSE, warning=FALSE}
+A + B + C + D + plot_annotation(tag_levels=c("a"), title="Rasgos físicos de pingunios")+ plot_layout(widths=unit(c(5,5), c('cm','cm')), height=unit(c(3.5,3.5),c('cm','cm')))
+
+```
+También sea más facíl con 'annotate()' que 'stat_compare_means()' porque puede cambiar más facilmente donde se queda su texto con 'annotate()'
+
+```{r}
+A <- pinguinos %>%
+  ggplot(aes(x=especie, y=largo_pico_mm))+
+  geom_boxplot()+
+  theme_classic()+
+  labs(x="Especie", y="Largo pico (mm)")+
+  #ggtitle("Masa Corporal de pinguinos por Especie")+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate(geom="text", x= 1.85, y= 62, label="Kruskal-wallis, p<0.001")
+
+```
+
+```{r, message=FALSE, warning=FALSE}
+A + B + C + D + plot_annotation(tag_levels=c("a"), title="Rasgos físicos de pingunios")+ plot_layout(widths=unit(c(5,5), c('cm','cm')), height=unit(c(3.5,3.5),c('cm','cm')))
+```
+También peude cambiar sus ejes para controlar el tamaño.
+
+```{r}
+A <- pinguinos %>%
+  ggplot(aes(x=especie, y=largo_pico_mm))+
+  geom_boxplot()+
+  theme_classic()+
+  labs(x="Especie", y="Largo pico (mm)")+
+  #ggtitle("Masa Corporal de pinguinos por Especie")+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate(geom="text", x= 1.85, y= 65, label="Kruskal-wallis, p<0.001")+
+  ylim(30,67)
+```
+
+```{r, message=FALSE, warning=FALSE}
+A + B + C + D + plot_annotation(tag_levels=c("a"), title="Rasgos físicos de pingunios")+ plot_layout(widths=unit(c(5,5), c('cm','cm')))
+```
+
+# Otros opciones
+
+Un opcion adicional, que puede aprender desde YouTube, u otros scripts, un análisis de componentes principales toma sus datos y lo hice una comparación entre la fuerza de las relaciones entre ellos. O sea, que crea un matriz visual en que puede ver si son relacionados y con q nivel de fuerza.
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(MASS)
+library(factoextra)
+Iris <- datos::flores
+Iris <- Iris %>%
+  rename("Ancho sepalo (cm)"= Ancho.Sepalo, "Largo Sepalo (cm)"=Largo.Sepalo, "Ancho Petalo (cm)"=Ancho.Petalo, "Largo Petalo (cm)"=Largo.Petalo)
+IrisNum <- Iris[c(1:4)]
+modIr <- prcomp(IrisNum[c(1:4)], data=IrisNum, scale=TRUE)
+result <- summary(modIr)
+#fviz_screeplot(modIr)
+library(ggfortify)
+pca <- autoplot(modIr, data=Iris, color='Especie', label=TRUE, loadings=TRUE, loadings.label=TRUE)
+pca + ggtitle("PCA de rasgos florales por especie de iris")+theme(plot.title=element_text(hjust=0.5))
+```
+
+A finalizar quiero contarse que hay muchos métodos de analizar encima de lo que hice en esta clase y temas más profundos según el glm/gam/anova. O sea, sigue buscando por más ejemplos y métodos en los papers que lee para que pueda aprobar los métodos más recién. 
+
+Fuentes de ayuda:
+* Chatgpt (si tiene errores en su code especialmente, pero no es perfecto así que ten cuidado)
+* ?help (parte de r, puede poner ‘?’ y cualquier función y recibe información 
+* https://es.r4ds.hadley.nz/  este libro (español) super bueno y descriptivo
+* Stackoverflow <- donde gente pide ayuda por sus preguntas en R y otras se responden, puede ser ayudante (mayormente ingles)
+*	Pagina de UCLA <- en ingles pero con buen ejemplos https://stats.oarc.ucla.edu/other/dae/
+*	Yo! Y sus profes
+
