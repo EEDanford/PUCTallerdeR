@@ -4,8 +4,6 @@ title: "C11-Gráficos del communicación"
 
 # Gráficos para communicar
 
-## Diseño
-
 Cuando hicimos estadística la parte que quizás se cuesta mas es comunicar los resultados. Hay distintas formas de mostrarlos que depende en su audiencia y los pruebas que ha usado.
 
 Pero siempre debe pensar en tu diseño para que sea claro y accesible sus datos. Por ejemplo, si quiere usar colores para distinguir grupos, no ocupes verde y rojo, porque hay gente que no pueden verlos. O si necesite usar, puede cambiar las formas de sus puntos también.
@@ -136,7 +134,7 @@ pinguinos %>%
 
 Para un paper, generalmente pone boxplots con un anova/kruskal-wallis y un dotplot/gráfico lineal con un glm/gam.
 
-```{r, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 
 AN <- pinguinos %>%
   ggplot(aes(x=especie, y=masa_corporal_g))+
@@ -209,7 +207,6 @@ le <- datsumir %>%
 le2 <- le + geom_errorbar(aes(ymin=mean-SE_am, ymax =mean+SE_am))
 le2
 ```
-
 
 # Patchwork
 
@@ -305,10 +302,7 @@ A + B + C + plot_annotation(title = "Rasgos físicos de pinguinos")
 
 ## numerar sus gráficos
 
-Para una figura de un paper científico, es normal añadir números o letras a cada grafico para que puede explicar cada uno en su leyenda. Puede hacer ese de forma automática en patchwork así:
-por números: Plot_annotation(tag_levels = c(“1”)) 
-por letras: Plot_annotation(tag_levels = c(“a”)) 
-
+Para una figura de un paper científico, es normal añadir números o letras a cada grafico para que puede explicar cada uno en su leyenda. Puede hacer ese de forma automática en patchwork así: por números: Plot_annotation(tag_levels = c(“1”)) por letras: Plot_annotation(tag_levels = c(“a”))
 
 ```{r, message=FALSE, warning=FALSE}
 A + B + C + plot_annotation(tag_levels = c("1"), title = "Rasgos físicos de pinguinos")
@@ -337,14 +331,14 @@ Puede cambiar la ratio del ancho de sus gráficos también. Lo hice por cada col
 A + B + C + plot_annotation(tag_levels = c("a"), title = "Rasgos físicos de pinguinos")+ plot_layout(widths = c(1, 2, 1))
 ```
 
-
 Lo mismo con heights=c()
 
 ```{r, message=FALSE, warning=FALSE}
 A + B + C + plot_annotation(tag_levels = c("a"), title = "Rasgos físicos de pinguinos")+ plot_layout(ncol=2, widths=c(1,1), heights = c(5,1))
 
 ```
-También puede ocupar unidades especificas para cambiar tamaño. 
+
+También puede ocupar unidades especificas para cambiar tamaño.
 
 plot_layout(widths=unit(c(4,4,4), c('cm','cm','cm)))
 
@@ -357,12 +351,14 @@ o sea, así que solo hay una colúmna ahora, esta colúmna va a tener una altura
 ```{r, message=FALSE, warning=FALSE}
 A + B + C + plot_annotation(tag_levels = c("a"), title = "Rasgos físicos de pinguinos")+ plot_layout(widths=unit(c(4,4,4), c('cm','cm','cm')), height = unit(c(5), c('cm')))
 ```
+
 Generalmente, funciona mejor con no más de dos gráficos por fila, y de forma más cuadrado, pero funciona igual si quiere cambiar.
 
 ```{r, message=FALSE, warning=FALSE}
 A + B + C + D + plot_annotation(tag_levels=c("a"), title="Rasgos físicos de pingunios")+ plot_layout(widths=unit(c(5,5), c('cm','cm')), height=unit(c(3.5,3.5),c('cm','cm')))
 
 ```
+
 También sea más facíl con 'annotate()' que 'stat_compare_means()' porque puede cambiar más facilmente donde se queda su texto con 'annotate()'
 
 ```{r}
@@ -380,6 +376,7 @@ A <- pinguinos %>%
 ```{r, message=FALSE, warning=FALSE}
 A + B + C + D + plot_annotation(tag_levels=c("a"), title="Rasgos físicos de pingunios")+ plot_layout(widths=unit(c(5,5), c('cm','cm')), height=unit(c(3.5,3.5),c('cm','cm')))
 ```
+
 También peude cambiar sus ejes para controlar el tamaño.
 
 ```{r}
@@ -402,7 +399,6 @@ A + B + C + D + plot_annotation(tag_levels=c("a"), title="Rasgos físicos de pin
 
 Un opcion adicional, que puede aprender desde YouTube, u otros scripts, un análisis de componentes principales toma sus datos y lo hice una comparación entre la fuerza de las relaciones entre ellos. O sea, que crea un matriz visual en que puede ver si son relacionados y con q nivel de fuerza.
 
-
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(MASS)
 library(factoextra)
@@ -418,13 +414,18 @@ pca <- autoplot(modIr, data=Iris, color='Especie', label=TRUE, loadings=TRUE, lo
 pca + ggtitle("PCA de rasgos florales por especie de iris")+theme(plot.title=element_text(hjust=0.5))
 ```
 
-A finalizar quiero contarse que hay muchos métodos de analizar encima de lo que hice en esta clase y temas más profundos según el glm/gam/anova. O sea, sigue buscando por más ejemplos y métodos en los papers que lee para que pueda aprobar los métodos más recién. 
+A finalizar quiero contarse que hay muchos métodos de analizar encima de lo que hice en esta clase y temas más profundos según el glm/gam/anova. O sea, sigue buscando por más ejemplos y métodos en los papers que lee para que pueda aprobar los métodos más recién.
 
 Fuentes de ayuda:
-* Chatgpt (si tiene errores en su code especialmente, pero no es perfecto así que ten cuidado)
-* ?help (parte de r, puede poner ‘?’ y cualquier función y recibe información 
-* https://es.r4ds.hadley.nz/  este libro (español) super bueno y descriptivo
-* Stackoverflow <- donde gente pide ayuda por sus preguntas en R y otras se responden, puede ser ayudante (mayormente ingles)
-*	Pagina de UCLA <- en ingles pero con buen ejemplos https://stats.oarc.ucla.edu/other/dae/
-*	Yo! Y sus profes
 
+-   Chatgpt (si tiene errores en su code especialmente, pero no es perfecto así que ten cuidado)
+
+-   ?help (parte de r, puede poner ‘?’ y cualquier función y recibe información \*
+
+-   [Libro de R en español](https://es.r4ds.hadley.nz/)
+
+-   Stackoverflow \<- donde gente pide ayuda por sus preguntas en R y otras se responden, puede ser ayudante (mayormente ingles)
+
+-   [Página de UCLA](https://stats.oarc.ucla.edu/other/dae/) \<- en ingles pero con buen ejemplos
+
+-   Yo! Y sus profes

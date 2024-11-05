@@ -28,22 +28,20 @@ Debe entregar:
 
 -   Su modelo GLM/GAM con un gráfico (o más) adecuado con:
 
-```         
--   Valor P y R2
+    -   Valor P y R2
 
--   Títulos de ejes descriptivas y titulo de grafico
+    -   Títulos de ejes descriptivas y titulo de grafico
 
--    Colores adecuados (puede ser blanco/negro o colores temáticos)
+    -   Colores adecuados (puede ser blanco/negro o colores temáticos)
 
--    Variables non-transformados y en los ejes correctos (puede elegir a mostrar un par de gráficos una para cada variable explicativa, o puede elegir a mostrar solo un variable)
+    -   Variables non-transformados y en los ejes correctos (puede elegir a mostrar un par de gráficos una para cada variable explicativa, o puede elegir a mostrar solo un variable)
 
--   Leyenda que explica el gráfico y sus resultados según el gráfico
-```
+    -   Leyenda que explica el gráfico y sus resultados según el gráfico
 
 # Gráfico de ANOVA/Kruskal-Wallis
 
 |                                      |                     |                                                             |                                                                                            |                                                                                     |
-|--------------------------------------|---------------------|-------------------------------------------------------------|--------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|
+|-------------|-------------|-------------|-----------------|----------------|
 |                                      | 1                   | 3                                                           | 5                                                                                          | 7                                                                                   |
 | Tipo de grafico                      | Sin gráfico         | Gráfico mal elegido                                         |                                                                                            | Tipo de gráfico adecuado                                                            |
 | Diseño                               | Sin gráfico         | Gráfico básico y sin diseño intencional                     | Cambios pequeños, colores o ordenes que deben ser cambiados                                | Listo para un paper (colores adecuados, ordenes que tienen sentido, etc..)          |
@@ -54,7 +52,7 @@ Debe entregar:
 # Gráfico de GLM/GAM
 
 |                                      |                     |                                                             |                                                                                            |                                                                                     |
-|--------------------------------------|---------------------|-------------------------------------------------------------|--------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|
+|-------------|-------------|-------------|-----------------|----------------|
 |                                      | 1                   | 3                                                           | 5                                                                                          | 7                                                                                   |
 | Tipo de grafico                      | Sin gráfico         | Gráfico mal elegido                                         |                                                                                            | Tipo de gráfico adecuado                                                            |
 | Diseño                               | Sin gráfico         | Gráfico básico y sin diseño intencional                     | Cambios pequeños, colores o ordenes que deben ser cambiados                                | Listo para un paper (colores adecuados, ordenes que tienen sentido, etc..)          |
